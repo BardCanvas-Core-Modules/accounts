@@ -5,6 +5,7 @@
     <!-- User accounts language definitions -->
     <!-- ################################## -->
     
+    <display_name>User accounts manager</display_name>
     <description>
         User accounts control and register/login/logout functionality.
     </description>
