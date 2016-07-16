@@ -506,4 +506,31 @@
             <y_title>Day</y_title>
         </registrations_chart>
     </widgets>
+
+    <settings_data>
+        <title>Account services configuration</title>
+        <specs key="register_enabled">
+            <title>Allow users to register?</title>
+            <description><![CDATA[
+                Allow/disallow new users from sign-in.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="disable_registrations_widget">
+            <title>Disable registrations widget?</title>
+            <description><![CDATA[
+                Show/hide the registrations widget chart on top of the accounts browser.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="enforce_device_registration">
+            <title>Enforce device registration</title>
+            <description><![CDATA[
+                If enabled, users will have to confirm every browser they open the website in.<br>
+                Use it only if you want strict account security.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+    </settings_data>
+    
 </language>
