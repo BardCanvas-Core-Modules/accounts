@@ -1,11 +1,5 @@
-/**
- * Account front-end variables and functions
- *
- * @package    HNG2
- * @subpackage accounts
- * @author     Alejandro Caballero - lava.caballero@gmail.com
- */
 
+//noinspection JSUnusedGlobalSymbols
 function open_register_dialog()
 {
     $('#register_dialog').dialog('open');

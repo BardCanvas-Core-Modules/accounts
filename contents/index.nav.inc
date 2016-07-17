@@ -182,24 +182,24 @@ $res = $database->query($query);
     </script>
 <? endif; ?>
 
-<div class="filtering clearfix">
-    <script type="text/javascript">
-        function paginate(value)
-        {
-            $('form[name="filter_form"] input[name="offset"]').val(value);
-            $('form[name="filter_form"]').submit();
-        }
-        
-        function reset_filter()
-        {
-            document.filter_form.search_for.value           = "";
-            document.filter_form.search_state.selectedIndex = 0;
-            document.filter_form.limit.value                = "20";
-            document.filter_form.order.value                = "16";
-            document.filter_form.submit();
-        }
-    </script>
+<script type="text/javascript">
+    function paginate(value)
+    {
+        $('form[name="filter_form"] input[name="offset"]').val(value);
+        $('form[name="filter_form"]').submit();
+    }
     
+    function reset_filter()
+    {
+        document.filter_form.search_for.value           = "";
+        document.filter_form.search_state.selectedIndex = 0;
+        document.filter_form.limit.value                = "20";
+        document.filter_form.order.value                = "16";
+        document.filter_form.submit();
+    }
+</script>
+
+<div class="filtering clearfix">
     <form name="filter_form" id="filter_form" action="<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<? echo mt_rand(1, 65535); ?>"
           method="get">
         
