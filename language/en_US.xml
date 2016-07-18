@@ -6,6 +6,7 @@
     <!-- ################################## -->
     
     <display_name>User accounts manager</display_name>
+    <icon>fa-users</icon>
     <description>
         User accounts control and register/login/logout functionality.
     </description>
@@ -18,7 +19,7 @@
     
     <admin>
         <menu_items>
-            <admin_menu_caption icon="fa-users">Accounts</admin_menu_caption>
+            <admin_menu_caption>Accounts</admin_menu_caption>
         </menu_items>
         <record_nav>
             <page_title>User accounts</page_title>
