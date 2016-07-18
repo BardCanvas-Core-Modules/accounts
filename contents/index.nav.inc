@@ -310,7 +310,7 @@ $res = $database->query($query);
                 
                 <td width="60%" colspan="2">
                     
-                    <div class="principal_data"><?= $row->display_name ?></div>
+                    <div class="principal_data"><?= convert_emojis($row->display_name) ?></div>
                     
                     <code><?= $row->user_name ?></code>
                     
