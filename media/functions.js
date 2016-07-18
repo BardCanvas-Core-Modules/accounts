@@ -167,13 +167,16 @@ function process_reset_result(responseText, statusText, xhr, $form)
     $password_reset.dialog('close');
 }
 
-function set_engine_pref(key, value)
+function set_engine_pref(key, value, callback)
 {
-    var url = $_FULL_ROOT_PATH + '/accounts/scripts/set_engine_pref.php';
+    var url    = $_FULL_ROOT_PATH + '/accounts/scripts/set_engine_pref.php';
     var params = {'key': key, 'value': value};
+    
     $.get(url, params, function(response)
     {
         if(response != 'OK') alert(response);
+        
+        if(callback) callback();
     });
 }
 
