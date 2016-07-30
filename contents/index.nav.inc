@@ -401,7 +401,24 @@ $res = $database->query($query);
                 
                 <td width="20%"><?= empty($row->address_state) ? "&mdash;" : $row->address_state ?></td>
                 
-                <td nowrap align="center"><?= $row->level ?></td>
+                <td nowrap align="center">
+                    <div class="user_level_switcher">
+                        <div class="current">
+                            <?
+                            if( isset($config->user_levels_by_level[$row->level]) )
+                                echo "[{$row->level}] " . $config->user_levels_by_level[$row->level];
+                            else
+                                echo $row->level;
+                            ?>
+                            
+                            <? if( $account->level >= $config::MODERATOR_USER_LEVEL ): ?>
+                                <span class="fa fa-pencil fa-fw pseudo_link" 
+                                      onclick="open_level_switcher(this, '<?= $row->id_account ?>', '<?= $row->level ?>')"></span>
+                            <? endif; ?>
+                        </div>
+                        <div class="target" style="display: none;"></div>
+                    </div>
+                </td>
                 
                 <td width="20" align="center">
                     <? $online_flag = $row->last_activity >= date("Y-m-d H:i:s", strtotime("now - 1 minute")) ? "online" : "offline"; ?>
@@ -492,3 +509,13 @@ function render_user_devices_info($row, $res2)
 }
 ?>
 
+<div id="level_switch" style="display: none;">
+    <select onchange="change_user_level(this)">
+        <? foreach($config->user_levels_by_level as $level => $caption): ?>
+            <? if( $level > $account->level ) continue; ?>
+            <option value="<?= $level ?>">[<?= $level ?>] <?= $caption ?></option>
+        <? endforeach; ?>
+        <option disabled>──────────</option>
+        <option value="!@cancel">&lt;<?= $language->cancel ?>&gt;</option>
+    </select>
+</div>
