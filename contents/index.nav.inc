@@ -1,12 +1,18 @@
 <?
 /**
- * @var module $current_module
- * @var array  $errors
- * @var array  $messages
+ * @var config            $config
+ * @var settings          $settings
+ * @var \SimpleXMLElement $language
+ * @var module            $current_module
+ * @var array             $errors
+ * @var array             $messages
+ * @var account           $account
  */
 
 use hng2_base\account;
+use hng2_base\config;
 use hng2_base\module;
+use hng2_base\settings;
 use hng2_tools\record_browser;
 
 $browser = new record_browser("{$config->website_key}_{$current_module->name}");
@@ -130,17 +136,20 @@ $res = $database->query($query);
     
     <?= $current_module->language->admin->record_nav->page_title ?>
     
-    <? if( $settings->get("modules:accounts.register_enabled") != "false" ): ?>
-        <button onclick="top.location.href='<?= $_SERVER["PHP_SELF"] ?>?mode=disable_register&wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
+    <?
+    $style_disable = $settings->get("modules:accounts.register_enabled") != "false" ? ""               : "display: none;";
+    $style_enable  = $settings->get("modules:accounts.register_enabled") != "false" ? "display: none;" : "";
+    ?>
+    <span id="registration_toggle_button">
+        <button class="toggle_registration" onclick="toggle_registration_mode('off')" style="<?= $style_disable ?>">
             <span class="fa fa-toggle-on"></span>
             <?= $current_module->language->admin->record_nav->disable_register ?>
         </button>
-    <? else: ?>
-        <button onclick="top.location.href='<?= $_SERVER["PHP_SELF"] ?>?mode=enable_register&wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
+        <button class="toggle_registration" onclick="toggle_registration_mode('on')" style="<?= $style_enable ?>">
             <span class="fa fa-toggle-off"></span>
             <?= $current_module->language->admin->record_nav->enable_register ?>
         </button>
-    <? endif; ?>
+    </span>
     
     <button onclick="top.location.href='<?= $_SERVER["PHP_SELF"] ?>?mode=show_creation_form&wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
         <span class="fa fa-plus"></span>
@@ -249,7 +258,7 @@ $res = $database->query($query);
 <? endif;  ?>
 
 <div class="table_wrapper">
-    <table class="nav_table evened">
+    <table id="accounts_nav" class="nav_table evened">
         
         <thead>
         <tr>
@@ -295,7 +304,7 @@ $res = $database->query($query);
             <tr class="<? if( $row->id_account == $account->id_account ) echo "self"; else echo $row->state; ?>"
                 id_account="<?= $row->id_account ?>">
                 
-                <td width="20">
+                <td data-for="state" width="20">
                     <?
                     switch( $row->state )
                     {
@@ -344,43 +353,43 @@ $res = $database->query($query);
                         <? endif ?>
                         
                         <? if($row->state == "new"): ?>
-        
+                            
                             <? if($row->id_account != $account->id_account): ?>
-                                <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=enable&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
+                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'enable')">
                                     <span class="fa fa-unlock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->enable ?>
-                                </a>
+                                </span>
                             <? endif; ?>
                             
                         <? elseif($row->state == "enabled"): ?>
-        
+                            
                             <? $tmp_account = new account($row); ?>
                             <? if( $tmp_account->id_account != $account->id_account && ! $tmp_account->_is_admin ): ?>
-                                <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=promote_admin&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
+                                <span class="action pseudo_link" onclick="switch_admin('<?= $row->id_account ?>', 'promote_admin')">
                                     <span class="fa fa-level-up"></span>
                                     <?= $current_module->language->admin->record_nav->actions->promote_admin ?>
-                                </a>
+                                </span>
                             <? elseif( $tmp_account->id_account != $account->id_account && $tmp_account->_is_admin ): ?>
-                                <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=demote_admin&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
+                                <span class="action pseudo_link" onclick="switch_admin('<?= $row->id_account ?>', 'demote_admin')">
                                     <span class="fa fa-level-down"></span>
                                     <?= $current_module->language->admin->record_nav->actions->demote_admin ?>
-                                </a>
+                                </span>
                             <? endif; ?>
                             
                             <? if($row->id_account != $account->id_account): ?>
-                                <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=disable&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
+                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'disable')">
                                     <span class="fa fa-lock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->disable ?>
-                                </a>
+                                </span>
                             <? endif; ?>
                             
                         <? elseif($row->state == "disabled"): ?>
                             
                             <? if($row->id_account != $account->id_account): ?>
-                                <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=enable&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
+                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'enable')">
                                     <span class="fa fa-unlock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->enable ?>
-                                </a>
+                                </span>
                             <? endif; ?>
                             
                         <? endif; ?>

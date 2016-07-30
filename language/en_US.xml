@@ -140,6 +140,7 @@
                 <demoted_ok>Account successfully removed from the admins list.</demoted_ok>
                 <registering_enabled>Account registration has been enabled.</registering_enabled>
                 <registering_disabled>Account registration has been disabled.</registering_disabled>
+                <invalid_mode_specified>Sorry, but the script mode you specified is invalid.</invalid_mode_specified>
             </action_messages>
             <devices_and_login_infos>Devices and login info</devices_and_login_infos>
         </record_nav>
