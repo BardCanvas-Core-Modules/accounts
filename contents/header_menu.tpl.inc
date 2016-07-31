@@ -46,14 +46,14 @@ if( ! $account->_exists )
 else
 {
     $added_class = preg_match('#/accounts/edit_account.php|/accounts/devices.php#i', $_SERVER["PHP_SELF"]) ? "current" : "";
-    $locked      = $account->_is_locked ? "fa-lock" : "fa-user";
+    $locked      = $account->_is_locked ? "fa-lock" : "fa-info-circle";
     
     $template->add_menu_item(
         "_____login_____",
         "
         <span class='main_menu_item {$added_class} always_visible pull-right is_submenu_trigger' id='loggedin_username' 
               style='cursor: pointer;' data-submenu='#user_menu_items'>
-            <span id='loggedin_icon' class='fa fa-border {$locked}'></span>
+            <span id='loggedin_icon' class='fa fa-border {$locked}' style='color: transparent; background: url({$account->get_avatar_url()}) center center no-repeat; background-size: cover'></span>
             <span id='loggedin_icon_locked' class='fa fa-border fa-lock' style='display: none;'></span>
             {$account->get_processed_display_name()}
             <span class='menu_toggle'>
