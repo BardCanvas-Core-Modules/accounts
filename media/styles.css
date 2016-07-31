@@ -17,15 +17,16 @@
 
 .userdata_form       { text-align: center; margin-left: auto; margin-right: auto; }
 .userdata_form .cell { text-align: left; padding: 20px; vertical-align: top; }
-@media all and (max-width: 5000px) and (min-width: 851px)
+@media all and (min-width: 851px)
 {
-    .userdata_form .cell                 { width: 46%; display: inline-block; }
-    .userdata_form .cell:nth-child(odd)  { border-right: 2px solid #F0F0F0; }
+    .userdata_form .cell { width: 46%; display: inline-block; }
 }
 @media all and (max-width: 850px) and (min-width: 100px)
 {
-    .userdata_form .cell                 { display: block; }
+    .userdata_form .cell { display: block; }
 }
+
+.userdata_form .cell.full_width { display: block; width: 100%; }
 
 .userdata_form .field_caption         { margin-bottom: 5px; }
 .userdata_form .field_input           { margin-left: 24px; }

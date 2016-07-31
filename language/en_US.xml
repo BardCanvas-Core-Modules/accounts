@@ -389,6 +389,18 @@
             <caption>Profile banner:</caption>
             <upload>Select an image to upload. Recommended size is 900x300px (it will be resampled and cropped automatically)</upload>
         </banner>
+        <bio>
+            <caption>Bio:</caption>
+            <placeholder>Type a short description about yourself. Use the links below to insert images, emoji, etc.</placeholder>
+        </bio>
+        <homepage_url>
+            <caption>Homepage URL:</caption>
+            <placeholder>Type a fully qualified URL, starting with http:// or https://</placeholder>
+        </homepage_url>
+        <signature>
+            <caption>Posts signature:</caption>
+            <placeholder>Type a short text that will be appended to your posts. Use the links below to insert images, emoji, etc.</placeholder>
+        </signature>
         <submit>Submit form</submit>
         <messages>
             <invalid_avatar>Invalid avatar file uploaded. Please upload a jpg/jpeg/png/gif file.</invalid_avatar>

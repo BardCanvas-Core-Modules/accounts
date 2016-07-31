@@ -23,6 +23,24 @@ use hng2_base\module;
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/calendar.js"></script>
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/lang/calendar-<?= $language->info->iso ?>.js"></script>
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/calendar-setup.js"></script>
+<script type="text/javascript">
+    var tinymce_account_fileds_defaults = {};
+    $(document).ready(function()
+    {
+        tinymce_account_fileds_defaults = $.extend({}, tinymce_defaults);
+        
+        tinymce_account_fileds_defaults.toolbar  = 'bold italic strikethrough forecolor removeformat | link | fullscreen';
+        tinymce_account_fileds_defaults.selector = '.tinymce_account_fields';
+        
+        if( $_CURRENT_USER_IS_ADMIN )
+            tinymce_account_fileds_defaults.toolbar = tinymce_account_fileds_defaults.toolbar + ' | code';
+        
+        if( $_CURRENT_USER_LANGUAGE != "en" && $_CURRENT_USER_LANGUAGE != "en_US" )
+            tinymce_account_fileds_defaults.language = $_CURRENT_USER_LANGUAGE;
+        
+        tinymce.init(tinymce_account_fileds_defaults);
+    });
+</script>
 
 <h1 class="clearfix">
     <? if( ! empty($_cancelation_redirect) ): ?>
@@ -195,6 +213,42 @@ use hng2_base\module;
             </a><br>
             <?= $current_module->language->user_account_form->banner->upload ?><br>
             <input type="file" name="uploaded_profile_banner"><br>
+        </div>
+    </div>
+    
+    <div class="cell full_width">
+        <div class="field_caption">
+            <?= $current_module->language->user_account_form->bio->caption ?>
+        </div>
+        <div class="field_input">
+            <textarea name="bio" class="tinymce_account_fields"
+                      placeholder="<?= $current_module->language->user_account_form->bio->placeholder ?>"><?= htmlspecialchars($xaccount->bio) ?></textarea>
+            <div class="field tinymce_addons_bar">
+                <? render_tinymce_addons_bar(); ?>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cell full_width">
+        <div class="field_caption">
+            <?= $current_module->language->user_account_form->signature->caption ?>
+        </div>
+        <div class="field_input">
+            <textarea name="signature" class="tinymce_account_fields"
+                      placeholder="<?= $current_module->language->user_account_form->signature->placeholder ?>"><?= htmlspecialchars($xaccount->signature) ?></textarea>
+            <div class="field tinymce_addons_bar">
+                <? render_tinymce_addons_bar(); ?>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cell full_width">
+        <div class="field_caption">
+            <?= $current_module->language->user_account_form->homepage_url->caption ?>
+        </div>
+        <div class="field_input">
+            <input type="text" name="homepage_url" value="<?= $xaccount->homepage_url ?>"
+                   placeholder="<?= $current_module->language->user_account_form->homepage_url->placeholder ?>">
         </div>
     </div>
     
