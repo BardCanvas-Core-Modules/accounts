@@ -156,6 +156,10 @@ switch( $_REQUEST["mode"] )
         }
         else
         {
+            $_country_list = array();
+            $res = $database->query("select * from countries order by name asc");
+            while( $row = $database->fetch_object($res) ) $_country_list[$row->alpha_2] = $row->name;
+            
             $_form_title = replace_escaped_vars(
                 $current_module->language->edit_account_form->alt_title,
                 '{$name}',
