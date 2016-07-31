@@ -220,10 +220,10 @@ use hng2_base\module;
         <div class="field_caption">
             <?= $current_module->language->user_account_form->bio->caption ?>
         </div>
-        <div class="field_input">
-            <textarea name="bio" class="tinymce_account_fields"
+        <div class="field_input tinymce_container">
+            <textarea name="bio" id="account_bio" class="tinymce_account_fields"
                       placeholder="<?= $current_module->language->user_account_form->bio->placeholder ?>"><?= htmlspecialchars($xaccount->bio) ?></textarea>
-            <div class="field tinymce_addons_bar">
+            <div class="tinymce_addons_bar">
                 <? render_tinymce_addons_bar(); ?>
             </div>
         </div>
@@ -233,10 +233,10 @@ use hng2_base\module;
         <div class="field_caption">
             <?= $current_module->language->user_account_form->signature->caption ?>
         </div>
-        <div class="field_input">
-            <textarea name="signature" class="tinymce_account_fields"
+        <div class="field_input tinymce_container">
+            <textarea name="signature" id="account_signature" class="tinymce_account_fields"
                       placeholder="<?= $current_module->language->user_account_form->signature->placeholder ?>"><?= htmlspecialchars($xaccount->signature) ?></textarea>
-            <div class="field tinymce_addons_bar">
+            <div class="tinymce_addons_bar">
                 <? render_tinymce_addons_bar(); ?>
             </div>
         </div>
