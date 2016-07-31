@@ -574,4 +574,9 @@
         </specs>
     </settings_data>
     
+    <user_profile_tabs>
+        <tab mode="@root" priority="0">About</tab>
+        <!--<tab mode="activity">Activity</tab>-->
+    </user_profile_tabs>
+    
 </language>
