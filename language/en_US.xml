@@ -216,6 +216,7 @@
                 <user_name_taken>The user name you've specified has been taken. Please choose another.</user_name_taken>
                 <main_email_exists>There is another account registered with the main email you've provided. Please provide a different one.</main_email_exists>
                 <alt_email_exists>There is another account registered with the alternate email you've provided. Please provide a different one.</alt_email_exists>
+                <birthdate>Please specify a valid birth date.</birthdate>
             </invalid>
         </registration>
         
@@ -358,6 +359,7 @@
     <user_account_form>
         <display_name>Display name:</display_name>
         <user_name>User name:</user_name>
+        <birthdate>Your birth date:</birthdate>
         <country>Country of residence:</country>
         <country_select><![CDATA[
             <Please select a country>
@@ -378,7 +380,27 @@
             Try to use a long phrase rather than a single word. Usage of lowercase/uppercase letters, digits and symbols is preferred over plain dictionary words.
             Password should be different than the one you use for your e-mail accounts or popular social networks.
         </password_message>
+        <avatar>
+            <caption>Avatar:</caption>
+            <use_gravatar>Use Gravatar from my main email</use_gravatar>
+            <upload>Select an image to upload. Recommended size is 300x300px (it will be resampled and cropped automatically)</upload>
+        </avatar>
+        <banner>
+            <caption>Profile banner:</caption>
+            <upload>Select an image to upload. Recommended size is 900x300px (it will be resampled and cropped automatically)</upload>
+        </banner>
         <submit>Submit form</submit>
+        <messages>
+            <invalid_avatar>Invalid avatar file uploaded. Please upload a jpg/jpeg/png/gif file.</invalid_avatar>
+            <invalid_avatar_uploaded>The file you uploaded for avatar doesn't seem like an uploaded file.</invalid_avatar_uploaded>
+            <cant_create_avatars_dir>Can't create avatars data directory for your account! Please contact the tech support staff.</cant_create_avatars_dir>
+            <cant_move_uploaded_file>Can't move uploaded file to /tmp for processing! Please contact the tech support staff.</cant_move_uploaded_file>
+            <avatar_set_ok>Avatar set successfully.</avatar_set_ok>
+            <invalid_banner>Invalid banner file uploaded. Please upload a jpg/jpeg/png/gif file.</invalid_banner>
+            <invalid_banner_uploaded>The file you uploaded for banner doesn't seem like an uploaded file.</invalid_banner_uploaded>
+            <cant_create_banners_dir>Can't create banners data directory for your account! Please contact the tech support staff.</cant_create_banners_dir>
+            <banner_set_ok>Banner set successfully.</banner_set_ok>
+        </messages>
     </user_account_form>
     
     <account_confirmation>

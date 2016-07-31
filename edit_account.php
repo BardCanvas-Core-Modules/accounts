@@ -5,10 +5,17 @@
  * @package    HNG2
  * @subpackage accounts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
+ *             
+ * @var template $template
+ * @var account  $account
  */
+
+use hng2_base\account;
+use hng2_base\template;
 
 include "../config.php";
 include "../includes/bootstrap.inc";
+include "../includes/guncs.php";
 
 if( ! $account->_exists ) throw_fake_401();
 
@@ -46,6 +53,11 @@ if( $_POST["mode"] == "save" )
         if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
             $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
     
+    if( empty($_POST["birthdate"]) )
+        $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+    elseif( ! @checkdate(substr($_POST["birthdate"], 5, 2), substr($_POST["birthdate"], 8, 2), substr($_POST["birthdate"], 0, 4)) )
+        $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+    
     # Impersonation tries
     $res = $database->query("select * from account where id_account <> '$account->id_account' and (email = '".trim(stripslashes($_POST["email"]))."' or alt_email = '".trim(stripslashes($_POST["email"]))."')");
     
@@ -61,10 +73,11 @@ if( $_POST["mode"] == "save" )
     if( count($errors) == 0 )
     {
         if( trim(stripslashes($_POST["password"])) != "" ) $account->password = md5($account->_raw_password);
+        $account->set_avatar_from_post();
+        $account->set_banner_from_post();
         $account->save();
         $messages[] = $current_module->language->edit_account_form->saved_ok;
-    } # end if
-    
+    }
 }
 
 $xaccount = $account;

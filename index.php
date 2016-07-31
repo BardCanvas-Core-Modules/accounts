@@ -18,6 +18,7 @@ use hng2_base\template;
 
 include "../config.php";
 include "../includes/bootstrap.inc";
+include "../includes/guncs.php";
 if( ! $account->_is_admin ) throw_fake_404();
 
 $template->page_contents_include = "contents/index.nav.inc";
@@ -108,6 +109,11 @@ switch( $_REQUEST["mode"] )
             if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
                 $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
         
+        if( empty($_POST["birthdate"]) )
+            $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+        elseif( ! @checkdate(substr($_POST["birthdate"], 5, 2), substr($_POST["birthdate"], 8, 2), substr($_POST["birthdate"], 0, 4)) )
+            $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+        
         # Impersonation tries
         $query = "
             select * from account
@@ -139,6 +145,8 @@ switch( $_REQUEST["mode"] )
         if( count($errors) == 0 )
         {
             if( trim(stripslashes($_POST["password"])) != "" ) $xaccount->password = md5($xaccount->_raw_password);
+            $xaccount->set_avatar_from_post();
+            $xaccount->set_banner_from_post();
             $xaccount->save();
             $messages[] = $current_module->language->edit_account_form->saved_ok;
             

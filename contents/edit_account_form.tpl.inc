@@ -1,18 +1,28 @@
 <?php
 /**
- * @var module $current_module
- * @var array  $_messages
- * @var array  $_errors
- * @var array  $_country_list
- * @var string $_current_user_country
- * @var string $_cancelation_redirect
- * @var string $_submit_button_caption
- * @var string $_form_title
- * @var bool   $_include_account_id
+ * @var config            $config
+ * @var \SimpleXMLElement $language
+ * @var module            $current_module
+ * @var array             $_messages
+ * @var array             $_errors
+ * @var array             $_country_list
+ * @var string            $_current_user_country
+ * @var string            $_cancelation_redirect
+ * @var string            $_submit_button_caption
+ * @var string            $_form_title
+ * @var bool              $_include_account_id
+ * @var account           $xaccount
  */
 
+use hng2_base\account;
+use hng2_base\config;
 use hng2_base\module;
 ?>
+
+<link rel="stylesheet" type="text/css" href="<?= $config->full_root_path ?>/lib/jscalendar/calendar-blue.css">
+<script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/calendar.js"></script>
+<script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/lang/calendar-<?= $language->info->iso ?>.js"></script>
+<script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/calendar-setup.js"></script>
 
 <h1 class="clearfix">
     <? if( ! empty($_cancelation_redirect) ): ?>
@@ -47,7 +57,7 @@ use hng2_base\module;
 <? endif; ?>
 
 <form name="account_data_form" id="account_data_form" class="userdata_form" method="post"
-      action="<?=$_SERVER["PHP_SELF"]?>">
+      enctype="multipart/form-data" action="<?=$_SERVER["PHP_SELF"]?>">
     
     <input type="hidden" name="mode" value="save">
     <? if($_include_account_id): ?>
@@ -72,6 +82,30 @@ use hng2_base\module;
             <input type="text" name="display_name" maxlength="255"
                    value="<?= htmlspecialchars($xaccount->display_name) ?>">
         </div>
+    </div>
+    
+    <div class="cell">
+        <div class="field_caption">
+            <?= $current_module->language->user_account_form->birthdate ?>
+        </div>
+        <div class="field_input">
+            <input type="text" class="aligncenter" readonly name="birthdate" id="birthdate"
+                   style="width: calc(99% - 24px)"
+                   value="<?= $xaccount->birthdate ?>">
+            <span id="birthdate_trigger" class="fa fa-fw fa-calendar-o pseudo_link"></span>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+                Calendar.setup({
+                    inputField     :    "birthdate",
+                    button         :    "birthdate_trigger",
+                    ifFormat       :    "%Y-%m-%d",
+                    align          :    "Bl",
+                    singleClick    :    true
+                });
+            });
+        </script>
     </div>
     
     <div class="cell">
@@ -121,6 +155,46 @@ use hng2_base\module;
         </div>
         <div class="field_input">
             <input type="password" name="password2">
+        </div>
+    </div>
+    
+    <div class="cell">
+        <div class="field_caption">
+            <?= $current_module->language->user_account_form->avatar->caption ?>
+        </div>
+        <div class="field_input">
+            <input type="hidden" name="avatar" value="<?= $xaccount->avatar ?>">
+            <div class="clearfix">
+                <div style="float: left; width: 48px;">
+                    <a class="prettyPhoto" href="<?= $xaccount->get_avatar_url() ?>">
+                        <img src="<?= $xaccount->get_avatar_url() ?>" width="48">
+                    </a>
+                </div>
+                <div style="float: left; width: calc(100% - 48px); padding-left: 10px;">
+                    <?= $current_module->language->user_account_form->avatar->upload ?><br>
+                    <input type="file" name="uploaded_avatar"><br>
+                    <label>
+                        <? $checked = $xaccount->avatar == "@gravatar" ? "checked" : ""; ?>
+                        <input type="checkbox" <?= $checked ?> name="use_gravatar" value="true">
+                        <?= $current_module->language->user_account_form->avatar->use_gravatar ?>
+                    </label>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="cell">
+        <div class="field_caption">
+            <?= $current_module->language->user_account_form->banner->caption ?>
+        </div>
+        <div class="field_input">
+            <input type="hidden" name="profile_banner" value="<?= $xaccount->profile_banner ?>">
+            <a class="prettyPhoto" href="<?= $xaccount->get_profile_banner_url() ?>">
+                <img src="<?= $xaccount->get_profile_banner_url() ?>" width="100%">
+            </a><br>
+            <?= $current_module->language->user_account_form->banner->upload ?><br>
+            <input type="file" name="uploaded_profile_banner"><br>
         </div>
     </div>
     
