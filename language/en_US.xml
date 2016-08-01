@@ -546,8 +546,12 @@
             <x_title>Registrations</x_title>
             <y_title>Day</y_title>
         </registrations_chart>
+        <login>
+            <title>Login box</title>
+            <info>Shows login form for visitors and avatar/name/logout link for logged in users.</info>
+        </login>
     </widgets>
-
+    
     <settings_data>
         <title>Account services configuration</title>
         <specs key="register_enabled">

@@ -25,4 +25,8 @@
         <post_footer>dialog_defs.tpl.inc</post_footer>
     </template_includes>
     
+    <widgets>
+        <widget for="right_sidebar" id="login" type="php" is_clonable="false" file="login/widget.inc" />
+    </widgets>
+    
 </module>
