@@ -27,6 +27,8 @@
     
     <widgets>
         <widget for="right_sidebar" id="login" type="php" is_clonable="false" file="login/widget.inc" />
+        <widget for="left_sidebar"  id="meta"  type="php" is_clonable="false" file="left_sidebar_meta.inc"
+                added_classes="account_meta" />
     </widgets>
     
 </module>

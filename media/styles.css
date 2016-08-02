@@ -35,3 +35,7 @@
 .userdata_form input[type="password"] { width: 99%; font-size: 12pt; }
 
 .framed_content.state_ko ul { margin-top: 5px; margin-bottom: 5px; padding-left: 18px; }
+
+/* Left sidebar widget styles */
+
+#left_sidebar .group.account_meta .item .avatar { height: 1.4em; vertical-align: bottom; }
