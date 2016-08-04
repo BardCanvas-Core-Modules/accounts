@@ -586,4 +586,20 @@
         <!--<tab mode="activity">Activity</tab>-->
     </user_profile_tabs>
     
+    <user_profile_page>
+        <title>About {$user}</title>
+        <info>
+            <title>Info</title>
+            <country>Country:</country>
+            <home_page>Website/home page:</home_page>
+            <feed>Feed RSS:</feed>
+        </info>
+        <signature>
+            <title>Signature</title>
+        </signature>
+        <bio>
+            <title>Bio</title>
+        </bio>
+    </user_profile_page>
+    
 </language>
