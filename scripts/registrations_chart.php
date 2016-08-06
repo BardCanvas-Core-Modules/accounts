@@ -19,14 +19,14 @@ include "../../lib/phplot-6.1.0/phplot.php";
 $data  = array();
 $query = "select date(creation_date) as creation_date, count(id_account) as total 
           from account 
-          where date(creation_date) > '2015-01-01'
+          where date(creation_date) > '2016-01-01'
           group by date(creation_date)";
 $res    = $database->query($query);
 
 while($row = $database->fetch_object($res)) $data[$row->creation_date] = $row->total;
 
 $current_date =
-$first_date   = "2015-01-01";
+$first_date   = key($data);
 $today        = date("Y-m-d");
 $final_data   = array();
 $prev_month   = "";
