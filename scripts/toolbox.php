@@ -52,50 +52,6 @@ switch( $_REQUEST["mode"] )
         die("OK");
         break;
     
-    case "promote_admin":
-        
-        $user_account = new account($_REQUEST["id_account"]);
-        if( ! $user_account->_exists )
-            die($current_module->language->admin->record_nav->action_messages->target_not_exists);
-        
-        if($account->id_account == $user_account->id_account)
-            die($current_module->language->admin->record_nav->action_messages->no_self_promote_demote);
-    
-        if( $user_account->_is_admin )
-            die($current_module->language->admin->record_nav->action_messages->user_is_already_admin);
-    
-        $user_account->set_admin();
-        send_notification(
-            $account->id_account,
-            "information",
-            $current_module->language->admin->record_nav->action_messages->promoted_ok
-        );
-        
-        die("OK");
-        break;
-    
-    case "demote_admin":
-        
-        $user_account = new account($_REQUEST["id_account"]);
-        if( ! $user_account->_exists )
-            die($current_module->language->admin->record_nav->action_messages->target_not_exists);
-    
-        if($account->id_account == $user_account->id_account)
-            die( $current_module->language->admin->record_nav->action_messages->no_self_promote_demote );
-    
-        if( ! $user_account->_is_admin )
-            die( $current_module->language->admin->record_nav->action_messages->user_is_not_admin );
-        
-        $user_account->unset_admin();
-        send_notification(
-            $account->id_account,
-            "information",
-            $current_module->language->admin->record_nav->action_messages->demoted_ok
-        );
-        
-        die("OK");
-        break;
-    
     case "enable":
         
         $user_account = new account($_REQUEST["id_account"]);

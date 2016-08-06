@@ -124,8 +124,6 @@
                 <enable>Enable</enable>
                 <disable>Disable</disable>
                 <edit>Edit</edit>
-                <promote_admin>Promote Admin</promote_admin>
-                <demote_admin>Demote Admin</demote_admin>
                 <show_devices>Show devices</show_devices>
             </actions>
             <action_messages>
@@ -133,11 +131,6 @@
                 <enabled_ok>Account successfully enabled.</enabled_ok>
                 <disabled_ok>Account successfully disabled.</disabled_ok>
                 <no_self_enable_disable>You can't enable/disable your own account!</no_self_enable_disable>
-                <no_self_promote_demote>You can't promote/demote yourself as admin!</no_self_promote_demote>
-                <user_is_already_admin>User is already an admin.</user_is_already_admin>
-                <user_is_not_admin>User is not present in the admins list.</user_is_not_admin>
-                <promoted_ok>Account successfully added to admins list.</promoted_ok>
-                <demoted_ok>Account successfully removed from the admins list.</demoted_ok>
                 <registering_enabled>Account registration has been enabled.</registering_enabled>
                 <registering_disabled>Account registration has been disabled.</registering_disabled>
                 <invalid_mode_specified>Sorry, but the script mode you specified is invalid.</invalid_mode_specified>

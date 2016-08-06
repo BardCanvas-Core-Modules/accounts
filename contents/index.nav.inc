@@ -363,19 +363,6 @@ $res = $database->query($query);
                             
                         <? elseif($row->state == "enabled"): ?>
                             
-                            <? $tmp_account = new account($row); ?>
-                            <? if( $tmp_account->id_account != $account->id_account && ! $tmp_account->_is_admin ): ?>
-                                <span class="action pseudo_link" onclick="switch_admin('<?= $row->id_account ?>', 'promote_admin')">
-                                    <span class="fa fa-level-up"></span>
-                                    <?= $current_module->language->admin->record_nav->actions->promote_admin ?>
-                                </span>
-                            <? elseif( $tmp_account->id_account != $account->id_account && $tmp_account->_is_admin ): ?>
-                                <span class="action pseudo_link" onclick="switch_admin('<?= $row->id_account ?>', 'demote_admin')">
-                                    <span class="fa fa-level-down"></span>
-                                    <?= $current_module->language->admin->record_nav->actions->demote_admin ?>
-                                </span>
-                            <? endif; ?>
-                            
                             <? if($row->id_account != $account->id_account): ?>
                                 <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'disable')">
                                     <span class="fa fa-lock"></span>
@@ -402,22 +389,31 @@ $res = $database->query($query);
                 <td width="20%"><?= empty($row->address_state) ? "&mdash;" : $row->address_state ?></td>
                 
                 <td nowrap align="center">
-                    <div class="user_level_switcher">
-                        <div class="current">
-                            <?
-                            if( isset($config->user_levels_by_level[$row->level]) )
-                                echo "[{$row->level}] " . $config->user_levels_by_level[$row->level];
-                            else
-                                echo $row->level;
-                            ?>
-                            
-                            <? if( $account->level >= $config::MODERATOR_USER_LEVEL ): ?>
-                                <span class="fa fa-pencil fa-fw pseudo_link" 
-                                      onclick="open_level_switcher(this, '<?= $row->id_account ?>', '<?= $row->level ?>')"></span>
-                            <? endif; ?>
+                    <? if($row->id_account == $account->id_account): ?>
+                        <?
+                        if( isset($config->user_levels_by_level[$row->level]) )
+                            echo "[{$row->level}] " . $config->user_levels_by_level[$row->level];
+                        else
+                            echo $row->level;
+                        ?>
+                    <? else: ?>
+                        <div class="user_level_switcher">
+                            <div class="current">
+                                <?
+                                if( isset($config->user_levels_by_level[$row->level]) )
+                                    echo "[{$row->level}] " . $config->user_levels_by_level[$row->level];
+                                else
+                                    echo $row->level;
+                                ?>
+            
+                                <? if( $account->level >= $config::MODERATOR_USER_LEVEL ): ?>
+                                    <span class="fa fa-pencil fa-fw pseudo_link"
+                                          onclick="open_level_switcher(this, '<?= $row->id_account ?>', '<?= $row->level ?>')"></span>
+                                <? endif; ?>
+                            </div>
+                            <div class="target" style="display: none;"></div>
                         </div>
-                        <div class="target" style="display: none;"></div>
-                    </div>
+                    <? endif; ?>
                 </td>
                 
                 <td width="20" align="center">
