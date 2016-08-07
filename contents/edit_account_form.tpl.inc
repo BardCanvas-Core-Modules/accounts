@@ -29,8 +29,12 @@ use hng2_base\module;
     {
         tinymce_account_fileds_defaults = $.extend({}, tinymce_defaults);
         
-        tinymce_account_fileds_defaults.toolbar  = 'bold italic strikethrough forecolor removeformat | link | fullscreen';
+        tinymce_account_fileds_defaults.toolbar  = tinymce_minimal_toolbar;
         tinymce_account_fileds_defaults.selector = '.tinymce_account_fields';
+        
+        if( tinymce_custom_toolbar_buttons.length > 0 )
+            tinymce_account_fileds_defaults.toolbar = tinymce_account_fileds_defaults.toolbar + ' | ' + tinymce_custom_toolbar_buttons.join(' ');
+        tinymce_account_fileds_defaults.toolbar = tinymce_account_fileds_defaults.toolbar  + ' | fullscreen';
         
         if( $_CURRENT_USER_IS_ADMIN )
             tinymce_account_fileds_defaults.toolbar = tinymce_account_fileds_defaults.toolbar + ' | code';
