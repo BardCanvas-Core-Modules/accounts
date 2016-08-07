@@ -23,28 +23,6 @@ use hng2_base\module;
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/calendar.js"></script>
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/lang/calendar-<?= $language->info->iso ?>.js"></script>
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/calendar-setup.js"></script>
-<script type="text/javascript">
-    var tinymce_account_fileds_defaults = {};
-    $(document).ready(function()
-    {
-        tinymce_account_fileds_defaults = $.extend({}, tinymce_defaults);
-        
-        tinymce_account_fileds_defaults.toolbar  = tinymce_minimal_toolbar;
-        tinymce_account_fileds_defaults.selector = '.tinymce_account_fields';
-        
-        if( tinymce_custom_toolbar_buttons.length > 0 )
-            tinymce_account_fileds_defaults.toolbar = tinymce_account_fileds_defaults.toolbar + ' | ' + tinymce_custom_toolbar_buttons.join(' ');
-        tinymce_account_fileds_defaults.toolbar = tinymce_account_fileds_defaults.toolbar  + ' | fullscreen';
-        
-        if( $_CURRENT_USER_IS_ADMIN )
-            tinymce_account_fileds_defaults.toolbar = tinymce_account_fileds_defaults.toolbar + ' | code';
-        
-        if( $_CURRENT_USER_LANGUAGE != "en" && $_CURRENT_USER_LANGUAGE != "en_US" )
-            tinymce_account_fileds_defaults.language = $_CURRENT_USER_LANGUAGE;
-        
-        tinymce.init(tinymce_account_fileds_defaults);
-    });
-</script>
 
 <h1 class="clearfix">
     <? if( ! empty($_cancelation_redirect) ): ?>
@@ -225,7 +203,7 @@ use hng2_base\module;
             <?= $current_module->language->user_account_form->bio->caption ?>
         </div>
         <div class="field_input tinymce_container">
-            <textarea name="bio" id="account_bio" class="tinymce_account_fields"
+            <textarea name="bio" id="account_bio" class="tinymce_minimal"
                       placeholder="<?= $current_module->language->user_account_form->bio->placeholder ?>"><?= htmlspecialchars($xaccount->bio) ?></textarea>
         </div>
     </div>
@@ -235,7 +213,7 @@ use hng2_base\module;
             <?= $current_module->language->user_account_form->signature->caption ?>
         </div>
         <div class="field_input tinymce_container">
-            <textarea name="signature" id="account_signature" class="tinymce_account_fields"
+            <textarea name="signature" id="account_signature" class="tinymce_minimal"
                       placeholder="<?= $current_module->language->user_account_form->signature->placeholder ?>"><?= htmlspecialchars($xaccount->signature) ?></textarea>
         </div>
     </div>
