@@ -46,6 +46,7 @@ ob_start(); ?>
 <div id="sidebar_login">
     <form name="sidebar_login_form" id="sidebar_login_form" method="post"
           action="<?=$config->full_root_path?>/accounts/scripts/login.php">
+        <input type="hidden" name="goto" value="<?= $_SERVER["REQUEST_URI"] ?>">
         
         <div class="field">
             <div class="caption"><?= $this_module->language->user_name ?></div>

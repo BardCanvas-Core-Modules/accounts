@@ -8,7 +8,9 @@
  * 
  * @param string "user_name"
  * @param string "password"
- * @param string "redir_url" optional
+ * @param string "redir_url" optional, direct redirect after open session
+ * @param string "goto"      optional, return a location to redirect to as part of the response
+ *                           (handled by the login JS snippets)
  * 
  * @returns string
  * 
@@ -110,6 +112,6 @@ if( ! empty($_REQUEST["redir_url"]) )
     die("<a href='".$_REQUEST["redir_url"]."'>{$language->click_here_to_continue}</a>");
 } # end if
 
-$redir_url = empty($_REQUEST["redir_url"]) ? "/" : $_REQUEST["redir_url"];
+$goto = empty($_REQUEST["goto"]) ? "/" : $_REQUEST["goto"];
 
-echo "OK\t{$account->user_name}\t{$device_return}\t{$redir_url}";
+echo "OK\t{$account->user_name}\t{$device_return}\t{$goto}";

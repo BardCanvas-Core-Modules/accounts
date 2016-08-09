@@ -5,6 +5,7 @@
     <div id="login_dialog" style="display: none;" title="<?= $this_module->language->login ?>">
         <div id="login_targetarea" style="display: none;"></div>
         <form name="login_form" id="login_form" method="post" action="<?=$config->full_root_path?>/accounts/scripts/login.php">
+            <input type="hidden" name="goto" value="<?= $_SERVER["REQUEST_URI"] ?>">
             <span class="field">
                 <span class="caption"><?= $this_module->language->user_name ?></span>
                 <input type="text" name="user_name">
