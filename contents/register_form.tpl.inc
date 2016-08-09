@@ -211,7 +211,7 @@ use hng2_base\settings;
         
         <? if( ! empty($_submit_button_caption) ): ?>
             <button type="submit" class="big_form_submit_button">
-                <span class="fa fa-check"></span>
+                <span class="fa fa-save"></span>
                 <?= $_submit_button_caption ?>
             </button>
         <? else: ?>
