@@ -34,11 +34,10 @@ if( ! $account->_exists )
     $template->add_menu_item(
         "_____login_____",
         "
-        <a class='main_menu_item always_visible pull-right'
-           href='{$config->full_root_path}/accounts/scripts/login.php' onclick='return show_login_form()'>
+        <span class='main_menu_item always_visible pull-right pseudo_link' onclick='return show_login_form()'>
            <span class='fa fa-sign-in'></span>
            {$this_module->language->login}
-        </a>
+        </span>
         ",
         999
     );
