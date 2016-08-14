@@ -44,7 +44,7 @@ if( ! $account->_exists )
 }
 else
 {
-    $added_class = preg_match('#/accounts/edit_account.php|/accounts/devices.php#i', $_SERVER["PHP_SELF"]) ? "current" : "";
+    $added_class = preg_match('#/accounts/edit_account.php|/accounts/devices.php|/accounts/preferences.php#i', $_SERVER["PHP_SELF"]) ? "current" : "";
     $locked      = $account->_is_locked ? "fa-lock" : "fa-info-circle";
     
     $template->add_menu_item(

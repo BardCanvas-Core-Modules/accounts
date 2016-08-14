@@ -63,6 +63,14 @@
         <?= $this_module->language->edit_account ?>
     </a>
     
+    <? if( ! empty($config->globals["editable_prefs_collection"]) ): ?>
+        <a class="main_menu_item <?= $current_module->name == $this_module->name && basename($_SERVER["PHP_SELF"]) == "preferences.php" ? "current" : ""  ?>"
+           href="<?= "$config->full_root_path/$this_module->name/preferences.php" ?>">
+            <span class="fa fa-list-ul fa-fw"></span>
+            <?= $this_module->language->preferences ?>
+        </a>
+    <? endif; ?>
+    
     <a class="main_menu_item <?= $current_module->name == $this_module->name && basename($_SERVER["PHP_SELF"]) == "devices.php" ? "current" : "" ?>"
        href="<?= "$config->full_root_path/$this_module->name/devices.php" ?>">
         <span class="fa fa-mobile fa-fw"></span>

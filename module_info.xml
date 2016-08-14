@@ -18,7 +18,11 @@
             <url></url>
         </item>
     </menu_items>
-    
+
+    <php_includes>
+        <bootstrap>bootstrap.inc</bootstrap>
+    </php_includes>
+
     <template_includes>
         <html_head>head_scripts_preload.tpl.inc</html_head>
         <header_menu>header_menu.tpl.inc</header_menu>
