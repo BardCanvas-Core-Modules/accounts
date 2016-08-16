@@ -28,7 +28,7 @@ if( ! $account->_exists )
                {$this_module->language->register}
             </a>
             ",
-            999
+            950
         );
     
     $template->add_menu_item(
@@ -39,7 +39,7 @@ if( ! $account->_exists )
            {$this_module->language->login}
         </span>
         ",
-        999
+        950
     );
 }
 else
@@ -61,6 +61,6 @@ else
             </span>
         </span>
         ",
-        999
+        950
     );
 }
