@@ -19,6 +19,8 @@ if( $_POST["mode"] == "create" )
     # This keeps the whole posted data prepped for output on the form
     $xaccount = new account();
     $xaccount->assign_from_posted_form();
+    $config->globals["accounts:processing_account"] = $xaccount;
+    $current_module->load_extensions("registration", "after_init");
     
     # Validations: missing fields
     foreach( array("display_name", "user_name", "country", "email", "password", "password2", "recaptcha_response_field") as $field )
@@ -53,25 +55,23 @@ if( $_POST["mode"] == "create" )
     # Check for existing main email
     if( count($errors) == 0 )
     {
-        $query = "
+        $res = $database->query("
             select * from account 
             where email = '".trim(stripslashes($_POST["email"]))."' 
             or alt_email = '".trim(stripslashes($_POST["email"]))."'
-        ";
-        $res = mysql_query($query);
-        if( mysql_num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
+        ");
+        if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
     }
     
     # Check for existing alt email
     if( count($errors) == 0 && trim(stripslashes($_POST["alt_email"])) != "" )
     {
-        $query = "
+        $res = $database->query("
             select * from account 
             where email = '".trim(stripslashes($_POST["alt_email"]))."' 
             or alt_email = '".trim(stripslashes($_POST["alt_email"]))."'
-        ";
-        $res = mysql_query($query);
-        if( mysql_num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
+        ");
+        if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
     }
     
     # Proceed to insert the account and notify the user to confirm it

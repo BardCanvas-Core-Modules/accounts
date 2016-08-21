@@ -35,4 +35,9 @@
                 added_classes="account_meta" />
     </widgets>
     
+    <extension_areas_info><![CDATA[
+        Registration: after initializing submitted data.
+        Profile edition: after initializing submitted data.
+    ]]></extension_areas_info>
+    
 </module>

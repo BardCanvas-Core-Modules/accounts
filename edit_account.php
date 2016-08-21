@@ -26,6 +26,8 @@ if( $_POST["mode"] == "save" )
     $user_name = $account->user_name;
     $account->assign_from_posted_form();
     $account->user_name = $user_name;
+    $config->globals["accounts:processing_account"] = $account;
+    $current_module->load_extensions("profile_editor", "after_init");
     
     # Validations: missing fields
     foreach( array("display_name", "country", "email" ) as $field )
