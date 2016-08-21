@@ -27,9 +27,9 @@ if( ! empty($_POST["email"]) )
     while($row = $database->fetch_object($res))
     {
         if( $row->state == 'disabled' || $row->state == 'new' ) continue;
-        $tied_accounts[] = "• $row->user_name ~ $row->display_name ($row->email".(empty($row->alt_email) ? "" : ", $row->alt_email").")";
+        $tied_accounts[] = "• [{$row->user_name}] $row->display_name ($row->email".(empty($row->alt_email) ? "" : ", $row->alt_email").")";
         $token        = encrypt( $row->id_account."\t".$limit, $config->encryption_key );
-        $token_urls[] = "• $row->user_name: " . (empty($_SERVER["HTTPS"]) ? "http://" : "https://").$_SERVER["HTTP_HOST"]."/reset_password?token=".urlencode($token);
+        $token_urls[] = "• $row->user_name: {$config->full_root_url}/reset_password?token=".urlencode($token);
         if( ! in_array($row->email, $target_emails) ) $target_emails[] = $row->email;
         if( ! empty($row->alt_email) && ! in_array($row->email, $target_emails) ) $target_emails[] = $row->alt_email;
     }
@@ -38,8 +38,9 @@ if( ! empty($_POST["email"]) )
     $ip           = get_remote_address();
     $hostname     = gethostbyaddr(get_remote_address());
     $fecha_envio  = date("Y-m-d H:i:s");
-    $mail_from    = $settings->get("engine.mail_sender_name")."<".$settings->get("engine.mail_sender_email").">";
-    $mail_to      = implode(", ", $target_emails);
+    
+    $recipients = array();
+    foreach($target_emails as $email) $recipients[$email] = $email;
     
     $request_location = forge_geoip_location($ip);
     
@@ -53,15 +54,11 @@ if( ! empty($_POST["email"]) )
         array('{$website_name}',                       '{$account_list}',                 '{$token_urls}',                '{$email}', '{$date_sent}', '{$request_ip}', '{$request_hostname}', '{$request_location}', '{$request_user_agent}'      ),
         array(  $settings->get("engine.website_name"),   implode("\n\n", $tied_accounts),   implode("\n\n", $token_urls),   $email,     $fecha_envio,   $ip,             $hostname,             $request_location,     $_SERVER["HTTP_USER_AGENT"])
     );
-    $mail_body = str_replace("<br />", "", preg_replace('/\n\s*/', "\n", nl2br($mail_body)));
-    @mail(
-        $mail_to, $mail_subject, $mail_body, 
-        "From: ".$mail_from . "\r\n" . 
-        "MIME-Version: 1.0\r\n" .
-        "Content-Type: text/plain; charset=utf-8\r\n"
-    );
+    $mail_body = unindent($mail_body);
     
-    die("OK");
+    $res = send_mail($mail_subject, nl2br($mail_body), $recipients);
+    
+    die($res);
 }
 
 if( ! empty($_GET["token"]) )

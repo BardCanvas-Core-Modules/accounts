@@ -440,24 +440,24 @@
             <body>
                 Greetings, {$display_name}! We've received an account creation request
                 for {$website_name} on your behalf.
-                
+                 
                 Please follow the next link or copy it and paste it into your browser's address bar:
-                
+                 
                 {$token_url}
-                
+                 
                 Important: please do this from the same device you used to create the account within
                 the next hour, or the token will expire.
-                
+                 
                 This email was sent to the next addresses:
                 • Main:      {$main_email}
                 • Alternate: {$alt_email}
-                
+                 
                 If you didn't place this request, please reply to this email and let us know it.
                 We'll handle it ASAP.
-                
+                 
                 Regards
                 {$website_name} Admin Team.
-                
+                 
                 -----------------------------
                 Info requested by:
                 Date/Time:   {$date_sent}
@@ -473,28 +473,28 @@
             <body>
                 Greetings, {$display_name}! We've received a request to add a new
                 device to your account:
-                
+                 
                 {$device_info}
-                
+                 
                 Please authorize it by following the next link or copy it and paste it into your browser's address bar:
-                
+                 
                 {$token_url}
-                
+                 
                 Important: please do this from the same device you used to login to your account within
                 the next hour, or the token will expire.
-                
+                 
                 This email was sent to the next addresses:
                 • Main:      {$main_email}
                 • Alternate: {$alt_email}
-                
+                 
                 If you didn't place this request, please login from any of your previously
                 authorized devices and change your password ASAP.
-                
+                 
                 If you need assistance, don't hesitate on replying to this email and asking us.
-                
+                 
                 Regards
                 {$website_name} Admin Team.
-                
+                 
                 -----------------------------
                 Info requested by:
                 Date/Time:   {$date_sent}
@@ -509,21 +509,21 @@
             <subject>[{$website_name}] Password reset requested</subject>
             <body>
                 Greetings! We've received a password reset request on your behalf at {$website_name}.
-                
+                 
                 The request was for {$email}, and the next accounts are tied to it:
-                
+                 
                 {$account_list}
-                
+                 
                 Please follow the next link or copy it and paste it into your browser's address bar
                 to reset the password on the corresponding account:
-                
+                 
                 {$token_urls}
-                
+                 
                 If you didn't place this request, please reply to this email and let us know it.
-                
+                 
                 Regards
                 {$website_name} Admin Team.
-                
+                 
                 -----------------------------
                 Info requested by:
                 Date/Time:   {$date_sent}
