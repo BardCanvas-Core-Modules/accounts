@@ -8,6 +8,7 @@
  */
 
 use hng2_base\account;
+use hng2_base\config;
 use hng2_base\device;
 
 include "../config.php";
@@ -45,7 +46,7 @@ if( count($errors) == 0 )
 if( count($errors) == 0 )
 {
     # Let's activate the account
-    $xaccount->activate();
+    $xaccount->activate(config::NEWCOMER_USER_LEVEL);
     
     # Let's register this device
     $device = new device($id_account);
