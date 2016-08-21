@@ -72,6 +72,10 @@ $account_prefs  = $account->get_editable_prefs();
                 <tbody>
                 <? foreach($group_data as $key => $specs):
                     
+                    if( isset($specs["min_account_level"]) )
+                        if( $account->level < $specs["min_account_level"] )
+                            continue;
+                    
                     /** @var \SimpleXMLElement $specs */
                     
                     $class = "";
