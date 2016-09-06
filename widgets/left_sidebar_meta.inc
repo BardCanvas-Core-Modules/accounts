@@ -40,5 +40,11 @@ $items[] = "
         {$this_module->language->widgets->meta->edit_profile}
     </a>
 ";
+$items[] = "
+    <a class='item' href='{$config->full_root_path}/accounts/scripts/logout.php'>
+        <span class='fa fa-sign-out'></span>
+        {$this_module->language->logout}
+    </a>
+";
 
 return implode("\n", $items);
