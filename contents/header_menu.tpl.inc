@@ -23,7 +23,7 @@ if( ! $account->_exists )
         $template->add_menu_item(
             "_____login_____",
             "
-            <a class='main_menu_item always_visible pull-right' href='{$config->full_root_path}/accounts/register.php'>
+            <a class='main_menu_item always_visible pull-right' data-module='accounts' href='{$config->full_root_path}/accounts/register.php'>
                <span class='fa fa-pencil'></span>
                {$this_module->language->register}
             </a>
@@ -34,7 +34,7 @@ if( ! $account->_exists )
     $template->add_menu_item(
         "_____login_____",
         "
-        <span class='main_menu_item always_visible pull-right pseudo_link' onclick='return show_login_form()'>
+        <span class='main_menu_item always_visible pull-right pseudo_link' data-module='accounts' onclick='return show_login_form()'>
            <span class='fa fa-sign-in'></span>
            {$this_module->language->login}
         </span>
@@ -51,7 +51,7 @@ else
         "_____login_____",
         "
         <span class='main_menu_item {$added_class} always_visible pull-right is_submenu_trigger' id='loggedin_username' 
-              style='cursor: pointer;' data-submenu='#user_menu_items'>
+              data-module='accounts' style='cursor: pointer;' data-submenu='#user_menu_items'>
             <span id='loggedin_icon' class='fa fa-border {$locked}' style='color: transparent; background: url({$account->get_avatar_url()}) center center no-repeat; background-size: cover'></span>
             <span id='loggedin_icon_locked' class='fa fa-border fa-lock' style='display: none;'></span>
             {$account->get_processed_display_name()}
