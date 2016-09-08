@@ -203,7 +203,7 @@ use hng2_base\module;
             <?= $current_module->language->user_account_form->bio->caption ?>
         </div>
         <div class="field_input tinymce_container">
-            <textarea name="bio" id="account_bio" class="tinymce_minimal"
+            <textarea name="bio" id="account_bio" class="tinymce"
                       placeholder="<?= $current_module->language->user_account_form->bio->placeholder ?>"><?= htmlspecialchars($xaccount->bio) ?></textarea>
         </div>
     </div>
@@ -213,7 +213,7 @@ use hng2_base\module;
             <?= $current_module->language->user_account_form->signature->caption ?>
         </div>
         <div class="field_input tinymce_container">
-            <textarea name="signature" id="account_signature" class="tinymce_minimal"
+            <textarea name="signature" id="account_signature" class="tinymce"
                       placeholder="<?= $current_module->language->user_account_form->signature->placeholder ?>"><?= htmlspecialchars($xaccount->signature) ?></textarea>
         </div>
     </div>

@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+    
+    <display_name>Cuentas de usuario</display_name>
+    <icon>fa-users</icon>
+    <description>
+        Control y administración de cuentas de usuario con componentes para registro y sesiones.
+    </description>
+    
+    <page_titles>
+        <registration_form>Registro de cuenta</registration_form>
+        <edit_account>Mi cuenta</edit_account>
+        <user_devices>Mis dispositivos</user_devices>
+        <preferences>Preferencias</preferences>
+    </page_titles>
+    
+    <no_engine_prefs>No hay preferencias a definir.</no_engine_prefs>
+    <pref_saved_ok>Opción "{$key}" guardada.</pref_saved_ok>
+    
+    <admin>
+        <menu_items>
+            <admin_menu_caption>Usuarios</admin_menu_caption>
+        </menu_items>
+        <record_nav>
+            <page_title>Cuentas de usuario</page_title>
+            <disable_register>Desactivar registro</disable_register>
+            <enable_register>Activar registro</enable_register>
+            <create>Crear...</create>
+            <search_title>Introduce caracteres a buscar o un identificador de registro. Puedes buscar múltiples valores separándolos con comas.</search_title>
+            <rec_states>
+                <new>Nuevo</new>
+                <enabled>Activo</enabled>
+                <disabled>Desactivado</disabled>
+            </rec_states>
+            <column_titles>
+                <state>
+                    <layout xalign="center" xwidth="20" xnowrap="true" />
+                    <caption><![CDATA[ <span class="fa fa-flag"></span> ]]></caption>
+                </state>
+                <id>
+                    <layout xalign="center" xnowrap="true" />
+                    <caption>Id</caption>
+                </id>
+                <full_name>
+                    <layout xnowrap="true" />
+                    <caption>Alias</caption>
+                    <order_asc  id="3">Ordenar por alias ascendente</order_asc>
+                    <order_desc id="4">Ordenar por alias descendente</order_desc>
+                </full_name>
+                <details>
+                    <layout xalign="left" xwidth="60%" />
+                    <caption>y otros detalles</caption>
+                </details>
+                <country>
+                    <layout xalign="left" xwidth="20%" />
+                    <caption>País</caption>
+                    <order_asc  id="5">Ordenar por ubicación + alias ascendente</order_asc>
+                    <order_desc id="6">Ordenar por ubicación + alias descendente</order_desc>
+                </country>
+                <address_state>
+                    <layout xalign="left" xwidth="20%" />
+                    <caption>Estado</caption>
+                    <order_asc  id="11">Ordenar por estado + alias ascendente</order_asc>
+                    <order_desc id="12">Ordenar por estado + alias descendente</order_desc>
+                </address_state>
+                <level>
+                    <layout xalign="center" xnowrap="true" />
+                    <caption>Nivel</caption>
+                    <order_asc  id="7">Ordenar por nivel + alias ascendente</order_asc>
+                    <order_desc id="8">Ordenar por nivel + alias descendente</order_desc>
+                </level>
+                <online>
+                    <layout xalign="center" xwidth="20" xnowrap="true" />
+                    <caption>Actividad</caption>
+                    <order_asc  id="15">Ordenar por fecha de última actividad ascendente</order_asc>
+                    <order_desc id="16">Ordenar por fecha de última actividad descendente</order_desc>
+                </online>
+                <created>
+                    <layout xalign="center" xnowrap="true" />
+                    <caption>Creado</caption>
+                    <order_asc  id="9">Ordenar por fecha de creación + alias ascendente</order_asc>
+                    <order_desc id="10">Ordenar por fecha de creación + alias descendente</order_desc>
+                </created>
+                <updated>
+                    <layout xalign="center" xnowrap="true" />
+                    <caption>Actualizado</caption>
+                    <order_asc  id="13">Ordenar por fecha de actualización + alias ascendente</order_asc>
+                    <order_desc id="14">Ordenar por fecha de actualización + alias descendente</order_desc>
+                </updated>
+            </column_titles>
+            <row_extras>
+                <email>Correo principal:</email>
+                <alt_email>Correo alterno:</alt_email>
+                <country>País:</country>
+                <address_state>Estado:</address_state>
+                <creation_host>Creado desde:</creation_host>
+            </row_extras>
+            <devices_columns>
+                <id_device>Id dispositivo</id_device>
+                <label>Etiqueta</label>
+                <header>Encabezado</header>
+                <created>Creado</created>
+                <state>
+                    <header>Estado</header>
+                    <unregistered>Sin registrar</unregistered>
+                    <enabled>Habilitado</enabled>
+                    <disabled>Deshabilitado</disabled>
+                    <deleted>Eliminado</deleted>
+                </state>
+                <last_activity>
+                    <header>Última actividad</header>
+                    <last_action>Última acción:</last_action>
+                    <last_login>Última apertura de sesión:</last_login>
+                    <ip>IP:</ip>
+                    <hostname>Host:</hostname>
+                    <location>Ubicación:</location>
+                </last_activity>
+            </devices_columns>
+            <devices_messages>
+                <empty_table>Esta cuenta no tiene dispositivos anexos.</empty_table>
+            </devices_messages>
+            <changelog>Bitácora de cambios de la cuenta</changelog>
+            <actions>
+                <enable>Activar</enable>
+                <disable>Desactivar</disable>
+                <edit>Editar</edit>
+                <show_devices>Ver dispositivos</show_devices>
+            </actions>
+            <action_messages>
+                <target_not_exists>La cuenta especificada no existe en la base de datos.</target_not_exists>
+                <enabled_ok>Cuenta activada con éxito.</enabled_ok>
+                <disabled_ok>Cuenta desactivada con éxito.</disabled_ok>
+                <no_self_enable_disable>No puedes activar/desactivar tu propia cuenta.</no_self_enable_disable>
+                <registering_enabled>Registro de cuentas activado con éxito.</registering_enabled>
+                <registering_disabled>Registro de cuentas desactivado con éxito.</registering_disabled>
+                <invalid_mode_specified>Disculpa, pero el modo que has especifcado es inválido.</invalid_mode_specified>
+                <level_change_denied>No tienes el nivel de usuario adecuado para esta acción.</level_change_denied>
+                <no_self_level_change>No puedes cambiar tu propio nivel de usuario.</no_self_level_change>
+                <no_upper_level_allowed>No puedes asignar un nivel sobre el tuyo.</no_upper_level_allowed>
+                <invalid_level_specified>Nivel inválido</invalid_level_specified>
+                <level_change_ok>Nivel de {$user} cambiado a {$level} ({$level_name}). Si el usuario tiene una sesión abierta, puede recibir alertas o errores hasta que reabra su sesión.</level_change_ok>
+            </action_messages>
+            <devices_and_login_infos>Información de dispositivos y sesiones</devices_and_login_infos>
+        </record_nav>
+        <edit_account>
+            <page_title>Editando cuenta</page_title>
+        </edit_account>
+        <create_account>
+            <page_title>Nueva cuenta</page_title>
+        </create_account>
+    </admin>
+    
+    <login>Abrir sesión</login>
+    <close>Cerrar</close>
+    <reset_password>Reiniciar contraseña</reset_password>
+    <logout>Cerrar sesión</logout>
+    <register>Registrarse</register>
+    <edit_account>Mi cuenta</edit_account>
+    <edit_devices>Mis dispositivos</edit_devices>
+    <preferences>Preferencias</preferences>
+    <dashboard>Tablero</dashboard>
+    
+    <please_login>Favor de abrir sesión para continuar</please_login>
+    <user_name>Usuario:</user_name>
+    <password>Contraseña:</password>
+    <click_to_continue>Da click aquí para continuar...</click_to_continue>
+    
+    <errors>
+        
+        <!-- Login related -->
+        <invalid_login_info>Especifica un nombre de usuario y una contraseña.</invalid_login_info>
+        <missing_params>Especifica un nombre de usuario y una contraseña.</missing_params>
+        <account_unexistent>El nombre de usuario especificado no existe.</account_unexistent>
+        <account_disabled>Tu cuenta está desactivada.</account_disabled>
+        <wrong_password>La contraseña no coincide con la existente para esta cuenta.</wrong_password>
+        <engine_disabled>Disculpa, pero no puedfes abrir sesión en este momento. Intenta más tarde.</engine_disabled>
+        <device_disabled>El dispositivo desde el cual estás conectándote está desactivado.</device_disabled>
+        <device_unregistered>
+            Este dispositivo no está registrado. Un correo ha sido enviado a tu dirección con una llave
+            para autorizar este dispositivo de forma permanente.
+        </device_unregistered>
+        
+        <!-- Registration related -->
+        <registration>
+            <recaptcha_not_configured><![CDATA[
+                <b>¡Las llaves de ReCaptcha no están definidas!</b><br><br>
+                Si ya tienes unas llaves, abre sesión como administrador e introdúcelas en el módulo de configuración.<br>
+                Si no, visita <a href="https://www.google.com/recaptcha/admin" target="_blank">Google Recaptcha</a>,
+                regístrate y obtén un par de llaves privada/pública e introdúcelas en el módulo de configuración.
+            ]]></recaptcha_not_configured>
+            <errors_found_in_form>
+                <pre>Se han encontrado problemas al validar los datos</pre>
+                <post>Corrígelos, reteclea las contraseñas y reenvía la forma.</post>
+            </errors_found_in_form>
+            <missing>
+                <display_name>Introduce un alias o nombre para mostrar.</display_name>
+                <user_name>Especifica un nombre de usuario.</user_name>
+                <country>Selecciona un país de la lista.</country>
+                <email>Especifica una dirección de correo electrónico válida.</email>
+                <password>Introduce una contraseña.</password>
+                <password2>Repite la contraseña.</password2>
+                <recaptcha_response_field>Introduce una respuesta para el captcha.</recaptcha_response_field>
+            </missing>
+            <invalid>
+                <email>Especifica una dirección principal de correo electrónico váilda.</email>
+                <alt_email>Especifica una dirección alterna de correo electrónico válida.</alt_email>
+                <passwords_mismatch>Las contraseñas no coinciden.</passwords_mismatch>
+                <mails_must_be_different>Ambas direcciones de correo deben ser distintas.</mails_must_be_different>
+                <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
+                <user_name_taken>El nombre de usuario que especificaste ya existe. Elige otro.</user_name_taken>
+                <main_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como principal.</main_email_exists>
+                <alt_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como alterno.</alt_email_exists>
+                <birthdate>Especifica una fecha de nacimiento válida.</birthdate>
+            </invalid>
+        </registration>
+        
+        <!-- Account confirmation related -->
+        <confirmation>
+            <errors_found>
+                <pre>No se ha podido validar la llave!</pre>
+                <post>Por favor revisa el correo que se te ha enviado e intenta de nuevo. Si necesitas asistencia, ponte en contacto con el personal de soporte técnico.</post>
+            </errors_found>
+            <missing_token>Estás invocando esta página de forma incorrecta. Checa tu correo electrónico y da click en el vínculo que ahí se te ha enviado.</missing_token>
+            <invalid_token><![CDATA[
+                <p>La llave que has especificado es inválida. Por favor checa el correo electrónico que se te ha enviado.</p>
+                <p>Si necesitas asistencia, contacta al personal de soporte técnico.</p>
+            ]]></invalid_token>
+            <expired_token><![CDATA[
+                <p>La llave que has especificado ha expirado. Estas llaves tienen una vida de 60 minutos.</p>
+                <p>Espera unos minutos a que sea eliminada y trata de registrarte otra vez.</p>
+            ]]></expired_token>
+            <already_activated>Tu cuenta ha sido previamente activada. Puedes elimiar el correo de confirmación y abrir sesión usando tu nombre de usuario y contraseña.</already_activated>
+        </confirmation>
+        
+        <!-- Device authorization related -->
+        <device_authorization>
+            <errors_found>
+                <pre>Se han encontrado problemas al validar la llave!</pre>
+                <post>Revisa el correo que recibiste e intenta de nuevo. Si necesitas asistencia, por favor contacta al personal de soporte técnico.</post>
+            </errors_found>
+            <missing_token>Estás invocando esta página de una forma incorrecta. Por favor checa tu correo y da click en el vínculo que se te ha enviado.</missing_token>
+            <invalid_token><![CDATA[
+                <p>La llave que has especificado es inválida. Por favor checa el correo que se te ha enviado.</p>
+                <p>Si necesitas asistencia, por favor contacta al personal de soporte técnico</p>
+            ]]></invalid_token>
+            <expired_token><![CDATA[
+                <p>La llave que has especificado ha expirado. Estas tienen una vida de 60 minutos.</p>
+                <p>Espera unos minutos hasta que se elimine y trata de registrarte de nuevo.</p>
+            ]]></expired_token>
+            <account_not_enabled>Esta cuenta no está activada.</account_not_enabled>
+            <device_not_belongs>El dispositivo que intentas autorizar no te pertenece.</device_not_belongs>
+            <device_already_enabled>Este dispositivo ya ha sido activado.</device_already_enabled>
+        </device_authorization>
+        
+        <!-- Prefs setting related -->
+        <prefs_setting>
+            <empty_key>No se ha especificado una llave de preferencia a guardar. Este es un error de programación. Favor de contactar al personal de soporte técnico.</empty_key>
+        </prefs_setting>
+    </errors>
+    
+    <register_form>
+        <form_title>Registro de cuenta</form_title>
+        <creation>Creación de cuenta</creation>
+        <registering_disabled>Disculpa, pero el registro de cuentas está actualmente desactivado.</registering_disabled>
+        <form_info>Llena la forma para registrar tu cuenta. Todos los campos son mandatorios excepto aquellos explícitamente opcionales.</form_info>
+        <form_submitted>
+            <title>¡Cuenta creada con éxito!</title>
+            <content><![CDATA[
+                <p>Tu nueva cuenta ha sido creada, pero necesitas confirmar tu correo para poder abrir una sesión.</p>
+                <p>Checa tu cuenta de correo y sigue las instrucciones <u>dentro de la próxima hora</u>.</p>
+                <p><b>Importante:</b> nuestro mensaje puede ser marcado como no deseado por tu proveedor de correo.
+                Si no lo encuentras en tu bandeja de entrada, checa la de spam/correo no deseado.</p>
+                <p>Si el mensaje no arriva en el unos minutos, por favor contáctanos para asistirte.</p>
+            ]]></content>
+        </form_submitted>
+        <account_manually_created>La cuenta ha sido creada. No se ha enviado ningún mensaje al usuario. Tendrás que hacerlo de forma manual.</account_manually_created>
+    </register_form>
+    
+    <reset_form>
+        <title>Reiniciar contraseña</title>
+        <intro>Usa esta forma para reiniciar tu contraseña a través de una llave que se te enviará por correo electrónico.</intro>
+        <your_email>Especifica tu correo electrónico:</your_email>
+        <submit>Enviar</submit>
+        <close>Cerrar</close>
+        <OK>Checa tu correo y busca un mensaje con llave para reiniciar tu contraseña. No olvides revisar en la bandeja de correo no deseado!</OK>
+        <incorrect_call>Estás llamando esta página de forma incorrecta.</incorrect_call>
+        <unexisting_email>Error: no existe ninguna cuenta registrada con ese correo.</unexisting_email>
+        <invalid_token><![CDATA[
+            <p>La llave que has especificado es inválida. Por favor checa el correo que se te ha enviado.</p>
+            <p>Si necesitas asistencia, ponte en contacto con el personal de soporte técnico.</p>
+        ]]></invalid_token>
+        <expired_token><![CDATA[
+            <p>La llave que has especificado ha expirado. Estas tienen una vida de 60 minutos.</p>
+            <p>Espera unos minutos hasta que se elimine y trata de registrarte de nuevo.</p>
+        ]]></expired_token>
+        <invalid_account>La cuenta que has especificado no existe en la base de datos.</invalid_account>
+        <account_disabled>Esta cuenta está actualmente desactivada.</account_disabled>
+        <reset_ok>Reinicio de contraseña termiando.</reset_ok>
+        <errors_found>Errores encontrados al validar la llave.</errors_found>
+        <password_updated><![CDATA[
+            La contraseña se ha reiniciado en tu cuenta. La nueva contraseña es:<br><br>
+            <b>{$password}</b><br><br>
+            Ahora puedes abrir sesión, editar tu cuenta y establecer una nueva contraseña.<br><br>
+            <a href="/">Ir a la página principal de {$website_name}.</a>
+        ]]></password_updated>
+    </reset_form>
+    
+    <edit_account_form>
+        <form_title>Editando tu cuenta</form_title>
+        <alt_title>Editando la cuenta de {$name}</alt_title>
+        <saved_ok>La cuenta ha sido actualizada.</saved_ok>
+        <no_account_id_specified>No has especificado un identificador de cuenta.</no_account_id_specified>
+        <account_not_found>La cuenta que has especificado no existe.</account_not_found>
+    </edit_account_form>
+    
+    <devices_nav>
+        <page_title>Mis dispositivos</page_title>
+        <no_label>(Sin etiqueta)</no_label>
+        <change_label>Especifica una nueva etiqueta:</change_label>
+        <confirm_delete>Advertencia: si borras este dispositivo es posible que no puedas volver a abrir sesión desde él. ¿Deseas continuar?</confirm_delete>
+        <state_captions>
+            <unregistered>Sin registrar</unregistered>
+            <enabled>Activo</enabled>
+            <disabled>Desactivado</disabled>
+            <deleted>Eliminado</deleted>
+        </state_captions>
+        <buttons>
+            <change_label>Cambiar etiqueta...</change_label>
+            <enable>Activar</enable>
+            <disable>Desactivar</disable>
+            <delete>Borrar</delete>
+        </buttons>
+        <column_titles>
+            <login_date>Última sesión</login_date>
+            <ip>Dirección IP</ip>
+            <hostname>Nombre de host</hostname>
+            <location>Ubicación</location>
+        </column_titles>
+        <ops_messages>
+            <empty_id_device>No has especificado el dispositivo a cambiar.</empty_id_device>
+            <empty_label>Especifica una etiqueta.</empty_label>
+            <unexistent_device>El dispositivo que has especificado no existe.</unexistent_device>
+            <not_owned>El dispositivo que has especificado no te pertenece.</not_owned>
+            <device_deleted>El dispositivo que has especificado ha sido eliminado.</device_deleted>
+            <device_unregistered>Este dispositivo no está registardo. Checa tu correo para activarlo.</device_unregistered>
+            <invalid_state>El estado que has especificado es inválido. Especifica un estado válido.</invalid_state>
+            <cant_change_state_on_current_device>No puedes activar/desactivar el dispositivo actual.</cant_change_state_on_current_device>
+        </ops_messages>
+    </devices_nav>
+    
+    <!-- These are related to registration and edition -->
+    <user_account_form>
+        <display_name>Alias:</display_name>
+        <display_name_info><![CDATA[
+            ¿Cómo te haces llamar? Usa cualquier cosa menos comillas o apóstrofes.<br>
+            ¡Puedes usar emojis!
+        ]]></display_name_info>
+        <user_name>Nombre de usuario:</user_name>
+        <user_name_info><![CDATA[
+            Sólo usa letras (mayúsculas/minúsculas), números, puntos, guiones y guiones bajos.<br>
+            Ejemplo: <code>YoSoy-ElRey.2016</code>
+        ]]></user_name_info>
+        <birthdate>Fecha de nacimiento:</birthdate>
+        <country>País de residencia:</country>
+        <country_select><![CDATA[
+            <Selecciona un país>
+        ]]></country_select>
+        <email>Correo principal:</email>
+        <email_message>
+            Asegúrate de que especificas una dirección correcta y que tienes acceso al buzón,
+            pues se enviará un mensaje con una llave para activar la cuenta una vez que la forma es enviada.
+        </email_message>
+        <alt_email>Correo alterno:</alt_email>
+        <alt_email_message>
+            Este campo es opcional. Notificaciones y solicitudes de reinicio de contraseña también son enviados aquí.
+        </alt_email_message>
+        <password>Introduce una contraseña:</password>
+        <password2>Repite la contraseña:</password2>
+        <password_change>Cambiar contraseña a:</password_change>
+        <password_message>
+            Trata de usar una frase larga en vez de una palabra simpre. Uso de letras mayúsculas/minúsculas, dígitos y símbolos es preferible sobre palabras simples.
+            Procura que la contraseña sea distinta a la que usas para accesar a tus cuentas de correo o redes sociales populares.
+        </password_message>
+        <avatar>
+            <caption>Avatar:</caption>
+            <use_gravatar>Usar el Gravatar de mi cuenta de correo principal</use_gravatar>
+            <upload><![CDATA[
+                Selecciona una imagen a subir. El tamaño recomendado es de <code>300x300px</code> (se ajustará de forma automática)
+            ]]></upload>
+        </avatar>
+        <banner>
+            <caption>Imagen de perfil:</caption>
+            <upload><![CDATA[
+                Selecciona una imagen a subir. El tamaño recomendado es de <code>900x300px</code> (se ajustará de forma automática)
+            ]]></upload>
+        </banner>
+        <bio>
+            <caption>Bio:</caption>
+            <placeholder>Escribe sobre ti de forma breve. Puedes insertar imágenes, emojis, vínculos, etc.</placeholder>
+        </bio>
+        <homepage_url>
+            <caption>Sitio web personal:</caption>
+            <placeholder>Escribe una URL completa, empezando con http:// o https://</placeholder>
+        </homepage_url>
+        <signature>
+            <caption>Firma en entradas:</caption>
+            <placeholder>Escribe un texto corto que será añadido al final de tus entradas. Puedes insertar imágenes, emojis, vínculos, etc.</placeholder>
+        </signature>
+        <submit>Enviar formulario</submit>
+        <messages>
+            <invalid_avatar>Archivo de avatar inválido. Por favor envía un archivo jpg/jpeg/png/gif.</invalid_avatar>
+            <invalid_avatar_uploaded>El archivo que has enviado como avatar no se ha reconocido como subida.</invalid_avatar_uploaded>
+            <cant_create_avatars_dir>¡No se puede crear el directorio de avatars para tu cuenta! Por favor informa al personal de soporte técnico.</cant_create_avatars_dir>
+            <cant_move_uploaded_file>¡No se puede mover el archivo subido al directorio temporal para procesamiento! Por favor contacta al personal de sporte técnico.</cant_move_uploaded_file>
+            <avatar_set_ok>Avatar guardado con éxito.</avatar_set_ok>
+            <invalid_banner>Imagen de portada inválida. Por favor sube un archivo jpg/jpeg/png/gif.</invalid_banner>
+            <invalid_banner_uploaded>La imagen de portada que has subido no se ha reconocido como subida.</invalid_banner_uploaded>
+            <cant_create_banners_dir>¡No se puede crear el directorio de imágenes de portada para tu cuenta! Por favor informa al personal de soporte técnico.</cant_create_banners_dir>
+            <banner_set_ok>Imagen de portada guardada con éxito.</banner_set_ok>
+        </messages>
+    </user_account_form>
+    
+    <account_confirmation>
+        <title>Confirmación de cuenta</title>
+        <content><![CDATA[
+            <h2>¡Completado!</h2>
+            <p>Tu cuenta ha sido activada y se ha anexado a este dispositivo.</p>
+            <p>Si has creado la cuenta desde un dispositivo distinto, necesitarás autorizarlo al abrir sesión.</p>
+            <p>Ahora puedes abrir sesión con tu nombre de usuario y contraseña.</p>
+        ]]></content>
+    </account_confirmation>
+    
+    <device_confirmation>
+        <title>Autorización de dispositivo</title>
+        <content><![CDATA[
+            <h2>¡Completado!</h2>
+            <p>El dispositivo se ha activado.</p>
+            <p>Ahora puedes accesar desde él.</p>
+        ]]></content>
+    </device_confirmation>
+    
+    <email_templates>
+        
+        <confirm_account>
+            <subject>Te damos la bienvenida a {$website_name}, {$user_name}</subject>
+            <body>
+                ¡Saludos, {$display_name}! Hemos recibido una solicitud de creación de cuenta para
+                {$website_name} a tu nombre.
+                 
+                Por favor da click en el siguiente vínculo o cópialo y pégalo en tu navegador:
+                 
+                {$token_url}
+                 
+                Importante: procura hacer esto tras recibir este mensaje, pues la llave tiene una expiración de una hora.
+                 
+                Este mensaje se ha enviado a las siguientes direcciones:
+                • Principal: {$main_email}
+                • Alterna:   {$alt_email}
+                 
+                Si no has sido tú quien solicitó esta alta, por favor responde a este correo y háznoslo saber.
+                 
+                Saludos,
+                {$website_name}
+                 
+                -----------------------------
+                Info solicitada por:
+                Fecha/Hora:  {$date_sent}
+                IP:          {$request_ip}
+                Host:        {$request_hostname}
+                Ubicación:   {$request_location}
+                Navegador:   {$request_user_agent}
+            </body>
+        </confirm_account>
+        
+        <confirm_new_device>
+            <subject>[{$website_name}] Solicitud de registro de nuevo dispositivo</subject>
+            <body>
+                ¡Saludos, {$display_name}! Hemos recibido una solicitud para agregar el siguiente dispositivo a tu cuenta:
+                 
+                {$device_info}
+                 
+                Autorízalo dando click en el siguiente vínculo o cópialo y pégalo en tu navegador:
+                 
+                {$token_url}
+                 
+                Importante: procura hacer esto tras recibir este mensaje, pues la llave tiene una expiración de una hora.
+                 
+                Este mensaje se ha enviado a las siguientes direcciones:
+                • Principal: {$main_email}
+                • Alterna:   {$alt_email}
+                 
+                Si no has sido tú quien solicitó esta alta, por favor responde a este correo y háznoslo saber.
+                 
+                Saludos,
+                {$website_name}
+                 
+                -----------------------------
+                Info solicitada por:
+                Fecha/Hora:  {$date_sent}
+                IP:          {$request_ip}
+                Host:        {$request_hostname}
+                Ubicación:   {$request_location}
+                Navegador:   {$request_user_agent}
+            </body>
+        </confirm_new_device>
+        
+        <reset_password>
+            <subject>[{$website_name}] Solicitud de reinicio de contraseña</subject>
+            <body>
+                ¡Saludos! Hemos recibido una solicitud de reinicio de contraseña puesta a tu nombre en {$website_name}.
+                 
+                La solicitud ha sido para {$email}, y las cuentas atadas a esta dirección son las siguientes:
+                 
+                {$account_list}
+                 
+                Da click en el siguiente víncluo o pégalo en tu navegador para reiniciar la contraseña de la cuenta
+                correspondiente:
+                 
+                {$token_urls}
+                 
+                Si no has sido tú quien solicitó esta alta, por favor responde a este correo y háznoslo saber.
+                 
+                Saludos,
+                {$website_name}
+                 
+                -----------------------------
+                Info solicitada por:
+                Fecha/Hora:  {$date_sent}
+                IP:          {$request_ip}
+                Host:        {$request_hostname}
+                Ubicación:   {$request_location}
+                Navegador:   {$request_user_agent}
+            </body>
+        </reset_password>
+        
+    </email_templates>
+    
+    <widgets>
+        <registrations_chart>
+            <title>Nuevas cuentas</title>
+            <info>Gráfica de líneas para admins</info>
+            <chart_title>Nuevas cuentas por día</chart_title>
+            <x_title>Cuentas</x_title>
+            <y_title>Día</y_title>
+        </registrations_chart>
+        <login>
+            <title>Forma de acceso</title>
+            <info>Muestra la forma de apertura de sesión para visitantes y datos del usuario conectado cuando se tiene sesión abierta.</info>
+        </login>
+        <meta>
+            <edit_profile>Editar perfil</edit_profile>
+        </meta>
+    </widgets>
+    
+    <settings_data>
+        <title>Servicios de cuentas</title>
+        <specs key="register_enabled">
+            <title>Permitir nuevas cuentas?</title>
+            <description><![CDATA[
+                Activar/desactivar el registro de usuarios.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="disable_registrations_widget">
+            <title>Deshabilitar gráfica administrativa de cuentas?</title>
+            <description><![CDATA[
+                Muestra/oculta la gráfica de registros por día en el navegador de cuentas.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="enforce_device_registration">
+            <title>Forzar el registro de dispositivos</title>
+            <description><![CDATA[
+                De habilitarse, los usuarios tendrán que confirmar cada navegador que usen para accesar.<br>
+                Usar sólo si se requiere seguridad estricta.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+    </settings_data>
+    
+    <user_profile_tabs>
+        <tab mode="@root" priority="0">Acerca de...</tab>
+        <!--<tab mode="activity">Activity</tab>-->
+    </user_profile_tabs>
+    
+    <user_profile_page>
+        <title>Acerca de {$user}</title>
+        <info>
+            <title>Info</title>
+            <country>País:</country>
+            <home_page>Sitio web personal:</home_page>
+            <feed>Feed RSS:</feed>
+        </info>
+        <signature>
+            <title>Firma</title>
+        </signature>
+        <bio>
+            <title>Bio</title>
+        </bio>
+    </user_profile_page>
+    
+</language>

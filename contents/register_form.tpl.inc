@@ -89,6 +89,12 @@ use hng2_base\settings;
         </div>
         <div class="field_input">
             <input type="text" name="user_name" maxlength="64" value="<?= htmlspecialchars($xaccount->user_name) ?>">
+            <? if( ! $_hide_infos ): ?>
+                <div class="framed_content state_ok">
+                    <span class="fa fa-info-circle"></span>
+                    <?= $current_module->language->user_account_form->user_name_info ?>
+                </div>
+            <? endif; ?>
         </div>
     </div>
     
@@ -98,6 +104,12 @@ use hng2_base\settings;
         </div>
         <div class="field_input">
             <input type="text" name="display_name" maxlength="255" value="<?= htmlspecialchars($xaccount->display_name) ?>">
+            <? if( ! $_hide_infos ): ?>
+                <div class="framed_content state_ok">
+                    <span class="fa fa-info-circle"></span>
+                    <?= $current_module->language->user_account_form->display_name_info ?>
+                </div>
+            <? endif; ?>
         </div>
     </div>
     
