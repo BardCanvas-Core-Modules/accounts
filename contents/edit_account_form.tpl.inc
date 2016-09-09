@@ -88,24 +88,32 @@ use hng2_base\module;
         <div class="field_caption">
             <?= $current_module->language->user_account_form->birthdate ?>
         </div>
-        <div class="field_input">
-            <input type="text" class="aligncenter" readonly name="birthdate" id="birthdate"
-                   style="width: calc(99% - 24px)"
-                   value="<?= $xaccount->birthdate ?>">
-            <span id="birthdate_trigger" class="fa fa-fw fa-calendar-o pseudo_link"></span>
-        </div>
-        <script type="text/javascript">
-            $(document).ready(function()
-            {
-                Calendar.setup({
-                    inputField     :    "birthdate",
-                    button         :    "birthdate_trigger",
-                    ifFormat       :    "%Y-%m-%d",
-                    align          :    "Bl",
-                    singleClick    :    true
+        
+        <? if( ! empty($xaccount->birthdate) ): ?>
+            <div class="field_input">
+                <input type="text" class="aligncenter" name="birthdate" id="birthdate"
+                       readonly value="<?= $xaccount->birthdate ?>">
+            </div>
+        <? else: ?>
+            <div class="field_input">
+                <input type="text" class="aligncenter" name="birthdate" id="birthdate"
+                       style="width: calc(99% - 24px)"
+                       value="<?= $xaccount->birthdate ?>">
+                <span id="birthdate_trigger" class="fa fa-fw fa-calendar-o pseudo_link"></span>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function()
+                {
+                    Calendar.setup({
+                        inputField     :    "birthdate",
+                        button         :    "birthdate_trigger",
+                        ifFormat       :    "%Y-%m-%d",
+                        align          :    "Bl",
+                        singleClick    :    true
+                    });
                 });
-            });
-        </script>
+            </script>
+        <? endif; ?>
     </div>
     
     <div class="cell">

@@ -71,7 +71,7 @@ $plot->SetYTickLabelPos('none');
 $plot->SetYTickPos('none');
 
 # Main plot title:
-$plot->SetTitle(trim($current_module->language->widgets->registrations_chart->chart_title));
+$plot->SetTitle(utf8_decode(trim($current_module->language->widgets->registrations_chart->chart_title)));
 
 # Set Y data limits, tick increment, and titles:
 # $plot->SetPlotAreaWorld(NULL, 0, NULL, NULL);

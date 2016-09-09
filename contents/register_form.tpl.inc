@@ -118,7 +118,7 @@ use hng2_base\settings;
             <?= $current_module->language->user_account_form->birthdate ?>
         </div>
         <div class="field_input">
-            <input type="text" class="aligncenter" readonly name="birthdate" id="birthdate"
+            <input type="text" class="aligncenter" name="birthdate" id="birthdate"
                    style="width: calc(99% - 24px)"
                    value="<?= $xaccount->birthdate ?>">
             <span id="birthdate_trigger" class="fa fa-fw fa-calendar-o pseudo_link"></span>

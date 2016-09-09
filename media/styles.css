@@ -38,4 +38,10 @@
 
 /* Left sidebar widget styles */
 
-#left_sidebar .group.account_meta .item .avatar { height: 1.4em; vertical-align: bottom; }
+#left_sidebar .group.account_meta .item.user_name {
+    padding-left: 28px;
+    padding-top:  4px;
+    background-repeat: no-repeat;
+    background-position: 6px 4px;
+    background-size: 16px;
+}

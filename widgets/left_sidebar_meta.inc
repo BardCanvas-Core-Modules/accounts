@@ -45,8 +45,8 @@ else
 {
     $display_name = convert_emojis($account->display_name);
     $items[] = "
-        <a class='item' href='{$config->full_root_path}/user/{$account->user_name}'>
-            <img class='avatar' src='{$account->get_avatar_url()}'>
+        <a class='item user_name' href='{$config->full_root_path}/user/{$account->user_name}'
+           style='background-image: url({$account->get_avatar_url()})'>
             {$display_name}
         </a>
     ";

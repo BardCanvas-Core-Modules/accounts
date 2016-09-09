@@ -209,7 +209,7 @@
                 <user_name_taken>The user name you've specified has been taken. Please choose another.</user_name_taken>
                 <main_email_exists>There is another account registered with the main email you've provided. Please provide a different one.</main_email_exists>
                 <alt_email_exists>There is another account registered with the alternate email you've provided. Please provide a different one.</alt_email_exists>
-                <birthdate>Please specify a valid birth date.</birthdate>
+                <birthdate>Please specify a valid birth date in the next format: yyyy-mm-dd.</birthdate>
             </invalid>
         </registration>
         
@@ -357,10 +357,10 @@
         ]]></display_name_info>
         <user_name>User name:</user_name>
         <user_name_info><![CDATA[
-            Use only letters, numbers, dots, hyphens and underscores.<br>
-            Exapmle: <code>Iam-TheKing.2016</code>
+            Use only letters, numbers, hyphens and underscores.<br>
+            Exapmle: <code>Iam-TheKing_2016</code>
         ]]></user_name_info>
-        <birthdate>Your birth date:</birthdate>
+        <birthdate>Your birth date (yyyy-mm-dd):</birthdate>
         <country>Country of residence:</country>
         <country_select><![CDATA[
             <Please select a country>

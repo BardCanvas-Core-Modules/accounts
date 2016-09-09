@@ -210,7 +210,7 @@
                 <user_name_taken>El nombre de usuario que especificaste ya existe. Elige otro.</user_name_taken>
                 <main_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como principal.</main_email_exists>
                 <alt_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como alterno.</alt_email_exists>
-                <birthdate>Especifica una fecha de nacimiento válida.</birthdate>
+                <birthdate>Especifica una fecha de nacimiento válida usando el siguiente formato: aaaa-mm-dd.</birthdate>
             </invalid>
         </registration>
         
@@ -357,10 +357,10 @@
         ]]></display_name_info>
         <user_name>Nombre de usuario:</user_name>
         <user_name_info><![CDATA[
-            Sólo usa letras (mayúsculas/minúsculas), números, puntos, guiones y guiones bajos.<br>
-            Ejemplo: <code>YoSoy-ElRey.2016</code>
+            Sólo usa letras (mayúsculas/minúsculas), números, guiones y guiones bajos.<br>
+            Ejemplo: <code>YoSoy-ElRey_2016</code>
         ]]></user_name_info>
-        <birthdate>Fecha de nacimiento:</birthdate>
+        <birthdate>Fecha de nacimiento (aaaa-mm-dd):</birthdate>
         <country>País de residencia:</country>
         <country_select><![CDATA[
             <Selecciona un país>
