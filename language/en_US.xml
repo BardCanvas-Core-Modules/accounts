@@ -591,6 +591,9 @@
                 You can specify another one here.
             ]]></description>
             <type>@gallery:specs_renderer/image_selector</type>
+            <options>
+                <image_size>full</image_size>
+            </options>
         </specs>
     </settings_data>
     
