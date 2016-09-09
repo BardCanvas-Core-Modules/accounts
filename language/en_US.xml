@@ -155,6 +155,8 @@
     <reset_password>Reset password</reset_password>
     <logout>Logout</logout>
     <register>Register</register>
+    <create_account>Create account</create_account>
+    <create_account_now><![CDATA[Join us!<br><b>Create an account now!</b>]]></create_account_now>
     <edit_account>My account</edit_account>
     <edit_devices>My devices</edit_devices>
     <preferences>Preferences</preferences>

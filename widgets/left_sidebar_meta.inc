@@ -35,9 +35,9 @@ if( ! $account->_exists )
     ";
     if( $settings->get("modules:accounts.register_enabled") != "false" )
         $items[] = "
-            <a class='item important pseudo_link' href='{$config->full_root_path}/accounts/register.php'>
+            <a class='item important critical pseudo_link' href='{$config->full_root_path}/accounts/register.php'>
                <span class='fa fa-pencil'></span>
-               {$this_module->language->register}
+               {$this_module->language->create_account}
             </a>
         ";
 }

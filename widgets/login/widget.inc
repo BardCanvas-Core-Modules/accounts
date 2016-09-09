@@ -48,6 +48,12 @@ ob_start(); ?>
           action="<?=$config->full_root_path?>/accounts/scripts/login.php">
         <input type="hidden" name="goto" value="<?= $_SERVER["REQUEST_URI"] ?>">
         
+        <a class="framed_content state_highlight" 
+           style="display: block; margin-top: 0; margin-bottom: 10px; text-align: center; font-size: 1.2em;"
+           href="<?= $config->full_root_path ?>/accounts/register.php">
+            <?= $this_module->language->create_account_now ?>
+        </a>
+        
         <div class="field">
             <div class="caption"><?= $this_module->language->user_name ?></div>
             <div class="input"><input type="text" name="user_name"></div>
