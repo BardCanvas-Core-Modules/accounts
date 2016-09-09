@@ -553,7 +553,7 @@
     </widgets>
     
     <settings_data>
-        <title>Servicios de cuentas</title>
+        <title>Servicios de cuentas de usuarios</title>
         <specs key="register_enabled">
             <title>Permitir nuevas cuentas?</title>
             <description><![CDATA[
@@ -575,6 +575,15 @@
                 Usar sólo si se requiere seguridad estricta.
             ]]></description>
             <type>boolean</type>
+        </specs>
+        <specs key="default_profile_banner">
+            <title>Imagen de perfil predeterminada</title>
+            <description><![CDATA[
+                Por defecto, el motor viene con una imagen genérica:
+                <a href="{$full_root_url}/media/default_user_banner.jpg">{$full_root_url}/media/default_user_banner.jpg</a>.
+                Usa este control para definir otra.
+            ]]></description>
+            <type>@gallery:specs_renderer/image_selector</type>
         </specs>
     </settings_data>
     

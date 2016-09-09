@@ -560,7 +560,7 @@
     </widgets>
     
     <settings_data>
-        <title>Account services configuration</title>
+        <title>User account services</title>
         <specs key="register_enabled">
             <title>Allow users to register?</title>
             <description><![CDATA[
@@ -582,6 +582,15 @@
                 Use it only if you want strict account security.
             ]]></description>
             <type>boolean</type>
+        </specs>
+        <specs key="default_profile_banner">
+            <title>Default user profile banner</title>
+            <description><![CDATA[
+                By default, the engine comes with a generic profile banner:
+                <a href="{$full_root_url}/media/default_user_banner.jpg">{$full_root_url}/media/default_user_banner.jpg</a>.
+                You can specify another one here.
+            ]]></description>
+            <type>@gallery:specs_renderer/image_selector</type>
         </specs>
     </settings_data>
     
