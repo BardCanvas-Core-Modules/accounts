@@ -321,17 +321,30 @@ $res = $database->query($query);
                     
                     <div class="principal_data"><?= convert_emojis($row->display_name) ?></div>
                     
-                    <code><?= $row->user_name ?></code>
-                    
-                    <span class="fa pseudo_link fa-fw fa-envelope-o"
-                          title="<?= $row->email ?>"
-                          onclick="prompt('<?= $current_module->language->admin->record_nav->row_extras->email ?>', '<?= $row->email ?>')"></span>
-                    <? if( ! empty($row->alt_email) ): ?>
-                        <span class="fa pseudo_link fa-fw fa-envelope-o"
-                              title="<?= $row->alt_email ?>"
-                              onclick="prompt('<?= $current_module->language->admin->record_nav->row_extras->alt_email ?>', '<?= $row->alt_email ?>')"></span>
-                    <? endif; ?>
-                    <br>
+                    <div class="actions">
+                        <a href="<?= $config->full_root_path ?>/user/<?= $row->user_name ?>" target="_blank">
+                            <span class="fa fa-home"></span>
+                            <?= $row->user_name ?>
+                        </a>
+                        
+                        <a class="action" target="_blank" href="<?= $config->full_root_path ?>/contact/?target=<?= urlencode($row->user_name) ?>">
+                            <span class="fa fa-envelope"></span>
+                            <?= $row->email ?>
+                        </a>
+                        
+                        <? if( ! empty($row->alt_email) ): ?>
+                            <a class="action" target="_blank" href="<?= $config->full_root_path ?>/contact/?target=<?= urlencode($row->user_name) ?>">
+                                <span class="fa fa-envelope"></span>
+                                <?= $row->alt_email ?>
+                            </a>
+                        <? endif; ?>
+                        
+                        <span class="action pseudo_link" onclick="send_pm(this, '<?= $row->user_name ?>', '<?= replace_escaped_vars($language->contact->pm->send_to, '{$recipient}', htmlspecialchars($row->display_name)) ?>')"
+                              title="<?= replace_escaped_vars( $language->contact->pm->title, '{$website_name}', $settings->get("engine.website_name") ) ?>">
+                            <span class="fa fa-inbox"></span>
+                            <?= $language->contact->pm->caption ?>
+                        </span>
+                    </div>
                     
                     <div class="actions">
                         
