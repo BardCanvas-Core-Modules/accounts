@@ -136,20 +136,20 @@ $res = $database->query($query);
     
     <?= $current_module->language->admin->record_nav->page_title ?>
     
-    <?
-    $style_disable = $settings->get("modules:accounts.register_enabled") != "false" ? ""               : "display: none;";
-    $style_enable  = $settings->get("modules:accounts.register_enabled") != "false" ? "display: none;" : "";
-    ?>
-    <span id="registration_toggle_button">
-        <button class="toggle_registration" onclick="toggle_registration_mode('off')" style="<?= $style_disable ?>">
-            <span class="fa fa-toggle-on"></span>
-            <?= $current_module->language->admin->record_nav->disable_register ?>
-        </button>
-        <button class="toggle_registration" onclick="toggle_registration_mode('on')" style="<?= $style_enable ?>">
-            <span class="fa fa-toggle-off"></span>
-            <?= $current_module->language->admin->record_nav->enable_register ?>
-        </button>
-    </span>
+    <? if( $account->level >= config::ADMIN_USER_LEVEL ):
+        $style_disable = $settings->get("modules:accounts.register_enabled") != "false" ? ""               : "display: none;";
+        $style_enable  = $settings->get("modules:accounts.register_enabled") != "false" ? "display: none;" : ""; ?>
+        <span id="registration_toggle_button">
+            <button class="toggle_registration" onclick="toggle_registration_mode('off')" style="<?= $style_disable ?>">
+                <span class="fa fa-toggle-on"></span>
+                <?= $current_module->language->admin->record_nav->disable_register ?>
+            </button>
+            <button class="toggle_registration" onclick="toggle_registration_mode('on')" style="<?= $style_enable ?>">
+                <span class="fa fa-toggle-off"></span>
+                <?= $current_module->language->admin->record_nav->enable_register ?>
+            </button>
+        </span>
+    <? endif; ?>
     
     <button onclick="top.location.href='<?= $_SERVER["PHP_SELF"] ?>?mode=show_creation_form&wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
         <span class="fa fa-plus"></span>
@@ -402,7 +402,7 @@ $res = $database->query($query);
                 <td width="20%"><?= empty($row->address_state) ? "&mdash;" : $row->address_state ?></td>
                 
                 <td nowrap align="center">
-                    <? if($row->id_account == $account->id_account): ?>
+                    <? if($row->id_account == $account->id_account || $row->level > $account->level): ?>
                         <?
                         if( isset($config->user_levels_by_level[$row->level]) )
                             echo "[{$row->level}] " . $config->user_levels_by_level[$row->level];
