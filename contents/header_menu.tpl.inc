@@ -54,7 +54,7 @@ else
               data-module='accounts' style='cursor: pointer;' data-submenu='#user_menu_items'>
             <span id='loggedin_icon' class='fa fa-border {$locked}' style='color: transparent; background: url({$account->get_avatar_url()}) center center no-repeat; background-size: cover'></span>
             <span id='loggedin_icon_locked' class='fa fa-border fa-lock' style='display: none;'></span>
-            {$account->get_processed_display_name()}
+            <span id='logedin_user_name'>{$account->get_processed_display_name()}</span>
             <span class='menu_toggle'>
                 <span class='fa fa-caret-down'></span>
                 <span class='fa fa-caret-up' style='display: none;'></span>
