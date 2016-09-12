@@ -44,6 +44,12 @@ $account = new account(trim(stripslashes($_POST["user_name"])));
 if( ! $account->_exists )
     die("ERROR_ACCOUNT_UNEXISTENT");
 
+if( $account->state == "new" )
+{
+    $account->send_new_account_confirmation_email();
+    die("ERROR_UNCONFIRMED_ACCOUNT");
+}
+
 if( $account->state != "enabled" )
     die("ERROR_ACCOUNT_DISABLED");
 

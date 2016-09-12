@@ -174,6 +174,13 @@
         <missing_params>Especifica un nombre de usuario y una contraseña.</missing_params>
         <account_unexistent>El nombre de usuario especificado no existe.</account_unexistent>
         <account_disabled>Tu cuenta está desactivada.</account_disabled>
+        <verification_email_resent><![CDATA[
+            Tu cuenta no está verificada. Se ha enviado un correo a la dirección
+            que has especificado durante el registro con una llave de activación.
+            Por favor checa tu bandeja de entrada y la de correo no deseado
+            y sigue las instrucciones. Si no te llega el correo después de
+            varios intentos, solicita apoyo al personal de soporte técnico.
+        ]]></verification_email_resent>
         <wrong_password>La contraseña no coincide con la existente para esta cuenta.</wrong_password>
         <engine_disabled>Disculpa, pero no puedfes abrir sesión en este momento. Intenta más tarde.</engine_disabled>
         <device_disabled>El dispositivo desde el cual estás conectándote está desactivado.</device_disabled>
@@ -273,6 +280,12 @@
                 <p><b>Importante:</b> nuestro mensaje puede ser marcado como no deseado por tu proveedor de correo.
                 Si no lo encuentras en tu bandeja de entrada, checa la de spam/correo no deseado.</p>
                 <p>Si el mensaje no arriva en el unos minutos, por favor contáctanos para asistirte.</p>
+                <p class="framed_content state_highlight">
+                    <span class="fa fa-info-circle"></span>
+                    Si no validas tu cuenta dentro de una hora y la llave expira, 
+                    una nueva llave se te enviará al intentar abrir sesión.
+                    Si la cuenta no está activada tras 12 horas, será eliminada.
+                </p>
             ]]></content>
         </form_submitted>
         <account_manually_created>La cuenta ha sido creada. No se ha enviado ningún mensaje al usuario. Tendrás que hacerlo de forma manual.</account_manually_created>

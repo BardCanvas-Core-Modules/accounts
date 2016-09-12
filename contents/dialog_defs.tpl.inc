@@ -90,6 +90,7 @@
     <div class="ERROR_MISSING_PARAMS"><?= $this_module->language->errors->missing_params ?></div>
     <div class="ERROR_ACCOUNT_UNEXISTENT"><?= $this_module->language->errors->account_unexistent ?></div>
     <div class="ERROR_ACCOUNT_DISABLED"><?= $this_module->language->errors->account_disabled ?></div>
+    <div class="ERROR_UNCONFIRMED_ACCOUNT"><?= unindent($this_module->language->errors->verification_email_resent) ?></div>
     <div class="ERROR_WRONG_PASSWORD"><?= $this_module->language->errors->wrong_password ?></div>
     <div class="ERROR_ENGINE_DISABLED"><?= $this_module->language->errors->engine_disabled ?></div>
     <div class="ERROR_DEVICE_DISABLED"><?= $this_module->language->errors->device_disabled ?></div>
