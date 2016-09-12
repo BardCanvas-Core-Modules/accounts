@@ -216,6 +216,7 @@
                 <passwords_mismatch>Las contraseñas no coinciden.</passwords_mismatch>
                 <mails_must_be_different>Ambas direcciones de correo deben ser distintas.</mails_must_be_different>
                 <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
+                <chars_in_user_name>Caracteres inválidos en nombre de usuario.</chars_in_user_name>
                 <user_name_taken>El nombre de usuario que especificaste ya existe. Elige otro.</user_name_taken>
                 <main_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como principal.</main_email_exists>
                 <alt_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como alterno.</alt_email_exists>

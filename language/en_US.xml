@@ -214,6 +214,7 @@
                 <passwords_mismatch>The passwords you've specified don't match. Please re-type them.</passwords_mismatch>
                 <mails_must_be_different>Main and alternate e-mail addresses must be different.</mails_must_be_different>
                 <captcha_invalid>Invalid captcha. Please try again.</captcha_invalid>
+                <chars_in_user_name>Invalid characters in user name.</chars_in_user_name>
                 <user_name_taken>The user name you've specified has been taken. Please choose another.</user_name_taken>
                 <main_email_exists>There is another account registered with the main email you've provided. Please provide a different one.</main_email_exists>
                 <alt_email_exists>There is another account registered with the alternate email you've provided. Please provide a different one.</alt_email_exists>

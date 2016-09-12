@@ -5,9 +5,12 @@
  * @package    HNG2
  * @subpackage accounts
  * @author     Alejandro Caballero - lava.caballero@gmail.com
+ * 
+ * @var module $current_module
  */
 
 use hng2_base\account;
+use hng2_base\module;
 
 include "../config.php";
 include "../includes/bootstrap.inc";
@@ -25,6 +28,10 @@ if( $_POST["mode"] == "create" )
     # Validations: missing fields
     foreach( array("display_name", "user_name", "country", "email", "password", "password2", "recaptcha_response_field") as $field )
         if( trim(stripslashes($_POST[$field])) == "" ) $errors[] = $current_module->language->errors->registration->missing->{$field};
+    
+    $user_name = trim(stripslashes($_POST["user_name"]));
+    if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
+        $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
     
     # Validations: invalid entries
     if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
@@ -48,7 +55,7 @@ if( $_POST["mode"] == "create" )
     # Check for duplicate account
     if( count($errors) == 0 )
     {
-        $yaccount = new account(trim(stripslashes($_POST["user_name"])));
+        $yaccount = new account($user_name);
         if( $yaccount->_exists ) $errors[] = $current_module->language->errors->registration->invalid->user_name_taken;
     }
     
