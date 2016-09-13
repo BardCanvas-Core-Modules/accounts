@@ -62,6 +62,8 @@ switch( $_REQUEST["mode"] )
             die( $current_module->language->admin->record_nav->action_messages->no_self_enable_disable );
     
         $user_account->enable();
+        if( $user_account->level < config::NEWCOMER_USER_LEVEL ) $user_account->set_level(config::NEWCOMER_USER_LEVEL);
+        
         send_notification(
             $account->id_account,
             "information",
