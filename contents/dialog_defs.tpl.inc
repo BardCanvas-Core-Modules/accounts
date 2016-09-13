@@ -1,3 +1,4 @@
+
 <!-- accounts :: basic :: dialog defs -->
 
 <? if( ! $account->_exists ): ?>
@@ -101,4 +102,17 @@
 
 <div id="reset_messages" style="display: none;">
     <div class="OK"><?= $this_module->language->reset_form->OK ?></div>
+</div>
+
+<? if( ! $account->_is_admin) return; ?>
+
+<div id="level_switch" style="display: none;">
+    <select onchange="change_user_level(this)">
+        <? foreach($config->user_levels_by_level as $level => $caption): ?>
+            <? if( $level > $account->level ) continue; ?>
+            <option value="<?= $level ?>">[<?= $level ?>] <?= $caption ?></option>
+        <? endforeach; ?>
+        <option disabled>──────────</option>
+        <option value="!@cancel">&lt;<?= $language->cancel ?>&gt;</option>
+    </select>
 </div>

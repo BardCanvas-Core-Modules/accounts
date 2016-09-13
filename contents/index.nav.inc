@@ -517,14 +517,3 @@ function render_user_devices_info($row, $res2)
     <?
 }
 ?>
-
-<div id="level_switch" style="display: none;">
-    <select onchange="change_user_level(this)">
-        <? foreach($config->user_levels_by_level as $level => $caption): ?>
-            <? if( $level > $account->level ) continue; ?>
-            <option value="<?= $level ?>">[<?= $level ?>] <?= $caption ?></option>
-        <? endforeach; ?>
-        <option disabled>──────────</option>
-        <option value="!@cancel">&lt;<?= $language->cancel ?>&gt;</option>
-    </select>
-</div>
