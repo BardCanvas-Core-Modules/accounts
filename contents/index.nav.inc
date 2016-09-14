@@ -92,22 +92,21 @@ $pagination = $browser->build_pagination($rowx->record_count, $limit, $offset);
 #region Data grabbing
 switch( $order )
 {
-    case  1: $sqlorder = "user_name asc";                                             break;
-    case  2: $sqlorder = "user_name desc";                                            break;
-    case  3: $sqlorder = "display_name asc";                                          break;
-    case  4: $sqlorder = "display_name desc";                                         break;
-    case  5: $sqlorder = "country_name asc, address_state asc, display_name asc";     break;
-    case  6: $sqlorder = "country_name desc, address_state desc, display_name desc";  break;
-    case  7: $sqlorder = "level asc, display_name asc";                               break;
-    case  8: $sqlorder = "level desc, display_name desc";                             break;
-    case  9: $sqlorder = "creation_date asc, display_name asc";                       break;
-    case 10: $sqlorder = "creation_date desc, display_name desc";                     break;
-    case 11: $sqlorder = "address_state asc, display_name asc";                       break;
-    case 12: $sqlorder = "address_state desc, display_name desc";                     break;
-    case 13: $sqlorder = "last_update asc, display_name asc";                         break;
-    case 14: $sqlorder = "last_update desc, display_name desc";                       break;
-    case 15: $sqlorder = "last_activity asc";                                         break;
-    case 16: $sqlorder = "last_activity desc";                                        break;
+    case  1: $sqlorder = "user_name asc";                          break;
+    case  2: $sqlorder = "user_name desc";                         break;
+    case  3: $sqlorder = "display_name asc";                       break;
+    case  4: $sqlorder = "display_name desc";                      break;
+    case  5: $sqlorder = "country_name asc, display_name asc";     break;
+    case  6: $sqlorder = "country_name desc, display_name desc";   break;
+    case  7: $sqlorder = "level asc, display_name asc";            break;
+    case  8: $sqlorder = "level desc, display_name desc";          break;
+    case  9: $sqlorder = "creation_date asc, display_name asc";    break;
+    case 10: $sqlorder = "creation_date desc, display_name desc";  break;
+    case 13: $sqlorder = "last_update asc, display_name asc";      break;
+    case 14: $sqlorder = "last_update desc, display_name desc";    break;
+    case 15: $sqlorder = "last_activity asc";                      break;
+    case 16: $sqlorder = "last_activity desc";                     break;
+    default: $sqlorder = "user_name asc";                          break;
 }
 
 $config->globals["accounts:nav/presettings_data"] = array($sqlorder, "");
@@ -385,8 +384,6 @@ $res = $database->query($query);
                 </td>
                 
                 <td width="20%"><?= $row->country_name ?></td>
-                
-                <td width="20%"><?= empty($row->address_state) ? "&mdash;" : $row->address_state ?></td>
                 
                 <td nowrap align="center">
                     <? if($row->id_account == $account->id_account || $row->level > $account->level): ?>

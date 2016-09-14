@@ -57,12 +57,6 @@
                     <order_asc  id="5">Ordenar por ubicación + alias ascendente</order_asc>
                     <order_desc id="6">Ordenar por ubicación + alias descendente</order_desc>
                 </country>
-                <address_state>
-                    <layout xalign="left" xwidth="20%" />
-                    <caption>Estado</caption>
-                    <order_asc  id="11">Ordenar por estado + alias ascendente</order_asc>
-                    <order_desc id="12">Ordenar por estado + alias descendente</order_desc>
-                </address_state>
                 <level>
                     <layout xalign="center" xnowrap="true" />
                     <caption>Nivel</caption>
