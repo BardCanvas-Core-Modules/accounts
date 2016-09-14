@@ -110,6 +110,11 @@ switch( $order )
     case 16: $sqlorder = "last_activity desc";                                        break;
 }
 
+$config->globals["accounts:nav/presettings_data"] = array($sqlorder, "");
+$current_module->load_extensions("records_browser", "presettings_data");
+list($sqlorder, $additional_select_columns) = $config->globals["accounts:nav/presettings_data"];
+unset( $config->globals["accounts:nav/presettings_data"] );
+
 $query = "
     select
         account.*,
@@ -118,6 +123,7 @@ $query = "
           from account_devices
           where account_devices.id_account = account.id_account
           order by last_activity desc limit 1 ) as last_activity
+        $additional_select_columns
     from
         account, countries
     $query_filter
@@ -262,8 +268,14 @@ $res = $database->query($query);
         
         <thead>
         <tr>
-            <? foreach( $browser->build_table_header($current_module->language->admin->record_nav->column_titles) as $this_cell ): ?>
-                <th align="<?= $this_cell->xalign ?>" <? if( $this_cell->xnowrap == true ) echo "nowrap "; ?>
+            <?
+            $config->globals["accounts:nav/additional_headers"]
+                = $browser->build_table_header($current_module->language->admin->record_nav->column_titles);
+            $current_module->load_extensions("records_browser", "additional_headers");
+            $headers = $config->globals["accounts:nav/additional_headers"];
+            unset( $config->globals["accounts:nav/additional_headers"] );
+            foreach( $headers as $this_cell ): ?>
+                <th align="<?= $this_cell->xalign ?>" valign="middle" <? if( $this_cell->xnowrap == true ) echo "nowrap "; ?>
                     <? if( ! empty($this_cell->xwidth) ) echo "width='$this_cell->xwidth' "; ?> class="<?= $this_cell->xclass ?>"><?
                     if( $this_cell->sort_asc->enabled == true ) echo "<img
                         src='{$config->full_root_path}/media/icons/order_asc" . ($order == $this_cell->sort_asc->order ? "_this" : "") . ".gif' 
@@ -283,23 +295,6 @@ $res = $database->query($query);
         
         <tbody>
         <? while( $row = $database->fetch_object($res) ): ?>
-            <?
-            $res2 = $database->query("
-                select
-                    account_devices.*,
-                    ( select concat(login_date, '\t', ip, '\t', hostname, '\t', location) 
-                      from account_logins 
-                      where account_logins.id_account = account_devices.id_account 
-                      and account_logins.id_device = account_devices.id_device 
-                      order by login_date desc limit 1 ) as last_login_info
-                from
-                    account_devices
-                where
-                    id_account = '$row->id_account'
-                order by
-                    last_activity desc
-            ");
-            ?>
             
             <tr class="<? if( $row->id_account == $account->id_account ) echo "self"; else echo $row->state; ?>"
                 id_account="<?= $row->id_account ?>">
@@ -348,15 +343,7 @@ $res = $database->query($query);
                     
                     <div class="actions">
                         
-                        <? if( $database->num_rows($res2) > 0 ): ?>
-                            <span class="action pseudo_link" onclick="show_discardable_dialog('#df_<?= $row->id_account ?>', true)">
-                            <span class="fa fa-search"></span>
-                                <?= $current_module->language->admin->record_nav->actions->show_devices ?>
-                            </span>
-                            <div id="df_<?= $row->id_account ?>" title="<?= $current_module->language->admin->record_nav->devices_and_login_infos ?>" style="display: none;">
-                                <? render_user_devices_info($row, $res2) ?>
-                            </div>
-                        <? endif; ?>
+                        <? render_user_devices_trigger($row); ?>
                         
                         <? if($row->id_account != $account->id_account): ?>
                             <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=edit&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
@@ -441,6 +428,9 @@ $res = $database->query($query);
                           onclick="alert('<?= $current_module->language->admin->record_nav->row_extras->creation_host ?>\n<?= str_replace("; ", "\\n", $row->creation_host) ?>')"></span>
                 </td>
                 <td nowrap align="center"><?= time_elapsed_string($row->last_update) ?></td>
+                
+                <? $current_module->load_extensions("records_browser", "additional_columns"); ?>
+                
             </tr>
         <? endwhile; ?>
         </tbody>
@@ -452,6 +442,40 @@ $res = $database->query($query);
 </div><!-- /.pagination -->
 
 <?
+function render_user_devices_trigger($row)
+{
+    global $database, $current_module;
+    
+    $res2 = $database->query("
+        select
+            account_devices.*,
+            ( select concat(login_date, '\t', ip, '\t', hostname, '\t', location) 
+              from account_logins 
+              where account_logins.id_account = account_devices.id_account 
+              and account_logins.id_device = account_devices.id_device 
+              order by login_date desc limit 1 ) as last_login_info
+        from
+            account_devices
+        where
+            id_account = '$row->id_account'
+        order by
+            last_activity desc
+    ");
+    
+    if( $database->num_rows($res2) == 0 ) return;
+    ?>
+    
+    <span class="action pseudo_link" onclick="show_discardable_dialog('#df_<?= $row->id_account ?>', true)">
+        <span class="fa fa-search"></span>
+        <?= $current_module->language->admin->record_nav->actions->show_devices ?>
+    </span>
+    <div id="df_<?= $row->id_account ?>" title="<?= $current_module->language->admin->record_nav->devices_and_login_infos ?>" style="display: none;">
+        <? render_user_devices_info($row, $res2) ?>
+    </div>
+    
+    <?
+}
+
 function render_user_devices_info($row, $res2)
 {
     global $current_module, $database;
