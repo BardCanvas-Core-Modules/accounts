@@ -71,6 +71,11 @@ use hng2_base\settings;
     </div>
 <? endif; ?>
 
+<?
+$custom_banner = $settings->get("modules:accounts.custom_registration_banner");
+if( ! empty($custom_banner) ) echo "<div class='custom_registration_baner'>$custom_banner</div>";
+?>
+
 <? if( ! $_hide_infos ): ?>
     <div class="framed_content state_ok">
         <span class="fa fa-info-circle"></span>

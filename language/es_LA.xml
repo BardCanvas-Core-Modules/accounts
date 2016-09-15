@@ -571,6 +571,13 @@
             ]]></description>
             <type>yes/no</type>
         </specs>
+        <specs key="custom_registration_banner">
+            <title>Anuncio a mostrar en el registro</title>
+            <description><![CDATA[
+                Código HTML con mensaje personalizado a incluir al inicio de la página de registro
+            ]]></description>
+            <type>code</type>
+        </specs>
         <specs key="disable_registrations_widget">
             <title>Deshabilitar gráfica administrativa de cuentas?</title>
             <description><![CDATA[

@@ -577,6 +577,13 @@
             ]]></description>
             <type>yes/no</type>
         </specs>
+        <specs key="custom_registration_banner">
+            <title>Custom registration banner code</title>
+            <description><![CDATA[
+                Type HTML code that you want to be shown above the registration page
+            ]]></description>
+            <type>code</type>
+        </specs>
         <specs key="disable_registrations_widget">
             <title>Disable registrations widget?</title>
             <description><![CDATA[
