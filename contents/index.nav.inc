@@ -10,18 +10,21 @@
  */
 
 use hng2_base\account;
+use hng2_base\accounts_repository;
 use hng2_base\config;
 use hng2_base\module;
 use hng2_base\settings;
 use hng2_tools\record_browser;
 
-$browser = new record_browser("{$config->website_key}_{$current_module->name}");
+$repository = new accounts_repository();
+$browser    = new record_browser("{$config->website_key}_{$current_module->name}");
 
 /**
  * @var int    $offset
  * @var int    $limit
  * @var int    $order
- * @var string $search_state
+ * @var int    $search_state
+ * @var int    $search_level
  * @var string $search_for
  */
 #region Nav filters
@@ -64,7 +67,16 @@ if( ! empty($search_for) )
     }
 }
 
-if( ! empty($search_state) ) $where_lines[] = "state = '$search_state'";
+if( empty($search_state) )
+{
+    if( ! empty($search_level) )
+        $where_lines[] = "level = '$search_level'";
+}
+else
+{
+    $where_lines[] = "state = '$search_state'";
+    if( $search_state == "new" ) $search_level = "";
+}
 
 if( ! empty($where_lines) )
 {
@@ -184,7 +196,8 @@ $res = $database->query($query);
     </div>
 <? endif; ?>
 
-<? if( empty($_REQUEST["offset"]) && empty($_REQUEST["search_for"]) && $settings->get("modules:accounts.disable_registrations_widget") != "true"): ?>
+<? if( empty($_REQUEST["offset"]) && empty($_REQUEST["search_for"]) && empty($_REQUEST["search_level"])
+       && $settings->get("modules:accounts.disable_registrations_widget") != "true"): ?>
     <div id="chart" style="margin-bottom: 20px;"></div>
     <script type="text/javascript">
         function show_chart()
@@ -211,6 +224,7 @@ $res = $database->query($query);
     function reset_filter()
     {
         document.filter_form.search_for.value           = "";
+        document.filter_form.search_level.value         = "";
         document.filter_form.search_state.selectedIndex = 0;
         document.filter_form.limit.value                = "20";
         document.filter_form.order.value                = "16";
@@ -222,9 +236,10 @@ $res = $database->query($query);
     <form name="filter_form" id="filter_form" action="<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<? echo mt_rand(1, 65535); ?>"
           method="get">
         
-        <input type="hidden" name="mode"   value="set_filter">
-        <input type="hidden" name="order"  value="<?= $order ?>">
-        <input type="hidden" name="offset" value="0">
+        <input type="hidden" name="mode"         value="set_filter">
+        <input type="hidden" name="order"        value="<?= $order ?>">
+        <input type="hidden" name="search_level" value="<?= $search_level ?>">
+        <input type="hidden" name="offset"       value="0">
         
         <span style="float: right;">
             <?= $browser->get_pagination_button("previous", "paginate", $pagination) ?>
@@ -257,7 +272,27 @@ $res = $database->query($query);
         <button type="submit"><?= $language->record_nav->buttons->apply ?></button>
         <button type="submit" onclick="reset_filter();"><?= $language->record_nav->buttons->reset ?></button>
     </form>
-</div><!-- /#navcontrols -->
+    
+    <script type="text/javascript">
+        function set_search_level(level)
+        {
+            var $form = $('#filter_form');
+            $form.find('input[name="search_level"]').val(level);
+            $form.submit();
+        }
+    </script>
+    <div class="records_browser filter_links" style="margin-top: 10px;">
+        <?
+        $grouped_counts = $repository->get_counts_by_level();
+        foreach($config->user_levels_by_level as $level => $name):
+            $count = $grouped_counts[$level];
+            if( $count == 0 ) continue; ?>
+            <span class="framed_content pseudo_link <? if($search_level == $level) echo "state_active"; ?>"
+                  onclick="set_search_level('<?= $level ?>')"><?= $name ?> (<?= number_format($count) ?>)</span>
+        <? endforeach; ?>
+        <span class="framed_content pseudo_link" onclick="set_search_level('')"><?= $language->any ?></span>
+    </div>
+</div>
 
 <? if( ! $database->num_rows($res) ): ?>
     <div class="framed_content state_ko">
