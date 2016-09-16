@@ -84,7 +84,7 @@ function toggle_account(id_account, new_mode, trigger, reload_page)
 
 function open_level_switcher(trigger, id_account, current_level, reload_on_change)
 {
-    if( typeof reload_on_change == 'undefined' ) reload_on_change = false;
+    if( typeof reload_on_change == 'undefined' ) reload_on_change = true;
     
     var $target = $(trigger).closest('.user_level_switcher').find('.target');
     var $source = $(trigger).closest('.current');

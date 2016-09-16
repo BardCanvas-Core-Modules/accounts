@@ -254,7 +254,7 @@ $res = $database->query($query);
                value="<?= htmlspecialchars($search_for) ?>" size="40"
                title="<?= $current_module->language->admin->record_nav->search_title ?>">
         
-        <select name="search_state">
+        <select name="search_state" onchange="$('#filter_form').submit();">
             <option <? if( $search_state == "" ) echo "selected"; ?>         value=""        >&lt;<?= $language->record_nav->show_all ?>&gt;</option>
             <option <? if( $search_state == "new" ) echo "selected"; ?>      value="new"     ><?= $current_module->language->admin->record_nav->rec_states->new ?></option>
             <option <? if( $search_state == "enabled" ) echo "selected"; ?>  value="enabled" ><?= $current_module->language->admin->record_nav->rec_states->enabled ?></option>
@@ -436,8 +436,7 @@ $res = $database->query($query);
                 <td width="20%"><?= $row->country_name ?></td>
                 
                 <td nowrap align="center">
-                    <? if($row->id_account == $account->id_account || $row->level > $account->level): ?>
-                        <?
+                    <? if($row->id_account == $account->id_account || $row->level > $account->level):
                         if( isset($config->user_levels_by_level[$row->level]) )
                             echo "[{$row->level}] " . $config->user_levels_by_level[$row->level];
                         else
@@ -451,9 +450,8 @@ $res = $database->query($query);
                                     echo "[{$row->level}] " . $config->user_levels_by_level[$row->level];
                                 else
                                     echo $row->level;
-                                ?>
-            
-                                <? if( $account->level >= $config::MODERATOR_USER_LEVEL ): ?>
+                                
+                                if( $account->level >= $config::MODERATOR_USER_LEVEL ): ?>
                                     <span class="fa fa-pencil fa-fw pseudo_link"
                                           onclick="open_level_switcher(this, '<?= $row->id_account ?>', '<?= $row->level ?>')"></span>
                                 <? endif; ?>
