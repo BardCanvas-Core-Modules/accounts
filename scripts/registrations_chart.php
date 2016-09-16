@@ -16,10 +16,11 @@ include "../../includes/bootstrap.inc";
 include "../../lib/phplot-6.1.0/rgb.inc.php";
 include "../../lib/phplot-6.1.0/phplot.php";
 
+$date  = date("Y-m-d 00:00:00", strtotime("today - 30 days"));
 $data  = array();
 $query = "select date(creation_date) as creation_date, count(id_account) as total 
           from account 
-          where date(creation_date) > '2016-01-01'
+          where date(creation_date) >= '$date'
           group by date(creation_date)";
 $res    = $database->query($query);
 
