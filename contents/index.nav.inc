@@ -145,11 +145,6 @@ $res = $database->query($query);
 #endregion
 ?>
 
-<style type="text/css">
-    .principal_addons   { color: #bf0060; padding-left: 18px; margin-top: 10px; margin-bottom: 0; }
-    .principal_addons a { color: #bf0060; }
-</style>
-
 <h1 style="margin-top: 0;" class="clearfix">
     <button class="pull-right" onclick="$('#filter_form').submit()">
         <span class="fa fa-refresh"></span>
@@ -359,9 +354,9 @@ $res = $database->query($query);
                     $principal_data_addons = array();
                     $current_module->load_extensions("records_browser", "principal_data_addons");
                     if( ! empty($principal_data_addons) ){
-                        echo "<ul class='principal_addons'><li>";
-                        echo implode("</li>\n<li>", $principal_data_addons);
-                        echo "</li></ul><hr>";
+                        echo "<div class='principal_addons' style='margin-top: 5px;'>";
+                        echo implode("", $principal_data_addons);
+                        echo "</div><hr>";
                     }
                     ?>
                     
