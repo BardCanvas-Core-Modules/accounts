@@ -399,7 +399,7 @@ $res = $database->query($query);
                         <? if($row->state == "new"): ?>
                             
                             <? if($row->id_account != $account->id_account): ?>
-                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'enable')">
+                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'enable', this, true)">
                                     <span class="fa fa-unlock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->enable ?>
                                 </span>
@@ -408,7 +408,7 @@ $res = $database->query($query);
                         <? elseif($row->state == "enabled"): ?>
                             
                             <? if($row->id_account != $account->id_account): ?>
-                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'disable')">
+                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'disable', this, true)">
                                     <span class="fa fa-lock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->disable ?>
                                 </span>
@@ -417,7 +417,7 @@ $res = $database->query($query);
                         <? elseif($row->state == "disabled"): ?>
                             
                             <? if($row->id_account != $account->id_account): ?>
-                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'enable')">
+                                <span class="action pseudo_link" onclick="toggle_account('<?= $row->id_account ?>', 'enable', this, true)">
                                     <span class="fa fa-unlock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->enable ?>
                                 </span>

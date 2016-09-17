@@ -8,12 +8,14 @@ function toggle_registration_mode(new_mode)
     };
     
     $.blockUI(blockUI_default_params);
+    stop_notifications_getter();
     $.get(url, params, function(response)
     {
         if( response != 'OK' )
         {
             alert( response );
             $.unblockUI();
+            start_notifications_getter();
             
             return;
         }
@@ -33,16 +35,18 @@ function switch_admin(id_account, admin_action)
     
     var $tr = $('#accounts_nav').find('tr[id_account="' + id_account + '"]');
     $tr.block(blockUI_smallest_params);
+    stop_notifications_getter();
     $.get(url, params, function(response)
     {
         if( response != 'OK' )
         {
             alert( response );
             $tr.unblock();
+            start_notifications_getter();
             
             return;
         }
-    
+        
         location.href = $_PHP_SELF + '?wasuuup=' + parseInt(Math.random() * 1000000000000000);
     });
 }
@@ -61,12 +65,14 @@ function toggle_account(id_account, new_mode, trigger, reload_page)
     else $tr = $('#accounts_nav').find('tr[id_account="' + id_account + '"]');
     $tr.block(blockUI_smallest_params);
     
+    stop_notifications_getter();
     $.get(url, params, function(response)
     {
         if( response != 'OK' )
         {
             alert( response );
             $tr.unblock();
+            start_notifications_getter();
             
             return;
         }
@@ -74,6 +80,7 @@ function toggle_account(id_account, new_mode, trigger, reload_page)
         if( ! reload_page )
         {
             $tr.unblock();
+            start_notifications_getter();
             
             return;
         }
@@ -132,12 +139,14 @@ function change_user_level(trigger)
     var $tr = $('#accounts_nav').find('tr[id_account="' + id_account + '"]');
     if( $tr.length == 0 ) $tr = $trigger.closest('.user_level_switcher');
     $tr.block(blockUI_smallest_params);
+    stop_notifications_getter();
     $.get(url, params, function(response)
     {
         if( response != 'OK' )
         {
             alert( response );
             $tr.unblock();
+            start_notifications_getter();
             
             return;
         }
@@ -145,6 +154,7 @@ function change_user_level(trigger)
         if( reload_page != 'true' )
         {
             $tr.unblock();
+            start_notifications_getter();
             
             return;
         }
