@@ -32,6 +32,8 @@
                 <enabled>Activo</enabled>
                 <disabled>Desactivado</disabled>
             </rec_states>
+            <any_state>Cualquier estado</any_state>
+            <any_level>Cualquier nivel</any_level>
             <column_titles>
                 <state>
                     <layout xalign="center" xwidth="20" xnowrap="true" />

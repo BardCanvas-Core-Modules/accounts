@@ -28,6 +28,7 @@ $browser    = new record_browser("{$config->website_key}_{$current_module->name}
  * @var string $search_for
  */
 #region Nav filters
+
 $built_vars = $browser->build_vars(20, 16);
 foreach($built_vars as $key => $val) $$key = $val;
 
@@ -53,30 +54,23 @@ if( ! empty($search_for) )
             }
         }
         $where_line    = substr($where_line, 0, -4);
-        $where_lines[] = $where_line;
+        $where_lines[] = "({$where_line})";
         unset($where_line, $search_exploded, $this_term);
     }
     else
     {
-        $where_lines[] = "id_account      =    '" . trim($search_for) . "'   or "
+        $where_lines[] = "("
+            . "id_account      =    '" . trim($search_for) . "'   or "
             . "user_name       like '%" . trim($search_for) . "%' or "
             . "display_name    like '%" . trim($search_for) . "%' or "
             . "email           like '%" . trim($search_for) . "%' or "
             . "alt_email       like '%" . trim($search_for) . "%' or "
-            . "countries.name  like '%" . trim($search_for) . "%'    ";
+            . "countries.name  like '%" . trim($search_for) . "%'    )";
     }
 }
 
-if( empty($search_state) )
-{
-    if( ! empty($search_level) )
-        $where_lines[] = "level = '$search_level'";
-}
-else
-{
-    $where_lines[] = "state = '$search_state'";
-    if( $search_state == "new" ) $search_level = "";
-}
+if( ! empty($search_state) ) $where_lines[] = "state = '$search_state'";
+if( ! empty($search_level) ) $where_lines[] = "level = '$search_level'";
 
 if( ! empty($where_lines) )
 {
@@ -219,7 +213,7 @@ $res = $database->query($query);
     function reset_filter()
     {
         document.filter_form.search_for.value           = "";
-        document.filter_form.search_level.value         = "";
+        document.filter_form.search_level.selectedIndex = 0;
         document.filter_form.search_state.selectedIndex = 0;
         document.filter_form.limit.value                = "20";
         document.filter_form.order.value                = "16";
@@ -233,7 +227,6 @@ $res = $database->query($query);
         
         <input type="hidden" name="mode"         value="set_filter">
         <input type="hidden" name="order"        value="<?= $order ?>">
-        <input type="hidden" name="search_level" value="<?= $search_level ?>">
         <input type="hidden" name="offset"       value="0">
         
         <span style="float: right;">
@@ -250,14 +243,21 @@ $res = $database->query($query);
                title="<?= $current_module->language->admin->record_nav->search_title ?>">
         
         <select name="search_state" onchange="$('#filter_form').submit();">
-            <option <? if( $search_state == "" ) echo "selected"; ?>         value=""        >&lt;<?= $language->record_nav->show_all ?>&gt;</option>
+            <option <? if( $search_state == "" ) echo "selected"; ?>         value=""        >&lt;<?= $current_module->language->admin->record_nav->any_state ?>&gt;</option>
             <option <? if( $search_state == "new" ) echo "selected"; ?>      value="new"     ><?= $current_module->language->admin->record_nav->rec_states->new ?></option>
             <option <? if( $search_state == "enabled" ) echo "selected"; ?>  value="enabled" ><?= $current_module->language->admin->record_nav->rec_states->enabled ?></option>
             <option <? if( $search_state == "disabled" ) echo "selected"; ?> value="disabled"><?= $current_module->language->admin->record_nav->rec_states->disabled ?></option>
         </select>
         
+        <select name="search_level" onchange="$('#filter_form').submit();">
+            <option <? if( $search_level == "" ) echo "selected"; ?> value="">&lt;<?= $current_module->language->admin->record_nav->any_level ?>&gt;</option>
+            <? foreach($config->user_levels_by_level as $level => $name): if($level < 1) continue; ?>
+                <option <? if( $search_level == $level ) echo "selected"; ?> value="<?= $level ?>"><?= $level ?>: <?= $name ?></option>
+            <? endforeach; ?>
+        </select>
+        
         <?= $language->record_nav->show ?>
-        <select name="limit">
+        <select name="limit" onchange="$('#filter_form').submit();">
             <? foreach(array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500) as $recs): ?>
                 <option <? if($limit == $recs) echo "selected" ?>><?= $recs ?></option>
             <? endforeach; ?>
@@ -267,26 +267,6 @@ $res = $database->query($query);
         <button type="submit"><?= $language->record_nav->buttons->apply ?></button>
         <button type="submit" onclick="reset_filter();"><?= $language->record_nav->buttons->reset ?></button>
     </form>
-    
-    <script type="text/javascript">
-        function set_search_level(level)
-        {
-            var $form = $('#filter_form');
-            $form.find('input[name="search_level"]').val(level);
-            $form.submit();
-        }
-    </script>
-    <div class="records_browser filter_links" style="margin-top: 10px;">
-        <?
-        $grouped_counts = $repository->get_counts_by_level();
-        foreach($config->user_levels_by_level as $level => $name):
-            $count = $grouped_counts[$level];
-            if( $count == 0 ) continue; ?>
-            <span class="framed_content pseudo_link <? if($search_level == $level) echo "state_active"; ?>"
-                  onclick="set_search_level('<?= $level ?>')"><?= $name ?> (<?= number_format($count) ?>)</span>
-        <? endforeach; ?>
-        <span class="framed_content pseudo_link" onclick="set_search_level('')"><?= $language->any ?></span>
-    </div>
 </div>
 
 <? if( ! $database->num_rows($res) ): ?>
