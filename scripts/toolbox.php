@@ -29,7 +29,7 @@ header("Content-Type: text/plain; charset=utf-8");
 switch( $_REQUEST["mode"] )
 {
     case "enable_register":
-        
+    {
         $settings->set("modules:accounts.register_enabled", "true");
         send_notification(
             $account->id_account,
@@ -39,9 +39,9 @@ switch( $_REQUEST["mode"] )
         
         die("OK");
         break;
-    
+    }
     case "disable_register":
-        
+    {
         $settings->set("modules:accounts.register_enabled", "false");
         send_notification(
             $account->id_account,
@@ -51,17 +51,19 @@ switch( $_REQUEST["mode"] )
         
         die("OK");
         break;
-    
+    }
     case "enable":
-        
+    {
         $user_account = new account($_REQUEST["id_account"]);
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
     
         if( $account->id_account == $user_account->id_account )
             die( $current_module->language->admin->record_nav->action_messages->no_self_enable_disable );
-    
+        
         $user_account->enable();
+        $current_module->load_extensions("toolbox", "enable_account");
+        
         if( $user_account->level < config::NEWCOMER_USER_LEVEL ) $user_account->set_level(config::NEWCOMER_USER_LEVEL);
         
         send_notification(
@@ -72,9 +74,9 @@ switch( $_REQUEST["mode"] )
         
         die("OK");
         break;
-    
+    }
     case "disable":
-        
+    {
         $user_account = new account($_REQUEST["id_account"]);
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
@@ -83,17 +85,19 @@ switch( $_REQUEST["mode"] )
             die( $current_module->language->admin->record_nav->action_messages->no_self_enable_disable );
         
         $user_account->disable();
+        $current_module->load_extensions("toolbox", "disable_account");
+        
         send_notification(
             $account->id_account,
             "information",
-            $current_module->language->admin->record_nav->action_messages->enabled_ok
+            $current_module->language->admin->record_nav->action_messages->disabled_ok
         );
         
         die("OK");
         break;
-    
+    }
     case "change_level":
-        
+    {
         if( $account->level < $config::MODERATOR_USER_LEVEL )
             die( $current_module->language->admin->record_nav->action_messages->level_change_denied );
         
@@ -114,7 +118,10 @@ switch( $_REQUEST["mode"] )
         if( ! isset($config->user_levels_by_level[$_GET["level"]]))
             die( $current_module->language->admin->record_nav->action_messages->invalid_level_specified );
         
+        $previous_level = $user_account->level;
         $user_account->set_level( $_GET["level"] );
+        if( $previous_level != $_GET["level"] ) $current_module->load_extensions("toolbox", "account_level_changed");
+        
         send_notification(
             $account->id_account,
             "information",
@@ -127,6 +134,7 @@ switch( $_REQUEST["mode"] )
         
         die("OK");
         break;
+    }
 }
 
 echo $current_module->language->admin->record_nav->action_messages->invalid_mode_specified;
