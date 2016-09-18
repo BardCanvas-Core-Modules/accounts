@@ -191,7 +191,7 @@ $res = $database->query($query);
     <script type="text/javascript">
         function show_chart()
         {
-            var src = '<?= $config->full_root_path ?>/accounts/scripts/registrations_chart.php?show=true&width=' + $(window).width() + '&height=200&wasuuup=' + parseInt(Math.random() * 1000000000000000);
+            var src = '<?= $config->full_root_path ?>/accounts/scripts/registrations_chart.php?show=true&width=' + $(window).width() + '&height=200&wasuuup=' + wasuuup();
             $('#chart').html('<img src="' + src + '" style="width: 100%; height: 200px; border: 1px solid black;">');
         }
         

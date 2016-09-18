@@ -4,7 +4,7 @@ function toggle_registration_mode(new_mode)
     var url = $_FULL_ROOT_PATH + '/accounts/scripts/toolbox.php';
     var params = {
         mode: new_mode == 'on' ? 'enable_register' : 'disable_register',
-        wasuuup: parseInt(Math.random() * 1000000000000000)
+        wasuuup: wasuuup()
     };
     
     $.blockUI(blockUI_default_params);
@@ -20,7 +20,7 @@ function toggle_registration_mode(new_mode)
             return;
         }
         
-        location.href = $_PHP_SELF + '?wasuuup=' + parseInt(Math.random() * 1000000000000000);
+        location.href = $_PHP_SELF + '?wasuuup=' + wasuuup();
     });
 }
 
@@ -30,7 +30,7 @@ function switch_admin(id_account, admin_action)
     var params = {
         id_account: id_account,
         mode:       admin_action,
-        wasuuup:    parseInt(Math.random() * 1000000000000000)
+        wasuuup:    wasuuup()
     };
     
     var $tr = $('#accounts_nav').find('tr[id_account="' + id_account + '"]');
@@ -47,7 +47,7 @@ function switch_admin(id_account, admin_action)
             return;
         }
         
-        location.href = $_PHP_SELF + '?wasuuup=' + parseInt(Math.random() * 1000000000000000);
+        location.href = $_PHP_SELF + '?wasuuup=' + wasuuup();
     });
 }
 
@@ -57,7 +57,7 @@ function toggle_account(id_account, new_mode, trigger, reload_page)
     var params = {
         id_account: id_account,
         mode:       new_mode,
-        wasuuup:    parseInt(Math.random() * 1000000000000000)
+        wasuuup:    wasuuup()
     };
     
     var $tr;
@@ -85,7 +85,7 @@ function toggle_account(id_account, new_mode, trigger, reload_page)
             return;
         }
         
-        location.href = $_PHP_SELF + '?wasuuup=' + parseInt(Math.random() * 1000000000000000);
+        location.href = $_PHP_SELF + '?wasuuup=' + wasuuup();
     });
 }
 
@@ -133,7 +133,7 @@ function change_user_level(trigger)
         mode:       'change_level',
         id_account: id_account,
         level:      value,
-        wasuuup:    parseInt(Math.random() * 1000000000000000)
+        wasuuup:    wasuuup()
     };
     
     var $tr = $('#accounts_nav').find('tr[id_account="' + id_account + '"]');
@@ -159,6 +159,6 @@ function change_user_level(trigger)
             return;
         }
         
-        location.href = $_PHP_SELF + '?wasuuup=' + parseInt(Math.random() * 1000000000000000);
+        location.href = $_PHP_SELF + '?wasuuup=' + wasuuup();
     });
 }
