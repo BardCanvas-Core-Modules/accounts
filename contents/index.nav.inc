@@ -112,7 +112,9 @@ switch( $order )
     case 14: $sqlorder = "last_update desc, display_name desc";    break;
     case 15: $sqlorder = "last_activity asc";                      break;
     case 16: $sqlorder = "last_activity desc";                     break;
-    default: $sqlorder = "user_name asc";                          break;
+    case 17: $sqlorder = "id_account asc";                         break;
+    case 18: $sqlorder = "id_account desc";                        break;
+    default: $sqlorder = "id_account desc";                        break;
 }
 
 $config->globals["accounts:nav/presettings_data"] = array($sqlorder, "");
