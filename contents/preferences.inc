@@ -61,7 +61,7 @@ $account_prefs  = $account->get_editable_prefs();
     <? foreach($editable_prefs as $title => $group_data): ?>
         
         <div class="table_wrapper">
-            <table class="settings_group nav_table no_highlight">
+            <table class="settings_group nav_table no_highlight" style="margin-bottom: 20px;">
                 
                 <thead>
                 <tr>
@@ -98,7 +98,7 @@ $account_prefs  = $account->get_editable_prefs();
                                 <?= $specs->description ?>
                             </blockquote>
                         </td>
-                        <td class="control" width="30%">
+                        <td class="control" nowrap width="30%">
                             <?
                             $selector_default = trim($specs["selector_default"]);
                             $value = $account_prefs[$key];
