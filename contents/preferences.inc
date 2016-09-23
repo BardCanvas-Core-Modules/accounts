@@ -88,9 +88,11 @@ $account_prefs  = $account->get_editable_prefs();
                             <div class="principal_data">
                                 <? if($specs["is_locked"] == "true") echo "<span class='fa fa-lock'></span>" ?>
                                 <?= $specs->title ?>
-                                <span class="framed_content inlined fixed_font" style="font-weight: normal;">
-                                    <?= $key ?>
-                                </span>
+                                <? if( $account->_is_admin): ?>
+                                    <span class="framed_content inlined fixed_font" style="font-weight: normal;">
+                                        <?= $key ?>
+                                    </span>
+                                <? endif; ?>
                             </div>
                             <blockquote>
                                 <?= $specs->description ?>
