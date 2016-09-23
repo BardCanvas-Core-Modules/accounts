@@ -10,6 +10,7 @@
  */
 
 use hng2_base\account;
+use hng2_base\account_record;
 use hng2_base\accounts_repository;
 use hng2_base\config;
 use hng2_base\module;
@@ -310,7 +311,7 @@ $res = $database->query($query);
         </thead>
         
         <tbody>
-        <? while( $row = $database->fetch_object($res) ): ?>
+        <? while( $row = $database->fetch_object($res) ): /** @var account_record $row */ ?>
             
             <tr class="<? if( $row->id_account == $account->id_account ) echo "self"; else echo $row->state; ?>"
                 id_account="<?= $row->id_account ?>">
@@ -330,7 +331,10 @@ $res = $database->query($query);
                 
                 <td width="60%" colspan="2">
                     
-                    <div class="principal_data"><?= convert_emojis($row->display_name) ?></div>
+                    <div class="principal_data user_display_name" data-user-level="<?= $row->level ?>">
+                        <span class="fa fa-user"></span>
+                        <?= convert_emojis($row->display_name) ?>
+                    </div>
                     
                     <?
                     $principal_data_addons = array();

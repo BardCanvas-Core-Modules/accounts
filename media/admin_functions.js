@@ -159,6 +159,9 @@ function change_user_level(trigger)
             return;
         }
         
-        location.href = $_PHP_SELF + '?wasuuup=' + wasuuup();
+        if( $('body').hasClass('admin') && document.filter_form )
+            $('#filter_form').submit();
+        else
+            location.href = $_PHP_SELF + '?wasuuup=' + wasuuup();
     });
 }
