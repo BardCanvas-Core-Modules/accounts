@@ -10,11 +10,14 @@
  */
 
 use hng2_base\account;
+use hng2_base\accounts_repository;
 use hng2_base\module;
 
 include "../config.php";
 include "../includes/bootstrap.inc";
 include "../lib/recaptcha-php-1.11/recaptchalib.php";
+
+$repository = new accounts_repository();
 
 $errors = array();
 if( $_POST["mode"] == "create" )
@@ -26,11 +29,20 @@ if( $_POST["mode"] == "create" )
     $current_module->load_extensions("registration", "after_init");
     
     # Validations: missing fields
-    foreach( array("display_name", "user_name", "country", "email", "password", "password2", "recaptcha_response_field") as $field )
+    foreach( array("display_name", "email", "password", "password2", "recaptcha_response_field") as $field )
         if( trim(stripslashes($_POST[$field])) == "" ) $errors[] = $current_module->language->errors->registration->missing->{$field};
     
     $user_name = trim(stripslashes($_POST["user_name"]));
-    if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
+    $country   = trim(stripslashes($_POST["country"]));
+    
+    if( $settings->get("modules:accounts.automatic_user_names") != "true" && empty($user_name) )
+        $errors[] = $current_module->language->errors->registration->missing->user_name;
+    
+    if( $settings->get("modules:accounts.non_mandatory_country") != "true" && empty($country) )
+        $errors[] = $current_module->language->errors->registration->missing->country;
+    
+    if( $settings->get("modules:accounts.automatic_user_names") != "true"
+        && preg_match('/[^a-z0-9\-_]/i', $user_name) )
         $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
     
     # Validations: invalid entries
@@ -52,7 +64,48 @@ if( $_POST["mode"] == "create" )
     $res = recaptcha_check_answer($settings->get("engine.recaptcha_private_key"), get_remote_address(), $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
     if( ! $res->is_valid ) $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
     
-    # Check for duplicate account
+    # Pre-check for double accounts (by display name)
+    if( count($errors) == 0 )
+    {
+        $count = $repository->get_record_count(array("display_name" => $_POST["display_name"]) );
+        if( $count > 0 ) $errors[] = $current_module->language->errors->registration->invalid->display_name_taken;
+    }
+    
+    # User name forging if enabled
+    if( count($errors) == 0 )
+    {
+        if( $settings->get("modules:accounts.automatic_user_names") == "true" )
+        {
+            $user_name = wp_sanitize_filename($xaccount->display_name);
+            if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
+            {
+                $errors[] = $current_module->language->errors->registration->user_name_cant_be_forged;
+            }
+            else
+            {
+                $count = $repository->get_record_count(array("user_name like '$user_name%'"));
+                if( $count == 0 )
+                {
+                    $xaccount->user_name = $user_name;
+                }
+                else
+                {
+                    $user_name .= ($count + 1);
+                    $res   = $repository->get($user_name);
+                    if( ! is_null($res) )
+                        $errors[] = replace_escaped_vars(
+                            $current_module->language->errors->registration->similar_account_exists,
+                            '{$user_name}',
+                            $user_name
+                        );
+                    else
+                        $xaccount->user_name = $user_name;
+                }
+            }
+        }
+    }
+    
+    # Post check for duplicate account
     if( count($errors) == 0 )
     {
         $yaccount = new account($user_name);
@@ -80,6 +133,10 @@ if( $_POST["mode"] == "create" )
         ");
         if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
     }
+    
+    # Final assignments
+    if( $settings->get("modules:accounts.non_mandatory_country") == "true" && empty($xaccount->country) )
+        $xaccount->country = get_geoip_location_data(get_remote_address());
     
     # Proceed to insert the account and notify the user to confirm it
     if( count($errors) == 0 )

@@ -221,7 +221,7 @@ switch( $_REQUEST["mode"] )
             $xaccount->assign_from_posted_form();
             
             # Validations: missing fields
-            foreach( array("display_name", "country", "email" ) as $field )
+            foreach( array("user_name", "display_name", "country", "email" ) as $field )
                 if( trim(stripslashes($_POST[$field])) == "" )
                     $errors[] = $current_module->language->errors->registration->missing->{$field};
             

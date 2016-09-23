@@ -164,6 +164,7 @@
     <user_name>User name:</user_name>
     <password>Password:</password>
     <click_to_continue>Please click here to continue...</click_to_continue>
+    <password_encrypted>(encrypted, can't be shown)</password_encrypted>
     
     <errors>
         
@@ -214,10 +215,21 @@
                 <captcha_invalid>Invalid captcha. Please try again.</captcha_invalid>
                 <chars_in_user_name>Invalid characters in user name.</chars_in_user_name>
                 <user_name_taken>The user name you've specified has been taken. Please choose another.</user_name_taken>
+                <user_name_taken>The display name you've specified has been taken. Please choose another.</user_name_taken>
                 <main_email_exists>There is another account registered with the main email you've provided. Please provide a different one.</main_email_exists>
                 <alt_email_exists>There is another account registered with the alternate email you've provided. Please provide a different one.</alt_email_exists>
                 <birthdate>Please specify a valid birth date in the next format: yyyy-mm-dd.</birthdate>
             </invalid>
+            <user_name_cant_be_forged><![CDATA[
+                There are characters in your display name that can't be transliterated.
+                Please simplify your display name so the system can automatically build your user name
+                and register your account. Once you login, you can change your display name and add special
+                characters and emojis.
+            ]]></user_name_cant_be_forged>
+            <similar_account_exists><![CDATA[
+                Your automatic user name will be <code>{$user_name}</code>, but it can't be created since it already
+                exists. Please specify a more unique display name and try again.
+            ]]></similar_account_exists>
         </registration>
         
         <!-- Account confirmation related -->
@@ -269,6 +281,12 @@
         <creation>Account Creation</creation>
         <registering_disabled>Sorry, but account registration is currently disabled.</registering_disabled>
         <form_info>Please fill the form to register your account. All fields are mandatory except those explicitly specified.</form_info>
+        <automatic_user_names_info><![CDATA[
+            In order to login and identify yourself through mentions (<u>@user</u>), the system
+            will create a user name from your display name, but removing any special characters and emojis.
+            Once registered, the user name can't be changed but your alias can. So please
+            create your account with a simple display name and then change it to something cooler later.
+        ]]></automatic_user_names_info>
         <form_submitted>
             <title>Account created successfully!</title>
             <content><![CDATA[
@@ -461,6 +479,9 @@
                 Greetings, {$display_name}! We've received an account creation request
                 for {$website_name} on your behalf.
                  
+                User name: {$user_name}
+                Password:  {$password}
+                 
                 Please follow the next link or copy it and paste it into your browser's address bar:
                  
                 {$token_url}
@@ -592,6 +613,26 @@
             <title>Disable registrations widget?</title>
             <description><![CDATA[
                 Show/hide the registrations widget chart on top of the accounts browser.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="automatic_user_names">
+            <title>Automatic user names</title>
+            <description><![CDATA[
+                Disables user name introduction on the registration form and builds it automatically.<br>
+                <span class="fa fa-info-circle"></span>
+                Note: this applies only at the moment of account creation.
+                The field is sown read-only on the profile editing form.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="non_mandatory_country">
+            <title>Hide origin country selector on creation?</title>
+            <description><![CDATA[
+                If "Yes", the country selector is hidden on the registration form and is taken from the IP.
+                <span class="fa fa-info-circle"></span>
+                Note: this applies only at the moment of account creation.
+                The field is sown read-only on the profile editing form.
             ]]></description>
             <type>yes/no</type>
         </specs>

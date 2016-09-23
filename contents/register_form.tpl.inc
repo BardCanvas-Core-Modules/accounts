@@ -72,14 +72,23 @@ use hng2_base\settings;
 <? endif; ?>
 
 <?
-$custom_banner = $settings->get("modules:accounts.custom_registration_banner");
-if( ! empty($custom_banner) ) echo "<div class='custom_registration_baner'>$custom_banner</div>";
+if( $_POST["mode"] != "create" )
+{
+    $custom_banner = $settings->get("modules:accounts.custom_registration_banner");
+    if( ! $_no_flag_check && ! empty($custom_banner) ) echo "<div class='custom_registration_baner'>$custom_banner</div>";
+}
 ?>
 
 <? if( ! $_hide_infos ): ?>
     <div class="framed_content state_ok">
         <span class="fa fa-info-circle"></span>
         <?= $current_module->language->register_form->form_info ?>
+        <? if( $settings->get("modules:accounts.automatic_user_names") == "true" ): ?>
+            <div class="framed_content" style="margin-top: 5px; margin-bottom: 0;">
+                <span class="fa fa-warning"></span>
+                <?= $current_module->language->register_form->automatic_user_names_info ?>
+            </div>
+        <? endif; ?>
     </div>
 <? endif; ?>
 
@@ -88,20 +97,22 @@ if( ! empty($custom_banner) ) echo "<div class='custom_registration_baner'>$cust
     <input type="hidden" name="mode"      value="create">
     <input type="hidden" name="redir_url" value="<?= empty($_REQUEST["redir_url"]) ? "" : $_REQUEST["redir_url"] ?>">
     
-    <div class="cell">
-        <div class="field_caption">
-            <?= $current_module->language->user_account_form->user_name ?>
+    <? if( $settings->get("modules:accounts.automatic_user_names") != "true" || $_no_flag_check ): ?>
+        <div class="cell">
+            <div class="field_caption">
+                <?= $current_module->language->user_account_form->user_name ?>
+            </div>
+            <div class="field_input">
+                <input type="text" name="user_name" maxlength="64" value="<?= htmlspecialchars($xaccount->user_name) ?>">
+                <? if( ! $_hide_infos ): ?>
+                    <div class="framed_content state_ok">
+                        <span class="fa fa-info-circle"></span>
+                        <?= $current_module->language->user_account_form->user_name_info ?>
+                    </div>
+                <? endif; ?>
+            </div>
         </div>
-        <div class="field_input">
-            <input type="text" name="user_name" maxlength="64" value="<?= htmlspecialchars($xaccount->user_name) ?>">
-            <? if( ! $_hide_infos ): ?>
-                <div class="framed_content state_ok">
-                    <span class="fa fa-info-circle"></span>
-                    <?= $current_module->language->user_account_form->user_name_info ?>
-                </div>
-            <? endif; ?>
-        </div>
-    </div>
+    <? endif; ?>
     
     <div class="cell">
         <div class="field_caption">
@@ -142,19 +153,21 @@ if( ! empty($custom_banner) ) echo "<div class='custom_registration_baner'>$cust
         </script>
     </div>
     
-    <div class="cell">
-        <div class="field_caption">
-            <?= $current_module->language->user_account_form->country ?>
+    <? if( $settings->get("modules:accounts.non_mandatory_country") != "true" || $_no_flag_check ): ?>
+        <div class="cell">
+            <div class="field_caption">
+                <?= $current_module->language->user_account_form->country ?>
+            </div>
+            <div class="field_input">
+                <select name="country">
+                    <option value=""><?= htmlspecialchars(trim($current_module->language->user_account_form->country_select)) ?></option>
+                    <? foreach($_country_list as $key => $val): ?>
+                        <option <? if($key == $_current_user_country) echo "selected"; ?> value="<?= $key ?>"><?= $val ?></option>
+                    <? endforeach; ?>
+                </select>
+            </div>
         </div>
-        <div class="field_input">
-            <select name="country">
-                <option value=""><?= htmlspecialchars(trim($current_module->language->user_account_form->country_select)) ?></option>
-                <? foreach($_country_list as $key => $val): ?>
-                    <option <? if($key == $_current_user_country) echo "selected"; ?> value="<?= $key ?>"><?= $val ?></option>
-                <? endforeach; ?>
-            </select>
-        </div>
-    </div>
+    <? endif; ?>
     
     <div class="cell">
         <div class="field_caption">
@@ -191,7 +204,7 @@ if( ! empty($custom_banner) ) echo "<div class='custom_registration_baner'>$cust
             <?= $current_module->language->user_account_form->password ?>
         </div>
         <div class="field_input">
-            <input type="password" name="password">
+            <input type="password" name="password" value="<?= htmlspecialchars(stripslashes($_POST["password"])) ?>">
         </div>
     </div>
     
@@ -200,7 +213,7 @@ if( ! empty($custom_banner) ) echo "<div class='custom_registration_baner'>$cust
             <?= $current_module->language->user_account_form->password2 ?>
         </div>
         <div class="field_input">
-            <input type="password" name="password2">
+            <input type="password" name="password2" value="<?= htmlspecialchars(stripslashes($_POST["password2"])) ?>">
         </div>
     </div>
     

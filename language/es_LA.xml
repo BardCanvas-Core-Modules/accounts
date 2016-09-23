@@ -164,6 +164,7 @@
     <user_name>Usuario:</user_name>
     <password>Contraseña:</password>
     <click_to_continue>Da click aquí para continuar...</click_to_continue>
+    <password_encrypted>(cifrada, no puede mostrarse)</password_encrypted>
     
     <errors>
         
@@ -216,10 +217,23 @@
                 <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
                 <chars_in_user_name>Caracteres inválidos en nombre de usuario.</chars_in_user_name>
                 <user_name_taken>El nombre de usuario que especificaste ya existe. Elige otro.</user_name_taken>
+                <display_name_taken>El alias que especificaste ya existe. Elige otro.</display_name_taken>
                 <main_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como principal.</main_email_exists>
                 <alt_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como alterno.</alt_email_exists>
                 <birthdate>Especifica una fecha de nacimiento válida usando el siguiente formato: aaaa-mm-dd.</birthdate>
             </invalid>
+            <user_name_cant_be_forged><![CDATA[
+                Hay caracteres en tu alias que no pueden ser traducidos.
+                Por favor simplifícalo (remueve letras acentuadas, caracteres especiales y emojis)
+                para que el sistema pueda construír tu nombre de usuario de forma automática
+                y poder registrar tu cuenta.
+                Una vez hecho esto, podrás abrir tu sesión y cambiar tu alias para poder añadirle
+                letras acentuadas, caracteres especiales y emojis.
+            ]]></user_name_cant_be_forged>
+            <similar_account_exists><![CDATA[
+                Tu nombre de usuario automático se a fijado a <code>{$user_name}</code>, pero ya existe.
+                Por favor añade algo a tu alias (p.e. números o una palabra) e intenta de nuevo.
+            ]]></similar_account_exists>
         </registration>
         
         <!-- Account confirmation related -->
@@ -271,6 +285,11 @@
         <creation>Creación de cuenta</creation>
         <registering_disabled>Disculpa, pero el registro de cuentas está actualmente desactivado.</registering_disabled>
         <form_info>Llena la forma para registrar tu cuenta. Todos los campos son mandatorios excepto aquellos explícitamente opcionales.</form_info>
+        <automatic_user_names_info><![CDATA[
+            Para poder abrir sesión e identificarte vía menciones (<u>@usuario</u>), el sistema creará
+            un nombre de usuario a partir de tu alias, pero removiendo eñes, acentos, caracteres especiales o emojis.<br>
+            Una vez registrado, el nombre de usuario no puede cambiarse pero sí tu alias.
+        ]]></automatic_user_names_info>
         <form_submitted>
             <title>¡Cuenta creada con éxito!</title>
             <content><![CDATA[
@@ -461,6 +480,9 @@
                 ¡Saludos, {$display_name}! Hemos recibido una solicitud de creación de cuenta para
                 {$website_name} a tu nombre.
                  
+                Nombre de usuario: {$user_name}
+                Contraseña:        {$password}
+                 
                 Por favor da click en el siguiente vínculo o cópialo y pégalo en tu navegador:
                  
                 {$token_url}
@@ -586,6 +608,26 @@
             <title>Deshabilitar gráfica administrativa de cuentas?</title>
             <description><![CDATA[
                 Muestra/oculta la gráfica de registros por día en el navegador de cuentas.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="automatic_user_names">
+            <title>Nombres de usuario automáticos</title>
+            <description><![CDATA[
+                Desactiva la introducción de nombre de usuario de la forma de registro y lo construye automáticamente.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: esto aplica sólo al momento de crear la cuenta.
+                El campo es mostrado en solo lectura en la edición.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="non_mandatory_country">
+            <title>Ocultar selector de país al crear cuenta?</title>
+            <description><![CDATA[
+                Se oculta el selector de países y se obtiene este de la IP.
+                <span class="fa fa-info-circle"></span>
+                Nota: esto aplica sólo al momento de crear la cuenta.
+                El campo es mostrado en solo lectura en la edición.
             ]]></description>
             <type>yes/no</type>
         </specs>
