@@ -242,7 +242,7 @@ $res = $database->query($query);
         
         <?= $language->record_nav->search ?>
         <input type="text" name="search_for"
-               value="<?= htmlspecialchars($search_for) ?>" size="40"
+               value="<?= htmlspecialchars($search_for) ?>" size="30"
                title="<?= $current_module->language->admin->record_nav->search_title ?>">
         
         <select name="search_state" onchange="$('#filter_form').submit();">
