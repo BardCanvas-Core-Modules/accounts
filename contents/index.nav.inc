@@ -46,12 +46,18 @@ if( ! empty($search_for) )
             $this_term = trim($this_term);
             if( ! empty($this_term) )
             {
-                $where_line .= "id_account      =    '" . trim($this_term) . "'   or ";
-                $where_line .= "user_name       like '%" . trim($this_term) . "%' or ";
-                $where_line .= "display_name    like '%" . trim($this_term) . "%' or ";
-                $where_line .= "email           like '%" . trim($this_term) . "%' or ";
-                $where_line .= "alt_email       like '%" . trim($this_term) . "%' or ";
-                $where_line .= "countries.name  like '%" . trim($this_term) . "%' or ";
+                if( is_numeric($this_term) )
+                {
+                    $where_line .= "id_account      =    '" . trim($this_term) . "'   or ";
+                }
+                else
+                {
+                    $where_line .= "user_name       like '%" . trim($this_term) . "%' or ";
+                    $where_line .= "display_name    like '%" . trim($this_term) . "%' or ";
+                    $where_line .= "email           like '%" . trim($this_term) . "%' or ";
+                    $where_line .= "alt_email       like '%" . trim($this_term) . "%' or ";
+                    $where_line .= "countries.name  like '%" . trim($this_term) . "%' or ";
+                }
             }
         }
         $where_line    = substr($where_line, 0, -4);
@@ -60,13 +66,16 @@ if( ! empty($search_for) )
     }
     else
     {
-        $where_lines[] = "("
-            . "id_account      =    '" . trim($search_for) . "'   or "
-            . "user_name       like '%" . trim($search_for) . "%' or "
-            . "display_name    like '%" . trim($search_for) . "%' or "
-            . "email           like '%" . trim($search_for) . "%' or "
-            . "alt_email       like '%" . trim($search_for) . "%' or "
-            . "countries.name  like '%" . trim($search_for) . "%'    )";
+        if( is_numeric($search_for) )
+            $where_lines[] = "("
+                . "id_account      =    '" . trim($search_for) . "'      )";
+        else
+            $where_lines[] = "("
+                . "user_name       like '%" . trim($search_for) . "%' or "
+                . "display_name    like '%" . trim($search_for) . "%' or "
+                . "email           like '%" . trim($search_for) . "%' or "
+                . "alt_email       like '%" . trim($search_for) . "%' or "
+                . "countries.name  like '%" . trim($search_for) . "%'    )";
     }
 }
 
@@ -218,8 +227,9 @@ $res = $database->query($query);
         document.filter_form.search_for.value           = "";
         document.filter_form.search_level.selectedIndex = 0;
         document.filter_form.search_state.selectedIndex = 0;
-        document.filter_form.limit.value                = "20";
-        document.filter_form.order.value                = "16";
+        document.filter_form.limit.value                = 20;
+        document.filter_form.order.value                = 16;
+        document.filter_form.offset.value               = 0;
         document.filter_form.submit();
     }
 </script>
@@ -230,7 +240,7 @@ $res = $database->query($query);
         
         <input type="hidden" name="mode"         value="set_filter">
         <input type="hidden" name="order"        value="<?= $order ?>">
-        <input type="hidden" name="offset"       value="0">
+        <input type="hidden" name="offset"       value="<?= $offset ?>">
         
         <span style="float: right;">
             <?= $browser->get_pagination_button("previous", "paginate", $pagination) ?>
