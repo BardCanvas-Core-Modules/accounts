@@ -227,7 +227,7 @@ if( $_POST["mode"] != "create" )
     <div align="center">
         
         <? if( ! $_hide_captcha ): ?>
-            <?= recaptcha_get_html($settings->get("engine.recaptcha_public_key")) ?>
+            <?= recaptcha_get_html($settings->get("engine.recaptcha_public_key"), null, $_SERVER["HTTPS"]) ?>
             <br>
         <? endif; ?>
         
