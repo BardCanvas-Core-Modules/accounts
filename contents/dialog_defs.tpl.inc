@@ -78,6 +78,12 @@
         <?= $this_module->language->edit_devices ?>
     </a>
     
+    <a class="main_menu_item <?= basename($_SERVER["REQUEST_URI"]) == $account->user_name ? "current" : ""  ?>"
+       href="<?= "$config->full_root_path/user/{$account->user_name}" ?>">
+        <span class="fa fa-home fa-fw"></span>
+        <?= $this_module->language->view_my_profile ?>
+    </a>
+    
     <a class="main_menu_item" href="<?=$config->full_root_path?>/"
        onclick="top.location.href='<?=$config->full_root_path?>/accounts/scripts/logout.php'; return false;">
         <span class="fa fa-sign-out fa-fw"></span>
