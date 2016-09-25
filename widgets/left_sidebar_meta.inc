@@ -51,6 +51,14 @@ else
         </a>
     ";
     
+    $selected = stristr($_SERVER["REQUEST_URI"], "/user/{$account->user_name}") !== false ? "selected" : "";
+    $items[] = "
+        <a class='item {$selected}' href='{$config->full_root_path}/user/{$account->user_name}'>
+            <span class='fa fa-home'></span>
+            {$this_module->language->view_my_profile}
+        </a>
+    ";
+    
     $selected = stristr($_SERVER["PHP_SELF"], "/accounts/edit_account.php") !== false ? "selected" : "";
     $items[] = "
         <a class='item {$selected}' href='{$config->full_root_path}/accounts/edit_account.php'>
@@ -58,6 +66,7 @@ else
             {$this_module->language->widgets->meta->edit_profile}
         </a>
     ";
+    
     $items[] = "
         <a class='item' href='{$config->full_root_path}/accounts/scripts/logout.php'>
             <span class='fa fa-sign-out'></span>
