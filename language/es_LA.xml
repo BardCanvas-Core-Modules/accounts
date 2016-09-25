@@ -13,6 +13,9 @@
         <user_devices>Mis dispositivos</user_devices>
         <preferences>Preferencias</preferences>
     </page_titles>
+
+    <view_my_profile>Ver mi perfil</view_my_profile>
+    <save_now>Guardar ahora</save_now>
     
     <no_engine_prefs>No hay preferencias a definir.</no_engine_prefs>
     <pref_saved_ok>Opción "{$key}" guardada.</pref_saved_ok>

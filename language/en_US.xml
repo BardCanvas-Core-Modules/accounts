@@ -14,6 +14,9 @@
         <preferences>Account preferences</preferences>
     </page_titles>
     
+    <view_my_profile>View my profile</view_my_profile>
+    <save_now>Save now</save_now>
+    
     <no_engine_prefs>There are no preferences to set.</no_engine_prefs>
     <pref_saved_ok>Preference "{$key}" saved.</pref_saved_ok>
     
