@@ -13,6 +13,7 @@
  */
 
 use hng2_base\account;
+use hng2_base\config;
 use hng2_base\settings;
 use hng2_base\template;
 
@@ -109,10 +110,13 @@ switch( $_REQUEST["mode"] )
             if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
                 $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
         
-        if( empty($_POST["birthdate"]) )
-            $errors[] = $current_module->language->errors->registration->invalid->birthdate;
-        elseif( ! @checkdate(substr($_POST["birthdate"], 5, 2), substr($_POST["birthdate"], 8, 2), substr($_POST["birthdate"], 0, 4)) )
-            $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+        if( $account->level < config::MODERATOR_USER_LEVEL )
+        {
+            if( empty($_POST["birthdate"]) )
+                $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+            elseif( ! @checkdate(substr($_POST["birthdate"], 5, 2), substr($_POST["birthdate"], 8, 2), substr($_POST["birthdate"], 0, 4)) )
+                $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+        }
         
         # Impersonation tries
         $query = "
