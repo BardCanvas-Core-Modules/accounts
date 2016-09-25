@@ -179,13 +179,17 @@ use hng2_base\module;
                     </a>
                 </div>
                 <div style="float: left; width: calc(100% - 48px); padding-left: 10px;">
-                    <?= $current_module->language->user_account_form->avatar->upload ?><br>
-                    <input type="file" name="uploaded_avatar"><br>
+                    <?= $current_module->language->user_account_form->avatar->upload ?><br><br>
+                    <input type="file" name="uploaded_avatar"><br><br>
                     <label>
                         <? $checked = $xaccount->avatar == "@gravatar" ? "checked" : ""; ?>
                         <input type="checkbox" <?= $checked ?> name="use_gravatar" value="true">
                         <?= $current_module->language->user_account_form->avatar->use_gravatar ?>
-                    </label>
+                    </label><br><br>
+                    <button type="submit">
+                        <span class="fa fa-check"></span>
+                        <?= $current_module->language->save_now ?>
+                    </button>
                 </div>
             </div>
             
@@ -201,8 +205,12 @@ use hng2_base\module;
             <a class="prettyPhoto" href="<?= $xaccount->get_profile_banner_url() ?>">
                 <img src="<?= $xaccount->get_profile_banner_url() ?>" width="100%">
             </a><br>
-            <?= $current_module->language->user_account_form->banner->upload ?><br>
-            <input type="file" name="uploaded_profile_banner"><br>
+            <?= $current_module->language->user_account_form->banner->upload ?><br><br>
+            <input type="file" name="uploaded_profile_banner"><br><br>
+            <button type="submit">
+                <span class="fa fa-check"></span>
+                <?= $current_module->language->save_now ?>
+            </button>
         </div>
     </div>
     
@@ -252,8 +260,8 @@ use hng2_base\module;
             </button>
         <? else: ?>
             <button type="submit" class="big_form_submit_button">
-                <?= $current_module->language->user_account_form->submit ?>
-                <span class="fa fa-play"></span>
+                <span class="fa fa-check"></span>
+                <?= $language->save ?>
             </button>
         <? endif; ?>
     </div>
