@@ -11,6 +11,7 @@
  */
 
 use hng2_base\account;
+use hng2_base\config;
 use hng2_base\template;
 
 include "../config.php";
@@ -18,6 +19,7 @@ include "../includes/bootstrap.inc";
 include "../includes/guncs.php";
 
 if( ! $account->_exists ) throw_fake_401();
+$origin_account = clone $account;
 
 $errors = $messages = array();
 if( $_POST["mode"] == "save" )
@@ -61,13 +63,16 @@ if( $_POST["mode"] == "save" )
         $errors[] = $current_module->language->errors->registration->invalid->birthdate;
     
     # Impersonation tries
-    $res = $database->query("select * from account where id_account <> '$account->id_account' and (email = '".trim(stripslashes($_POST["email"]))."' or alt_email = '".trim(stripslashes($_POST["email"]))."')");
-    
-    if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
-    
-    if( trim(stripslashes($_POST["alt_email"])) != "" )
+    if( $_POST["email"] != $origin_account->email && $account->level < config::MODERATOR_USER_LEVEL )
     {
-        $res = $database->query("select * from account where id_account <> '$account->id_account' and (email = '".trim(stripslashes($_POST["alt_email"]))."' or alt_email = '".trim(stripslashes($_POST["alt_email"]))."')");
+        $res = $database->query("select * from account where id_account <> '$account->id_account' and (email = '".trim(stripslashes($_POST["email"]))."' or alt_email = '".trim(stripslashes($_POST["email"]))."')");
+        if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
+    }
+    
+    if( $_POST["alt_email"] != "" && $_POST["alt_email"] != $origin_account->alt_email && $account->level < config::MODERATOR_USER_LEVEL )
+    {
+        $query = "select * from account where id_account <> '$account->id_account' and (email = '".trim(stripslashes($_POST["alt_email"]))."' or alt_email = '".trim(stripslashes($_POST["alt_email"]))."')";
+        $res = $database->query($query);
         if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
     }
     
