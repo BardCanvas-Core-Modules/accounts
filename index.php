@@ -119,19 +119,28 @@ switch( $_REQUEST["mode"] )
         }
         
         # Impersonation tries
-        $query = "
-            select * from account
-            where id_account <> '$xaccount->id_account'
-            and (
-                email = '".trim(stripslashes($_POST["email"]))."'
-                or
-                alt_email = '".trim(stripslashes($_POST["email"]))."'
-            )
-        ";
-        $res = $database->query($query);
-        if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
-        if( trim(stripslashes($_POST["alt_email"])) != "" )
-        {
+        if(
+            trim(stripslashes($_POST["email"])) != $xaccount->email
+            && $account->level < config::MODERATOR_USER_LEVEL
+        ) {
+            $query = "
+                select * from account
+                where id_account <> '$xaccount->id_account'
+                and (
+                    email = '".trim(stripslashes($_POST["email"]))."'
+                    or
+                    alt_email = '".trim(stripslashes($_POST["email"]))."'
+                )
+            ";
+            $res = $database->query($query);
+            if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
+        }
+        
+        if(
+            trim(stripslashes($_POST["alt_email"])) != ""
+            && $_POST["alt_email"] != $xaccount->alt_email
+            && $account->level < config::MODERATOR_USER_LEVEL
+        ) {
             $query = "
                 select * from account
                 where id_account <> '$xaccount->id_account'
