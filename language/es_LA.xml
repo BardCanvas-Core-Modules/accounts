@@ -201,7 +201,7 @@
             ]]></recaptcha_not_configured>
             <errors_found_in_form>
                 <pre>Se han encontrado problemas al validar los datos</pre>
-                <post>Corrígelos, reteclea las contraseñas y reenvía la forma.</post>
+                <post>Corrígelos y reenvía la forma.</post>
             </errors_found_in_form>
             <missing>
                 <display_name>Introduce un alias o nombre para mostrar.</display_name>
@@ -597,6 +597,16 @@
             <title>Permitir nuevas cuentas?</title>
             <description><![CDATA[
                 Activar/desactivar el registro de usuarios.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="allow_duplicate_emails">
+            <title>Permitir cuentas de correo duplicadas?</title>
+            <description><![CDATA[
+                Permitir a los usuarios registrar más de una cuenta con la misma dirección de correo.<br>
+                <span class="fa fa-warning"></span>
+                Importante: esto aplica sólo para el registro.
+                Establecer correos duplicados al actualizar perfiles no está permitido.
             ]]></description>
             <type>yes/no</type>
         </specs>

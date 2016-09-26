@@ -112,8 +112,10 @@ if( $_POST["mode"] == "create" )
         if( $yaccount->_exists ) $errors[] = $current_module->language->errors->registration->invalid->user_name_taken;
     }
     
+    $allow_duplicate_emails = $settings->get("modules:accounts.allow_duplicate_emails") == "true";
+    
     # Check for existing main email
-    if( count($errors) == 0 )
+    if( count($errors) == 0 && ! $allow_duplicate_emails )
     {
         $res = $database->query("
             select * from account 
@@ -124,7 +126,7 @@ if( $_POST["mode"] == "create" )
     }
     
     # Check for existing alt email
-    if( count($errors) == 0 && trim(stripslashes($_POST["alt_email"])) != "" )
+    if( count($errors) == 0 && trim(stripslashes($_POST["alt_email"])) != "" && ! $allow_duplicate_emails )
     {
         $res = $database->query("
             select * from account 

@@ -199,7 +199,7 @@
             ]]></recaptcha_not_configured>
             <errors_found_in_form>
                 <pre>Errors found while validating the form!</pre>
-                <post>Please fix them, re-type the passwords and submit the form again.</post>
+                <post>Please fix them and submit the form again.</post>
             </errors_found_in_form>
             <missing>
                 <display_name>Please type in your display name.</display_name>
@@ -602,6 +602,15 @@
             <title>Allow users to register?</title>
             <description><![CDATA[
                 Allow/disallow new users from sign-in.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
+        <specs key="allow_duplicate_emails">
+            <title>Allow duplicate emails?</title>
+            <description><![CDATA[
+                Allow users to register more than one account with the same email address.<br>
+                <span class="fa fa-warning"></span>
+                Important: this only applies for registraion. Setting duplicate emails on profile updates isn't allowed.
             ]]></description>
             <type>yes/no</type>
         </specs>
