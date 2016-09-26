@@ -89,7 +89,7 @@ if( ! empty($_GET["token"]) )
     
     if( count($errors) == 0 )
     {
-        $raw_password = randomPassword();
+        $raw_password = randomPassword(8);
         $xaccount->password = md5($raw_password);
         $xaccount->save();
         $messages[] = replace_escaped_vars(
