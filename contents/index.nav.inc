@@ -374,7 +374,7 @@ $res = $database->query($query);
                             </a>
                         <? endif; ?>
                         
-                        <span class="action pseudo_link" onclick="send_pm(this, '<?= $row->user_name ?>', '<?= replace_escaped_vars($language->contact->pm->send_to, '{$recipient}', htmlspecialchars($row->display_name)) ?>')"
+                        <span class="action pseudo_link" onclick="send_pm(this, '<?= $row->user_name ?>', '<?= htmlspecialchars($row->display_name) ?>')"
                               title="<?= replace_escaped_vars( $language->contact->pm->title, '{$website_name}', $settings->get("engine.website_name") ) ?>">
                             <span class="fa fa-inbox"></span>
                             <?= $language->contact->pm->caption ?>
