@@ -51,7 +51,7 @@ function switch_admin(id_account, admin_action)
     });
 }
 
-function toggle_account(id_account, new_mode, trigger, reload_page)
+function toggle_account(id_account, new_mode, trigger, callback)
 {
     var url = $_FULL_ROOT_PATH + '/accounts/scripts/toolbox.php';
     var params = {
@@ -77,15 +77,12 @@ function toggle_account(id_account, new_mode, trigger, reload_page)
             return;
         }
         
-        if( ! reload_page )
+        if( callback )
         {
             $tr.unblock();
             start_notifications_getter();
-            
-            return;
+            callback();
         }
-        
-        location.href = $_PHP_SELF + '?wasuuup=' + wasuuup();
     });
 }
 
