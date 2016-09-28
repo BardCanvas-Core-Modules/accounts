@@ -233,6 +233,7 @@
                 Your automatic user name will be <code>{$user_name}</code>, but it can't be created since it already
                 exists. Please specify a more unique display name and try again.
             ]]></similar_account_exists>
+            <display_name_taken>Sorry, but the display name you specified is already taken. Please specify another.</display_name_taken>
         </registration>
         
         <!-- Account confirmation related -->

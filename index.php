@@ -13,6 +13,7 @@
  */
 
 use hng2_base\account;
+use hng2_base\accounts_repository;
 use hng2_base\config;
 use hng2_base\settings;
 use hng2_base\template;
@@ -21,6 +22,8 @@ include "../config.php";
 include "../includes/bootstrap.inc";
 include "../includes/guncs.php";
 if( ! $account->_is_admin ) throw_fake_404();
+
+$repository = new accounts_repository();
 
 $template->page_contents_include = "contents/index.nav.inc";
 
@@ -87,6 +90,17 @@ switch( $_REQUEST["mode"] )
         foreach( array("display_name", "country", "email" ) as $field )
             if( trim(stripslashes($_POST[$field])) == "" )
                 $errors[] = $current_module->language->errors->registration->missing->{$field};
+        
+        if( $settings->get("modules:accounts.automatic_user_names") == "true" )
+        {
+            $count = $repository->get_record_count(array(
+                "display_name" => $xaccount->display_name,
+                "id_account <> '$xaccount->id_account'"
+            ));
+            
+            if( $count > 0 )
+                $errors[] = $current_module->language->errors->registration->display_name_taken;
+        }
         
         # Validations: invalid entries
         if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
@@ -227,6 +241,12 @@ switch( $_REQUEST["mode"] )
             $errors[] = $current_module->language->errors->registration->invalid->user_name_taken;
             $xaccount = new account($_POST["user_name"]);
             $xaccount->assign_from_posted_form();
+        }
+        
+        if( $settings->get("modules:accounts.automatic_user_names") == "true" ) {
+            $count = $repository->get_record_count(array("display_name" => $_POST["display_name"]));
+            if( $count > 0 )
+                $errors[] = $current_module->language->errors->registration->display_name_taken;
         }
         
         if( empty($errors) )

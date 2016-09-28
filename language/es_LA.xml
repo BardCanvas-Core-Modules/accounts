@@ -237,6 +237,7 @@
                 Tu nombre de usuario automático se a fijado a <code>{$user_name}</code>, pero ya existe.
                 Por favor añade algo a tu alias (p.e. números o una palabra) e intenta de nuevo.
             ]]></similar_account_exists>
+            <display_name_taken>Disculpa, pero el alias que elegiste ya ha sido tomado. Por favor especifica otro.</display_name_taken>
         </registration>
         
         <!-- Account confirmation related -->

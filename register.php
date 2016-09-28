@@ -35,15 +35,24 @@ if( $_POST["mode"] == "create" )
     $user_name = trim(stripslashes($_POST["user_name"]));
     $country   = trim(stripslashes($_POST["country"]));
     
-    if( $settings->get("modules:accounts.automatic_user_names") != "true" && empty($user_name) )
-        $errors[] = $current_module->language->errors->registration->missing->user_name;
+    if( $settings->get("modules:accounts.automatic_user_names") == "true" )
+    {
+        $count = $repository->get_record_count(array("display_name" => $xaccount->display_name));
+        if( $count > 0 )
+            $errors[] = $current_module->language->errors->registration->display_name_taken;
+    }
+    else
+    {
+        if( empty($user_name) )
+            $errors[] = $current_module->language->errors->registration->missing->user_name;
+    
+        if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
+            $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
+    
+    }
     
     if( $settings->get("modules:accounts.non_mandatory_country") != "true" && empty($country) )
         $errors[] = $current_module->language->errors->registration->missing->country;
-    
-    if( $settings->get("modules:accounts.automatic_user_names") != "true"
-        && preg_match('/[^a-z0-9\-_]/i', $user_name) )
-        $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
     
     # Validations: invalid entries
     if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )

@@ -11,6 +11,7 @@
  */
 
 use hng2_base\account;
+use hng2_base\accounts_repository;
 use hng2_base\config;
 use hng2_base\template;
 
@@ -20,20 +21,35 @@ include "../includes/guncs.php";
 
 if( ! $account->_exists ) throw_fake_401();
 $origin_account = clone $account;
+$xaccount       = clone $account;
+$repository     = new accounts_repository();
 
 $errors = $messages = array();
 if( $_POST["mode"] == "save" )
 {
     # This keeps the whole posted data prepped for output on the form
     $user_name = $account->user_name;
-    $account->assign_from_posted_form();
-    $account->user_name = $user_name;
-    $config->globals["accounts:processing_account"] = $account;
+    $xaccount->assign_from_posted_form();
+    $xaccount->user_name = $user_name;
+    $config->globals["accounts:processing_account"] = $xaccount;
     $current_module->load_extensions("profile_editor", "after_init");
     
     # Validations: missing fields
     foreach( array("display_name", "country", "email" ) as $field )
         if( trim(stripslashes($_POST[$field])) == "" ) $errors[] = $current_module->language->errors->registration->missing->{$field};
+    
+    if(
+        $settings->get("modules:accounts.automatic_user_names") == "true"
+        && $origin_account->display_name != $xaccount->display_name
+    ) {
+        $count = $repository->get_record_count(array(
+            "display_name" => $xaccount->display_name,
+            "id_account <> '$xaccount->id_account'"
+        ));
+        
+        if( $count > 0 )
+            $errors[] = $current_module->language->errors->registration->display_name_taken;
+    }
     
     # Validations: invalid entries
     if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
@@ -63,15 +79,15 @@ if( $_POST["mode"] == "save" )
         $errors[] = $current_module->language->errors->registration->invalid->birthdate;
     
     # Impersonation tries
-    if( $_POST["email"] != $origin_account->email && $account->level < config::MODERATOR_USER_LEVEL )
+    if( $_POST["email"] != $origin_account->email && $xaccount->level < config::MODERATOR_USER_LEVEL )
     {
-        $res = $database->query("select * from account where id_account <> '$account->id_account' and (email = '".trim(stripslashes($_POST["email"]))."' or alt_email = '".trim(stripslashes($_POST["email"]))."')");
+        $res = $database->query("select * from account where id_account <> '$xaccount->id_account' and (email = '".trim(stripslashes($_POST["email"]))."' or alt_email = '".trim(stripslashes($_POST["email"]))."')");
         if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
     }
     
-    if( $_POST["alt_email"] != "" && $_POST["alt_email"] != $origin_account->alt_email && $account->level < config::MODERATOR_USER_LEVEL )
+    if( $_POST["alt_email"] != "" && $_POST["alt_email"] != $origin_account->alt_email && $xaccount->level < config::MODERATOR_USER_LEVEL )
     {
-        $query = "select * from account where id_account <> '$account->id_account' and (email = '".trim(stripslashes($_POST["alt_email"]))."' or alt_email = '".trim(stripslashes($_POST["alt_email"]))."')";
+        $query = "select * from account where id_account <> '$xaccount->id_account' and (email = '".trim(stripslashes($_POST["alt_email"]))."' or alt_email = '".trim(stripslashes($_POST["alt_email"]))."')";
         $res = $database->query($query);
         if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
     }
@@ -79,15 +95,14 @@ if( $_POST["mode"] == "save" )
     # Actual save
     if( count($errors) == 0 )
     {
-        if( trim(stripslashes($_POST["password"])) != "" ) $account->password = md5($account->_raw_password);
-        $account->set_avatar_from_post();
-        $account->set_banner_from_post();
-        $account->save();
+        if( trim(stripslashes($_POST["password"])) != "" ) $xaccount->password = md5($xaccount->_raw_password);
+        $xaccount->set_avatar_from_post();
+        $xaccount->set_banner_from_post();
+        $xaccount->save();
         $messages[] = $current_module->language->edit_account_form->saved_ok;
+        $account = $xaccount;
     }
 }
-
-$xaccount = $account;
 
 # Country list preload
 $current_user_country = $xaccount->country;
