@@ -91,7 +91,7 @@
             </column_titles>
             <row_extras>
                 <email>Correo principal:</email>
-                <alt_email>Correo alterno:</alt_email>
+                <alt_email>Correo adicional:</alt_email>
                 <country>País:</country>
                 <address_state>Estado:</address_state>
                 <creation_host>Creado desde:</creation_host>
@@ -218,11 +218,11 @@
                 <passwords_mismatch>Las contraseñas no coinciden.</passwords_mismatch>
                 <mails_must_be_different>Ambas direcciones de correo deben ser distintas.</mails_must_be_different>
                 <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
-                <chars_in_user_name>Caracteres inválidos en nombre de usuario.</chars_in_user_name>
+                <chars_in_user_name>Caracteres inválidos en nombre de usuario (usar solo letras, números, guiones y guiones bajos).</chars_in_user_name>
                 <user_name_taken>El nombre de usuario que especificaste ya existe. Elige otro.</user_name_taken>
                 <display_name_taken>El alias que especificaste ya existe. Elige otro.</display_name_taken>
                 <main_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como principal.</main_email_exists>
-                <alt_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como alterno.</alt_email_exists>
+                <alt_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como adicional.</alt_email_exists>
                 <birthdate>Especifica una fecha de nacimiento válida usando el siguiente formato: aaaa-mm-dd.</birthdate>
             </invalid>
             <user_name_cant_be_forged><![CDATA[
@@ -406,7 +406,7 @@
             Asegúrate de que especificas una dirección correcta y que tienes acceso al buzón,
             pues se enviará un mensaje con una llave para activar la cuenta una vez que la forma es enviada.
         </email_message>
-        <alt_email>Correo alterno:</alt_email>
+        <alt_email>Correo adicional:</alt_email>
         <alt_email_message>
             Este campo es opcional. Notificaciones y solicitudes de reinicio de contraseña también son enviados aquí.
         </alt_email_message>
