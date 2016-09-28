@@ -239,6 +239,9 @@ switch( $_REQUEST["mode"] )
                     $errors[] = $current_module->language->errors->registration->missing->{$field};
             
             # Validations: invalid entries
+            if( preg_match('/[^a-z0-9\-_]/i', $xaccount->user_name) )
+                $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
+            
             if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
                 $errors[] = $current_module->language->errors->registration->invalid->email;
             
@@ -261,6 +264,8 @@ switch( $_REQUEST["mode"] )
                     $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
             
             # Impersonation tries
+            # -- disabled for admins
+            /*
             $query = "
                 select * from account
                 where id_account <> '$xaccount->id_account'
@@ -272,6 +277,7 @@ switch( $_REQUEST["mode"] )
             ";
             $res = $database->query($query);
             if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
+            
             if( trim(stripslashes($_POST["alt_email"])) != "" )
             {
                 $query = "
@@ -286,6 +292,7 @@ switch( $_REQUEST["mode"] )
                 $res = $database->query($query);
                 if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
             }
+            */
         }
         
         # Actual save
@@ -295,6 +302,7 @@ switch( $_REQUEST["mode"] )
             $xaccount->set_new_id();
             $xaccount->save();
             $xaccount->enable();
+            $xaccount->set_level(config::NEWCOMER_USER_LEVEL);
             $messages[] = $current_module->language->register_form->account_manually_created;
             
             $template->set_page_title($current_module->language->admin->record_nav->page_title);
