@@ -357,19 +357,19 @@ $res = $database->query($query);
                     ?>
                     
                     <div class="actions">
-                        <a href="<?= $config->full_root_path ?>/user/<?= $row->user_name ?>" target="_blank">
+                        <a class="action" href="<?= $config->full_root_path ?>/user/<?= $row->user_name ?>" target="_blank">
                             <span class="fa fa-home"></span>
                             <?= $row->user_name ?>
                         </a>
                         
-                        <a class="action" target="_blank" href="<?= $config->full_root_path ?>/contact/?target=<?= urlencode($row->user_name) ?>">
-                            <span class="fa fa-envelope"></span>
+                        <span class="action pseudo_link clipboard-copy" data-clipboard-text="<?= $row->email ?>">
+                            <span class="fa fa-copy"></span>
                             <?= $row->email ?>
-                        </a>
+                        </span>
                         
                         <? if( ! empty($row->alt_email) ): ?>
-                            <a class="action" target="_blank" href="<?= $config->full_root_path ?>/contact/?target=<?= urlencode($row->user_name) ?>">
-                                <span class="fa fa-envelope"></span>
+                            <a class="action pseudo_link clipboard-copy" data-clipboard-text="<?= $row->alt_email ?>">
+                                <span class="fa fa-copy"></span>
                                 <?= $row->alt_email ?>
                             </a>
                         <? endif; ?>
