@@ -48,7 +48,6 @@ if( $_POST["mode"] == "create" )
     
         if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
             $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
-    
     }
     
     if( $settings->get("modules:accounts.non_mandatory_country") != "true" && empty($country) )
@@ -85,7 +84,7 @@ if( $_POST["mode"] == "create" )
     {
         if( $settings->get("modules:accounts.automatic_user_names") == "true" )
         {
-            $user_name = wp_sanitize_filename($xaccount->display_name);
+            $user_name = str_replace("_", "-", wp_sanitize_filename($xaccount->display_name));
             if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
             {
                 $errors[] = $current_module->language->errors->registration->user_name_cant_be_forged;
