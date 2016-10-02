@@ -45,8 +45,8 @@
                 <id>
                     <layout xalign="center" xnowrap="true" />
                     <caption>Id</caption>
-                    <order_asc  id="17">Order by id ascending</order_asc>
-                    <order_desc id="18">Order by id descending</order_desc>
+                    <!--<order_asc  id="17">Order by id ascending</order_asc>-->
+                    <!--<order_desc id="18">Order by id descending</order_desc>-->
                 </id>
                 <full_name>
                     <layout xnowrap="true" />
