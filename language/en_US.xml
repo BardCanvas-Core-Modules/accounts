@@ -77,7 +77,7 @@
                     <order_desc id="16">Order by last activity date descending</order_desc>
                 </online>
                 <created>
-                    <layout xalign="center" xnowrap="true" />
+                    <layout xnowrap="true" />
                     <caption>Created</caption>
                     <order_asc  id="9">Order by creation date + display name ascending</order_asc>
                     <order_desc id="10">Order by creation date + display name descending</order_desc>

@@ -77,7 +77,7 @@
                     <order_desc id="16">Ordenar por fecha de última actividad descendente</order_desc>
                 </online>
                 <created>
-                    <layout xalign="center" xnowrap="true" />
+                    <layout xnowrap="true" />
                     <caption>Creado</caption>
                     <order_asc  id="9">Ordenar por fecha de creación + alias ascendente</order_asc>
                     <order_desc id="10">Ordenar por fecha de creación + alias descendente</order_desc>
