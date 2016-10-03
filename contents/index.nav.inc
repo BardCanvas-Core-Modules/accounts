@@ -458,10 +458,43 @@ $res = $database->query($query);
                     <?= time_elapsed_string_alternate($row->last_activity) ?>
                 </td>
                 
-                <td nowrap align="center">
-                    <?= time_elapsed_string($row->creation_date) ?>
-                    <span class="fa pseudo_link fa-globe fa-fw" title="<?= $row->creation_host ?>"
-                          onclick="alert('<?= $current_module->language->admin->record_nav->row_extras->creation_host ?>\n<?= str_replace("; ", "\\n", $row->creation_host) ?>')"></span>
+                <td align="left">
+                    <?= time_today_string($row->creation_date) ?><br>
+                    (<?= time_elapsed_string($row->creation_date) ?>)<br>
+                    <? if( ! empty($row->creation_host) ): ?>
+                        
+                        <? list($ip, $hostname) = explode("; ", $row->creation_host) ?>
+                        <span class="nowrap">
+                            <span class="fa fa-cloud fa-fw"></span><?= $ip ?>
+                            <? if( $hostname != $ip ): ?>
+                                <span class="fa pseudo_link fa-info-circle fa-fw" title="<?= $row->creation_host ?>"
+                                      onclick="alert('<?= $current_module->language->admin->record_nav->row_extras->creation_host ?>\n<?= str_replace("; ", "\\n", $row->creation_host) ?>')"></span>
+                            <? endif; ?>
+                        </span><br>
+                        
+                        <?
+                        $location = forge_geoip_location($ip);
+                        $parts    = explode("; ", $location);
+                        $isp      = array_pop($parts);
+                        $country  = array_pop($parts);
+                        $city     = implode("; ", $parts);
+                        if( $city != "N/A; N/A") : ?>
+                            <span>
+                                <span class="fa fa-map-marker fa-fw"></span><?= $city ?>
+                            </span><br>
+                        <? endif; ?>
+                        <? if($country != "N/A"): ?>
+                            <span>
+                                <span class="fa fa-globe fa-fw"></span><?= $country ?>
+                            </span><br>
+                        <? endif; ?>
+                        <? if($isp != "N/A"): ?>
+                            <span>
+                                <span class="fa fa-building fa-fw"></span><?= $isp ?>
+                            </span><br>
+                        <? endif; ?>
+                    <? endif; ?>
+                    
                 </td>
                 <td nowrap align="center"><?= time_elapsed_string($row->last_update) ?></td>
                 
