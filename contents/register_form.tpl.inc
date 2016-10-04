@@ -138,6 +138,12 @@ if( $_POST["mode"] != "create" )
                    style="width: calc(99% - 24px)"
                    value="<?= $xaccount->birthdate ?>">
             <span id="birthdate_trigger" class="fa fa-fw fa-calendar-o pseudo_link"></span>
+            <? if( ! $_hide_infos ): ?>
+                <div class="framed_content state_ok">
+                    <span class="fa fa-info-circle"></span>
+                    <?= $current_module->language->user_account_form->brithdate_info ?>
+                </div>
+            <? endif; ?>
         </div>
         <script type="text/javascript">
             $(document).ready(function()

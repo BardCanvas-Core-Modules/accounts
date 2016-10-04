@@ -396,18 +396,21 @@
             Exapmle: <code>Iam-TheKing_2016</code>
         ]]></user_name_info>
         <birthdate>Your birth date (yyyy-mm-dd):</birthdate>
+        <brithdate_info><![CDATA[
+            This field is kept private.
+        ]]></brithdate_info>
         <country>Country of residence:</country>
         <country_select><![CDATA[
-            <Please select a country>
+            &lt;Please select a country&gt;
         ]]></country_select>
         <email>Main e-mail:</email>
         <email_message>
-            Please ensure you can access this email account, because a message will be sent
+            This field is kept private. Please ensure you can access this email account, because a message will be sent
             with a token to activate your account once the info is submitted.
         </email_message>
         <alt_email>Alternate e-mail:</alt_email>
         <alt_email_message>
-            This e-mail address is optional. Notifications and password reset requests are also sent here.
+            This e-mail address is optional and also kept private. Notifications and password reset requests are also sent here.
         </alt_email_message>
         <password>Please enter a password:</password>
         <password2>Please repeat the password:</password2>

@@ -398,18 +398,22 @@
             Ejemplo: <code>YoSoy-ElRey_2016</code>
         ]]></user_name_info>
         <birthdate>Fecha de nacimiento (aaaa-mm-dd):</birthdate>
+        <brithdate_info><![CDATA[
+            Este campo se mantiene privado.
+        ]]></brithdate_info>
         <country>País de residencia:</country>
         <country_select><![CDATA[
-            <Selecciona un país>
+            &lt;Selecciona un país&gt;
         ]]></country_select>
         <email>Correo principal:</email>
         <email_message>
+            Este campo se mantiene privado.
             Asegúrate de que especificas una dirección correcta y que tienes acceso al buzón,
             pues se enviará un mensaje con una llave para activar la cuenta una vez que la forma es enviada.
         </email_message>
         <alt_email>Correo adicional:</alt_email>
         <alt_email_message>
-            Este campo es opcional. Notificaciones y solicitudes de reinicio de contraseña también son enviados aquí.
+            Este campo es opcional y también se mantiene privado. Notificaciones y solicitudes de reinicio de contraseña también son enviados aquí.
         </alt_email_message>
         <password>Introduce una contraseña:</password>
         <password2>Repite la contraseña:</password2>
