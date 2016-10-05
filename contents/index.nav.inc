@@ -235,6 +235,20 @@ $res = $database->query($query);
 </script>
 
 <div class="filtering clearfix">
+    
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            $('#filter_form').keypress(function(e) {
+                if( (e.keyCode == 13) && (e.target.type != "textarea") )
+                {
+                    e.preventDefault();
+                    $(this).submit();
+                }
+            });
+        });
+    </script>
+    
     <form name="filter_form" id="filter_form" action="<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<? echo mt_rand(1, 65535); ?>"
           method="get">
         
@@ -253,7 +267,8 @@ $res = $database->query($query);
         <?= $language->record_nav->search ?>
         <input type="text" name="search_for"
                value="<?= htmlspecialchars($search_for) ?>" size="30"
-               title="<?= $current_module->language->admin->record_nav->search_title ?>">
+               title="<?= $current_module->language->admin->record_nav->search_title ?>"
+               onkeypress="">
         
         <select name="search_state" onchange="$('#filter_form').submit();">
             <option <? if( $search_state == "" ) echo "selected"; ?>         value=""        >&lt;<?= $current_module->language->admin->record_nav->any_state ?>&gt;</option>
@@ -269,16 +284,18 @@ $res = $database->query($query);
             <? endforeach; ?>
         </select>
         
-        <?= $language->record_nav->show ?>
-        <select name="limit" onchange="$('#filter_form').submit();">
-            <? foreach(array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500) as $recs): ?>
-                <option <? if($limit == $recs) echo "selected" ?>><?= $recs ?></option>
-            <? endforeach; ?>
-        </select>
-        <?= $language->record_nav->recs_per_page ?>
-        
-        <button type="submit"><?= $language->record_nav->buttons->apply ?></button>
-        <button type="submit" onclick="reset_filter();"><?= $language->record_nav->buttons->reset ?></button>
+        <span class="inline-block">
+            <?= $language->record_nav->show ?>
+            <select name="limit" onchange="$('#filter_form').submit();">
+                <? foreach(array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500) as $recs): ?>
+                    <option <? if($limit == $recs) echo "selected" ?>><?= $recs ?></option>
+                <? endforeach; ?>
+            </select>
+            <?= $language->record_nav->recs_per_page ?>
+            
+            <button type="submit"><?= $language->record_nav->buttons->apply ?></button>
+            <button onclick="reset_filter();"><?= $language->record_nav->buttons->reset ?></button>
+        </span>
     </form>
 </div>
 
