@@ -354,9 +354,11 @@ $res = $database->query($query);
                     ?>
                 </td>
                 
-                <td nowrap align="center"><?= $row->id_account ?></td>
-                
                 <td width="60%" colspan="2">
+                    
+                    <div class="pseudo_link clipboard-copy" data-clipboard-text="<?= $row->id_account ?>">
+                        <code>#<?= $row->id_account ?><span class="fa fa-copy fa-fw"></span></code>
+                    </div>
                     
                     <div class="principal_data user_display_name" data-user-level="<?= $row->level ?>">
                         <span class="fa fa-user"></span>

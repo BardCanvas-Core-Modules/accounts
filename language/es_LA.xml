@@ -42,12 +42,6 @@
                     <layout xalign="center" xwidth="20" xnowrap="true" />
                     <caption><![CDATA[ <span class="fa fa-flag"></span> ]]></caption>
                 </state>
-                <id>
-                    <layout xalign="center" xnowrap="true" />
-                    <caption>Id</caption>
-                    <!--<order_asc  id="17">Ordenar por id ascendente</order_asc>-->
-                    <!--<order_desc id="18">Ordenar por id descendente</order_desc>-->
-                </id>
                 <full_name>
                     <layout xnowrap="true" />
                     <caption>Alias</caption>
