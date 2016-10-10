@@ -58,6 +58,22 @@ $account_prefs  = $account->get_editable_prefs();
 
 <form method="post" id="preferences" action="<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<?=md5(mt_rand(1,65535))?>">
     
+    <?
+    $sanitized_list = array();
+    ksort($editable_prefs);
+    foreach($editable_prefs as $title => $group_data)
+    {
+        foreach($group_data as $key => $specs)
+        {
+            if( isset($specs["min_account_level"]) )
+                if( $account->level < $specs["min_account_level"] )
+                    continue;
+            
+            $sanitized_list[$title][$key] = $specs;
+        }
+    }
+    $editable_prefs = $sanitized_list;
+    ?>
     <? foreach($editable_prefs as $title => $group_data): ?>
         
         <div class="table_wrapper">
