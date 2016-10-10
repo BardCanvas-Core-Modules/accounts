@@ -393,11 +393,13 @@ $res = $database->query($query);
                             </a>
                         <? endif; ?>
                         
-                        <span class="action pseudo_link" onclick="send_pm(this, '<?= $row->user_name ?>', '<?= htmlspecialchars($row->display_name) ?>')"
-                              title="<?= replace_escaped_vars( $language->contact->pm->title, '{$website_name}', $settings->get("engine.website_name") ) ?>">
-                            <span class="fa fa-inbox"></span>
-                            <?= $language->contact->pm->caption ?>
-                        </span>
+                        <? if($modules["messaging"]->enabled): ?>
+                            <span class="action pseudo_link" onclick="send_pm(this, '<?= $row->user_name ?>', '<?= htmlspecialchars($row->display_name) ?>')"
+                                  title="<?= replace_escaped_vars( $language->contact->pm->title, '{$website_name}', $settings->get("engine.website_name") ) ?>">
+                                <span class="fa fa-inbox"></span>
+                                <?= $language->contact->pm->caption ?>
+                            </span>
+                        <? endif; ?>
                     </div>
                     
                     <div class="actions">
