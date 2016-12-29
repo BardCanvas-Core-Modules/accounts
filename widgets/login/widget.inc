@@ -21,7 +21,7 @@
 use hng2_base\module;
 use hng2_base\template;
 
-global $account, $config, $language;
+global $account, $config, $language, $settings;
 
 if( $account->_exists )
     return "
@@ -48,11 +48,13 @@ ob_start(); ?>
           action="<?=$config->full_root_path?>/accounts/scripts/login.php">
         <input type="hidden" name="goto" value="<?= $_SERVER["REQUEST_URI"] ?>">
         
-        <a class="framed_content state_highlight" 
-           style="display: block; margin-top: 0; margin-bottom: 10px; text-align: center; font-size: 1.2em;"
-           href="<?= $config->full_root_path ?>/accounts/register.php">
-            <?= $this_module->language->create_account_now ?>
-        </a>
+        <? if( $settings->get("modules:accounts.register_enabled") != "false" ): ?>
+            <a class="framed_content state_highlight" 
+               style="display: block; margin-top: 0; margin-bottom: 10px; text-align: center; font-size: 1.2em;"
+               href="<?= $config->full_root_path ?>/accounts/register.php">
+                <?= $this_module->language->create_account_now ?>
+            </a>
+        <? endif; ?>
         
         <div class="field">
             <div class="caption"><?= $this_module->language->user_name ?></div>

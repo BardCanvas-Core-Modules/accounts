@@ -34,7 +34,7 @@ if( ! $account->_exists )
     $template->add_menu_item(
         "_____login_____",
         "
-        <span class='main_menu_item always_visible pull-right pseudo_link' data-module='accounts' onclick='return show_login_form()'>
+        <span class='main_menu_item always_visible pull-right pseudo_link' id='header_login_button' data-module='accounts' onclick='show_login_form()'>
            <span class='fa fa-sign-in'></span>
            {$this_module->language->login}
         </span>

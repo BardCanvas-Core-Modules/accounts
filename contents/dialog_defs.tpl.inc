@@ -54,61 +54,70 @@
         </form>
     </div>
     
-<? endif; ?>
-
-<div id="user_menu_items" class="dropdown_menu" style="display: none;">
+    <div id="login_errors" style="display: none;">
+        <div class="invalid_login_info"><?= $this_module->language->errors->invalid_login_info ?></div>
+        <div class="ERROR_MISSING_PARAMS"><?= $this_module->language->errors->missing_params ?></div>
+        <div class="ERROR_ACCOUNT_UNEXISTENT"><?= $this_module->language->errors->account_unexistent ?></div>
+        <div class="ERROR_ACCOUNT_DISABLED"><?= $this_module->language->errors->account_disabled ?></div>
+        <div class="ERROR_UNCONFIRMED_ACCOUNT"><?= unindent($this_module->language->errors->verification_email_resent) ?></div>
+        <div class="ERROR_WRONG_PASSWORD"><?= $this_module->language->errors->wrong_password ?></div>
+        <div class="ERROR_ENGINE_DISABLED"><?= $this_module->language->errors->engine_disabled ?></div>
+        <div class="ERROR_DEVICE_DISABLED"><?= $this_module->language->errors->device_disabled ?></div>
+    </div>
+    <div id="device_messages" style="display: none;">
+        <div class="UNREGISTERED"><?= $this_module->language->errors->device_unregistered ?></div>
+    </div>
     
-    <a class="main_menu_item <?= $current_module->name == $this_module->name && basename($_SERVER["PHP_SELF"]) == "edit_account.php" ? "current" : ""  ?>"
-       href="<?= "$config->full_root_path/$this_module->name/edit_account.php" ?>">
-        <span class="fa fa-edit fa-fw"></span>
-        <?= $this_module->language->edit_account ?>
-    </a>
+    <div id="reset_messages" style="display: none;">
+        <div class="OK"><?= $this_module->language->reset_form->OK ?></div>
+    </div>
     
-    <? if( ! empty($config->globals["editable_prefs_collection"]) ): ?>
-        <a class="main_menu_item <?= $current_module->name == $this_module->name && basename($_SERVER["PHP_SELF"]) == "preferences.php" ? "current" : ""  ?>"
-           href="<?= "$config->full_root_path/$this_module->name/preferences.php" ?>">
-            <span class="fa fa-list-ul fa-fw"></span>
-            <?= $this_module->language->preferences ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if( '<?= $_GET["show_login_form"] ?>' == 'true' )
+                show_login_form();
+        });
+    </script>
+    
+<? else: ?>
+    
+    <div id="user_menu_items" class="dropdown_menu" style="display: none;">
+        
+        <a class="main_menu_item <?= $current_module->name == $this_module->name && basename($_SERVER["PHP_SELF"]) == "edit_account.php" ? "current" : ""  ?>"
+           href="<?= "$config->full_root_path/$this_module->name/edit_account.php" ?>">
+            <span class="fa fa-edit fa-fw"></span>
+            <?= $this_module->language->edit_account ?>
         </a>
-    <? endif; ?>
+        
+        <? if( ! empty($config->globals["editable_prefs_collection"]) ): ?>
+            <a class="main_menu_item <?= $current_module->name == $this_module->name && basename($_SERVER["PHP_SELF"]) == "preferences.php" ? "current" : ""  ?>"
+               href="<?= "$config->full_root_path/$this_module->name/preferences.php" ?>">
+                <span class="fa fa-list-ul fa-fw"></span>
+                <?= $this_module->language->preferences ?>
+            </a>
+        <? endif; ?>
+        
+        <a class="main_menu_item <?= $current_module->name == $this_module->name && basename($_SERVER["PHP_SELF"]) == "devices.php" ? "current" : "" ?>"
+           href="<?= "$config->full_root_path/$this_module->name/devices.php" ?>">
+            <span class="fa fa-mobile fa-fw"></span>
+            <?= $this_module->language->edit_devices ?>
+        </a>
+        
+        <a class="main_menu_item <?= basename($_SERVER["REQUEST_URI"]) == $account->user_name ? "current" : ""  ?>"
+           href="<?= "$config->full_root_path/user/{$account->user_name}" ?>">
+            <span class="fa fa-home fa-fw"></span>
+            <?= $this_module->language->view_my_profile ?>
+        </a>
+        
+        <a class="main_menu_item" href="<?=$config->full_root_path?>/"
+           onclick="top.location.href='<?=$config->full_root_path?>/accounts/scripts/logout.php'; return false;">
+            <span class="fa fa-sign-out fa-fw"></span>
+            <?= $this_module->language->logout ?>
+        </a>
     
-    <a class="main_menu_item <?= $current_module->name == $this_module->name && basename($_SERVER["PHP_SELF"]) == "devices.php" ? "current" : "" ?>"
-       href="<?= "$config->full_root_path/$this_module->name/devices.php" ?>">
-        <span class="fa fa-mobile fa-fw"></span>
-        <?= $this_module->language->edit_devices ?>
-    </a>
+    </div>
     
-    <a class="main_menu_item <?= basename($_SERVER["REQUEST_URI"]) == $account->user_name ? "current" : ""  ?>"
-       href="<?= "$config->full_root_path/user/{$account->user_name}" ?>">
-        <span class="fa fa-home fa-fw"></span>
-        <?= $this_module->language->view_my_profile ?>
-    </a>
-    
-    <a class="main_menu_item" href="<?=$config->full_root_path?>/"
-       onclick="top.location.href='<?=$config->full_root_path?>/accounts/scripts/logout.php'; return false;">
-        <span class="fa fa-sign-out fa-fw"></span>
-        <?= $this_module->language->logout ?>
-    </a>
-
-</div>
-
-<div id="login_errors" style="display: none;">
-    <div class="invalid_login_info"><?= $this_module->language->errors->invalid_login_info ?></div>
-    <div class="ERROR_MISSING_PARAMS"><?= $this_module->language->errors->missing_params ?></div>
-    <div class="ERROR_ACCOUNT_UNEXISTENT"><?= $this_module->language->errors->account_unexistent ?></div>
-    <div class="ERROR_ACCOUNT_DISABLED"><?= $this_module->language->errors->account_disabled ?></div>
-    <div class="ERROR_UNCONFIRMED_ACCOUNT"><?= unindent($this_module->language->errors->verification_email_resent) ?></div>
-    <div class="ERROR_WRONG_PASSWORD"><?= $this_module->language->errors->wrong_password ?></div>
-    <div class="ERROR_ENGINE_DISABLED"><?= $this_module->language->errors->engine_disabled ?></div>
-    <div class="ERROR_DEVICE_DISABLED"><?= $this_module->language->errors->device_disabled ?></div>
-</div>
-<div id="device_messages" style="display: none;">
-    <div class="UNREGISTERED"><?= $this_module->language->errors->device_unregistered ?></div>
-</div>
-
-<div id="reset_messages" style="display: none;">
-    <div class="OK"><?= $this_module->language->reset_form->OK ?></div>
-</div>
+<? endif; ?>
 
 <? if( ! $account->_is_admin) return; ?>
 
