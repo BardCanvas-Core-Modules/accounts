@@ -56,7 +56,8 @@ if( $account->state != "enabled" )
 if( md5(trim(stripslashes($_POST["password"]))) != $account->password )
     die("ERROR_WRONG_PASSWORD");
 
-if( $settings->get("engine.enabled") != "true" && ! $account->_is_admin )
+if( $settings->get("engine.enabled") != "true" &&
+    ! $account->_is_admin )
     die("ERROR_ENGINE_DISABLED");
 
 #==========================================#

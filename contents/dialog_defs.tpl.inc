@@ -119,7 +119,7 @@
     
 <? endif; ?>
 
-<? if( ! $account->_is_admin) return; ?>
+<? if( ! $account->has_admin_rights_to_module("accounts") ) return; ?>
 
 <div id="level_switch" style="display: none;">
     <select onchange="change_user_level(this)">

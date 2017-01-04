@@ -11,6 +11,7 @@
  * @var template          $template
  * @var settings          $settings
  * @var \SimpleXMLElement $language
+ * @var module            $current_module
  * 
  * $_GET params:
  * @param mode
@@ -18,12 +19,13 @@
 
 use hng2_base\account;
 use hng2_base\config;
+use hng2_base\module;
 use hng2_base\settings;
 use hng2_base\template;
 
 include "../../config.php";
 include "../../includes/bootstrap.inc";
-if( ! $account->_is_admin ) throw_fake_404();
+if( $account->level < $config::MODERATOR_USER_LEVEL ) throw_fake_404();
 
 header("Content-Type: text/plain; charset=utf-8");
 switch( $_REQUEST["mode"] )
@@ -98,8 +100,8 @@ switch( $_REQUEST["mode"] )
     }
     case "change_level":
     {
-        if( $account->level < $config::MODERATOR_USER_LEVEL )
-            die( $current_module->language->admin->record_nav->action_messages->level_change_denied );
+        # if( $account->level < $config::MODERATOR_USER_LEVEL )
+        #     die( $current_module->language->admin->record_nav->action_messages->level_change_denied );
         
         $user_account = new account($_REQUEST["id_account"]);
         

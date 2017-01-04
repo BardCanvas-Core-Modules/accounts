@@ -89,6 +89,7 @@
                 <country>Country:</country>
                 <address_state>State:</address_state>
                 <creation_host>Created from:</creation_host>
+                <granted_admin_to_modules>>Granted admin to</granted_admin_to_modules>
             </row_extras>
             <devices_columns>
                 <id_device>Device id</id_device>
@@ -134,6 +135,7 @@
                 <no_upper_level_allowed>You can't assign a user level above yours.</no_upper_level_allowed>
                 <invalid_level_specified>Invalid level specified.</invalid_level_specified>
                 <level_change_ok>{$user} level has been changed to {$level} ({$level_name}). If the user is online, he/she might get warnings or errors until their session is restarted.</level_change_ok>
+                <grant_admin_to_modules>Specify a comma separated list of module names for which this user will have admin rights. Note: this list may be modified by other modules!</grant_admin_to_modules>
             </action_messages>
             <devices_and_login_infos>Devices and login info</devices_and_login_infos>
         </record_nav>

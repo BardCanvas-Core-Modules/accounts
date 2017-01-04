@@ -21,7 +21,7 @@ use hng2_base\template;
 include "../config.php";
 include "../includes/bootstrap.inc";
 include "../includes/guncs.php";
-if( ! $account->_is_admin ) throw_fake_404();
+if( ! $account->has_admin_rights_to_module("accounts") ) throw_fake_404();
 
 $repository = new accounts_repository();
 

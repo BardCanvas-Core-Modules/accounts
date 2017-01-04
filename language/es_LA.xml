@@ -89,6 +89,7 @@
                 <country>País:</country>
                 <address_state>Estado:</address_state>
                 <creation_host>Creado desde:</creation_host>
+                <granted_admin_to_modules>Admin otorgado a</granted_admin_to_modules>
             </row_extras>
             <devices_columns>
                 <id_device>Id dispositivo</id_device>
@@ -134,6 +135,7 @@
                 <no_upper_level_allowed>No puedes asignar un nivel sobre el tuyo.</no_upper_level_allowed>
                 <invalid_level_specified>Nivel inválido</invalid_level_specified>
                 <level_change_ok>Nivel de {$user} cambiado a {$level} ({$level_name}). Si el usuario tiene una sesión abierta, puede recibir alertas o errores hasta que reabra su sesión.</level_change_ok>
+                <grant_admin_to_modules>Especifica una lista separada por comas de los nombres de módulos a los cuales se le otorgarán privilegios de administrador a este usuario. Nota: la lista puede ser alterada por otros módulos!</grant_admin_to_modules>
             </action_messages>
             <devices_and_login_infos>Información de dispositivos y sesiones</devices_and_login_infos>
         </record_nav>

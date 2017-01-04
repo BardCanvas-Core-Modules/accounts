@@ -318,6 +318,9 @@ $res = $database->query($query);
             $current_module->load_extensions("records_browser", "additional_headers");
             $headers = $config->globals["accounts:nav/additional_headers"];
             unset( $config->globals["accounts:nav/additional_headers"] );
+            if( $account->_is_admin ) $headers[] = (object) array(
+                "content" => $current_module->language->admin->record_nav->row_extras->granted_admin_to_modules
+            );
             foreach( $headers as $this_cell ): ?>
                 <th align="<?= $this_cell->xalign ?>" valign="middle" <? if( $this_cell->xnowrap == true ) echo "nowrap "; ?>
                     <? if( ! empty($this_cell->xwidth) ) echo "width='$this_cell->xwidth' "; ?> class="<?= $this_cell->xclass ?>"><?
@@ -406,7 +409,7 @@ $res = $database->query($query);
                         
                         <? render_user_devices_trigger($row); ?>
                         
-                        <? if($row->id_account != $account->id_account): ?>
+                        <? if($row->id_account != $account->id_account && $row->level < $account->level): ?>
                             <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=edit&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
                                 <span class="fa fa-pencil"></span>
                                 <?= $current_module->language->admin->record_nav->actions->edit ?>
@@ -424,7 +427,7 @@ $res = $database->query($query);
                             
                         <? elseif($row->state == "enabled"): ?>
                             
-                            <? if($row->id_account != $account->id_account): ?>
+                            <? if($row->id_account != $account->id_account && $row->level < $account->level): ?>
                                 <span class="action pseudo_link" onclick="if(confirm($_GENERIC_CONFIRMATION)) toggle_account( '<?= $row->id_account ?>', 'disable', this, function() { $('tr[id_account=<?= $row->id_account ?>]').fadeOut('fast'); } )">
                                     <span class="fa fa-lock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->disable ?>
@@ -433,7 +436,7 @@ $res = $database->query($query);
                             
                         <? elseif($row->state == "disabled"): ?>
                             
-                            <? if($row->id_account != $account->id_account): ?>
+                            <? if($row->id_account != $account->id_account && $row->level < $account->level): ?>
                                 <span class="action pseudo_link" onclick="if(confirm($_GENERIC_CONFIRMATION)) toggle_account( '<?= $row->id_account ?>', 'enable', this, function() { $('#filter_form').submit() } )">
                                     <span class="fa fa-unlock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->enable ?>
@@ -521,6 +524,21 @@ $res = $database->query($query);
                 
                 <? $current_module->load_extensions("records_browser", "additional_columns"); ?>
                 
+                <? if($account->_is_admin): ?>
+                    <td>
+                        <?
+                        $overrides = get_account_admin_module_overrides($row->id_account);
+                        echo empty($overrides) ? "&mdash;": $overrides;
+                        if( $row->id_account != $account->id_account ) echo "
+                            <br>
+                            <span class=\"pseudo_link\" onclick=\"set_modules_for_account('{$row->id_account}', '{$overrides}')\">
+                                <i class='fa fa-pencil'></i>
+                                {$current_module->language->admin->record_nav->actions->edit}
+                            </span>
+                        ";
+                        ?>
+                    </td>
+                <? endif; ?>
             </tr>
         <? endwhile; ?>
         </tbody>
@@ -531,7 +549,52 @@ $res = $database->query($query);
     <? $browser->render_pagination_controls("paginate", $pagination); ?>
 </div><!-- /.pagination -->
 
+<script type="text/javascript">
+    function set_modules_for_account(id_account, current_list)
+    {
+        var message = '<?= $current_module->language->admin->record_nav->action_messages->grant_admin_to_modules ?>';
+        var res     = prompt(message, current_list);
+        if( res == null || current_list ) return;
+        
+        var url    = $_FULL_ROOT_PATH + '/accounts/scripts/set_engine_pref.php';
+        var params = {
+            'id_account': id_account,
+            'key':        '@accounts:granted_admin_to_modules',
+            'value':      res,
+            'wasuuup':    wasuuup()
+        };
+        
+        $.get(url, params, function(response)
+        {
+            if(response != 'OK')
+            {
+                alert(response);
+                
+                return;
+            }
+            
+            $('#filter_form').submit();
+        });
+    }
+</script>
+
 <?
+function get_account_admin_module_overrides($id_account)
+{
+    global $database;
+    
+    $res = $database->query("
+        select value from account_engine_prefs
+        where id_account = '$id_account'
+        and   name       = 'granted_admin_to_modules'
+    ");
+    
+    if( $database->num_rows($res) == 0 ) return "";
+    
+    $row = $database->fetch_object($res);
+    return json_decode($row->value);
+}
+
 function render_user_devices_trigger($row)
 {
     global $database, $current_module;
