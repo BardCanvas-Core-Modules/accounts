@@ -562,12 +562,12 @@ $res = $database->query($query);
     {
         var message = '<?= $current_module->language->admin->record_nav->action_messages->grant_admin_to_modules ?>';
         var res     = prompt(message, current_list);
-        if( res == null || current_list ) return;
+        if( res == null || res == current_list ) return;
         
         var url    = $_FULL_ROOT_PATH + '/accounts/scripts/set_engine_pref.php';
         var params = {
             'id_account': id_account,
-            'key':        '@accounts:granted_admin_to_modules',
+            'key':        'granted_admin_to_modules',
             'value':      res,
             'wasuuup':    wasuuup()
         };
