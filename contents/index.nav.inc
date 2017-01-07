@@ -58,6 +58,7 @@ if( ! empty($search_for) )
                     $where_line .= "alt_email       like '%" . trim($this_term) . "%' or ";
                     $where_line .= "countries.name  like '%" . trim($this_term) . "%' or ";
                 }
+                $current_module->load_extensions("records_browser", "search_additions");
             }
         }
         $where_line    = substr($where_line, 0, -4);
@@ -66,16 +67,23 @@ if( ! empty($search_for) )
     }
     else
     {
+        $this_term  = $search_for;
+        $where_line = "";
         if( is_numeric($search_for) )
-            $where_lines[] = "("
-                . "id_account      =    '" . trim($search_for) . "'      )";
+        {
+            $where_line .= "id_account = '" . trim($this_term) . "' or ";
+        }
         else
-            $where_lines[] = "("
-                . "user_name       like '%" . trim($search_for) . "%' or "
-                . "display_name    like '%" . trim($search_for) . "%' or "
-                . "email           like '%" . trim($search_for) . "%' or "
-                . "alt_email       like '%" . trim($search_for) . "%' or "
-                . "countries.name  like '%" . trim($search_for) . "%'    )";
+        {
+            $where_line .= "user_name       like '%" . trim($this_term) . "%' or ";
+            $where_line .= "display_name    like '%" . trim($this_term) . "%' or ";
+            $where_line .= "email           like '%" . trim($this_term) . "%' or ";
+            $where_line .= "alt_email       like '%" . trim($this_term) . "%' or ";
+            $where_line .= "countries.name  like '%" . trim($this_term) . "%' or ";
+        }
+        $current_module->load_extensions("records_browser", "search_additions");
+        $where_line    = substr($where_line, 0, -4);
+        $where_lines[] = "({$where_line})";
     }
 }
 
