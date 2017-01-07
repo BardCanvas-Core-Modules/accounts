@@ -243,7 +243,7 @@ switch( $_REQUEST["mode"] )
             $xaccount->assign_from_posted_form();
         }
         
-        if( $settings->get("modules:accounts.automatic_user_names") == "true" ) {
+        if( empty($errors) && $settings->get("modules:accounts.automatic_user_names") == "true" ) {
             $count = $repository->get_record_count(array("display_name" => $_POST["display_name"]));
             if( $count > 0 )
                 $errors[] = $current_module->language->errors->registration->display_name_taken;
@@ -282,37 +282,6 @@ switch( $_REQUEST["mode"] )
             if( trim(stripslashes($_POST["password"])) != "" && trim(stripslashes($_POST["password2"])) != "" )
                 if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
                     $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
-            
-            # Impersonation tries
-            # -- disabled for admins
-            /*
-            $query = "
-                select * from account
-                where id_account <> '$xaccount->id_account'
-                and (
-                    email = '".trim(stripslashes($_POST["email"]))."'
-                    or
-                    alt_email = '".trim(stripslashes($_POST["email"]))."'
-                )
-            ";
-            $res = $database->query($query);
-            if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
-            
-            if( trim(stripslashes($_POST["alt_email"])) != "" )
-            {
-                $query = "
-                    select * from account
-                    where id_account <> '$xaccount->id_account'
-                    and (
-                        email = '".trim(stripslashes($_POST["alt_email"]))."'
-                        or
-                        alt_email = '".trim(stripslashes($_POST["alt_email"]))."'
-                    )
-                ";
-                $res = $database->query($query);
-                if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
-            }
-            */
         }
         
         # Actual save
@@ -332,7 +301,7 @@ switch( $_REQUEST["mode"] )
         else
         {
             $_country_list = array();
-    
+            
             $res = $database->query("select * from countries order by name asc");
             while( $row = $database->fetch_object($res) ) $_country_list[$row->alpha_2] = $row->name;
             
@@ -341,7 +310,7 @@ switch( $_REQUEST["mode"] )
                 '{$name}',
                 $xaccount->user_name
             );
-    
+            
             $_include_account_id    = true;
             $_current_user_country  = strtolower(get_geoip_location_data(get_remote_address()));
             $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?wasuuup=" . md5(mt_rand(1, 65535));
