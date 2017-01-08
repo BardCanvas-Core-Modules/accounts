@@ -62,7 +62,7 @@ if( ! empty($search_for) )
             }
         }
         $where_line    = substr($where_line, 0, -4);
-        $where_lines[] = "({$where_line})";
+        $where_lines[] = $where_line;
         unset($where_line, $search_exploded, $this_term);
     }
     else
@@ -83,7 +83,8 @@ if( ! empty($search_for) )
         }
         $current_module->load_extensions("records_browser", "search_additions");
         $where_line    = substr($where_line, 0, -4);
-        $where_lines[] = "({$where_line})";
+        $where_lines[] = $where_line;
+        unset($where_line);
     }
 }
 
