@@ -405,6 +405,14 @@ $res = $database->query($query);
                             </a>
                         <? endif; ?>
                         
+                        <? if($modules["contact"]->enabled): ?>
+                            <a class="action" href="<?= $config->full_root_path ?>/contact/?target=<?= urlencode($row->user_name) ?>"
+                                  title="<?= $language->contact->email->title ?>">
+                                <span class="fa fa-envelope-o"></span>
+                                <?= $language->contact->email->caption ?>
+                            </a>
+                        <? endif; ?>
+                        
                         <? if($modules["messaging"]->enabled): ?>
                             <span class="action pseudo_link" onclick="send_pm(this, '<?= $row->user_name ?>', '<?= htmlspecialchars($row->display_name) ?>')"
                                   title="<?= replace_escaped_vars( $language->contact->pm->title, '{$website_name}', $settings->get("engine.website_name") ) ?>">
