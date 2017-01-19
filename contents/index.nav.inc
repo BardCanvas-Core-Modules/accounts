@@ -426,7 +426,7 @@ $res = $database->query($query);
                         
                         <? render_user_devices_trigger($row); ?>
                         
-                        <? if($row->id_account != $account->id_account && $row->level < $account->level): ?>
+                        <? if( $row->id_account != $account->id_account && ($account->_is_admin || $row->level < $account->level) ): ?>
                             <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=edit&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
                                 <span class="fa fa-pencil"></span>
                                 <?= $current_module->language->admin->record_nav->actions->edit ?>
@@ -444,7 +444,7 @@ $res = $database->query($query);
                             
                         <? elseif($row->state == "enabled"): ?>
                             
-                            <? if($row->id_account != $account->id_account && $row->level < $account->level): ?>
+                            <? if( $row->id_account != $account->id_account && ($account->_is_admin || $row->level < $account->level) ): ?>
                                 <span class="action pseudo_link" onclick="if(confirm($_GENERIC_CONFIRMATION)) toggle_account( '<?= $row->id_account ?>', 'disable', this, function() { $('tr[id_account=<?= $row->id_account ?>]').fadeOut('fast'); } )">
                                     <span class="fa fa-lock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->disable ?>
@@ -453,7 +453,7 @@ $res = $database->query($query);
                             
                         <? elseif($row->state == "disabled"): ?>
                             
-                            <? if($row->id_account != $account->id_account && $row->level < $account->level): ?>
+                            <? if( $row->id_account != $account->id_account && ($account->_is_admin || $row->level < $account->level) ): ?>
                                 <span class="action pseudo_link" onclick="if(confirm($_GENERIC_CONFIRMATION)) toggle_account( '<?= $row->id_account ?>', 'enable', this, function() { $('#filter_form').submit() } )">
                                     <span class="fa fa-unlock"></span>
                                     <?= $current_module->language->admin->record_nav->actions->enable ?>

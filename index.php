@@ -104,11 +104,13 @@ switch( $_REQUEST["mode"] )
         
         # Validations: invalid entries
         if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
-            $errors[] = $current_module->language->errors->registration->invalid->email;
+            if( ! $account->_is_admin )
+                $errors[] = $current_module->language->errors->registration->invalid->email;
         
         if( trim(stripslashes($_POST["alt_email"])) != "" )
             if( ! filter_var(trim(stripslashes($_POST["alt_email"])), FILTER_VALIDATE_EMAIL) )
-                $errors[] = $current_module->language->errors->registration->invalid->alt_email;
+                if( ! $account->_is_admin )
+                    $errors[] = $current_module->language->errors->registration->invalid->alt_email;
         
         if( trim(stripslashes($_POST["alt_email"])) != "" )
             if( trim(stripslashes($_POST["email"])) == trim(stripslashes($_POST["alt_email"])) )
