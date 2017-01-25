@@ -393,10 +393,14 @@
             Sólo usa letras (mayúsculas/minúsculas), números, guiones y guiones bajos.<br>
             Ejemplo: <code>YoSoy-ElRey_2016</code>
         ]]></user_name_info>
+        <user_name_placeholder>Sólo letras, números, guiones y guiones bajos</user_name_placeholder>
         <birthdate>Fecha de nacimiento (aaaa-mm-dd):</birthdate>
         <brithdate_info><![CDATA[
             Este campo se mantiene privado.
         ]]></brithdate_info>
+        <admin_ommitable>Puede ser omitido</admin_ommitable>
+        <set_random_password>Generar contraseña aleatoria</set_random_password>
+        <copy_random_password>Copia esta contraseña y pégala en ambos campos de contraseña:</copy_random_password>
         <country>País de residencia:</country>
         <country_select><![CDATA[
             &lt;Selecciona un país&gt;

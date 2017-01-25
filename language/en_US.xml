@@ -391,10 +391,14 @@
             Use only letters, numbers, hyphens and underscores.<br>
             Exapmle: <code>Iam-TheKing_2016</code>
         ]]></user_name_info>
+        <user_name_placeholder>Letters, numbers, hyphens and underscores only</user_name_placeholder>
         <birthdate>Your birth date (yyyy-mm-dd):</birthdate>
         <brithdate_info><![CDATA[
             This field is kept private.
         ]]></brithdate_info>
+        <admin_ommitable>It can be ommited</admin_ommitable>
+        <set_random_password>Set a random password</set_random_password>
+        <copy_random_password>Copy this string and paste it in both password fields:</copy_random_password>
         <country>Country of residence:</country>
         <country_select><![CDATA[
             &lt;Please select a country&gt;

@@ -103,7 +103,11 @@ if( $_POST["mode"] != "create" )
                 <?= $current_module->language->user_account_form->user_name ?>
             </div>
             <div class="field_input">
-                <input type="text" name="user_name" maxlength="64" value="<?= htmlspecialchars($xaccount->user_name) ?>">
+                <? $placeholder = $account->has_admin_rights_to_module("accounts")
+                    ? $current_module->language->user_account_form->user_name_placeholder
+                    : ""; ?>
+                <input type="text" name="user_name" maxlength="64" value="<?= htmlspecialchars($xaccount->user_name) ?>"
+                       placeholder="<?= $placeholder ?>">
                 <? if( ! $_hide_infos ): ?>
                     <div class="framed_content state_ok">
                         <span class="fa fa-info-circle"></span>
@@ -134,8 +138,11 @@ if( $_POST["mode"] != "create" )
             <?= $current_module->language->user_account_form->birthdate ?>
         </div>
         <div class="field_input">
+            <? $placeholder = $account->has_admin_rights_to_module("accounts")
+                ? $current_module->language->user_account_form->admin_ommitable
+                : ""; ?>
             <input type="text" class="aligncenter" name="birthdate" id="birthdate"
-                   style="width: calc(99% - 24px)"
+                   style="width: calc(99% - 24px)" placeholder="<?= $placeholder ?>"
                    value="<?= $xaccount->birthdate ?>">
             <span id="birthdate_trigger" class="fa fa-fw fa-calendar-o pseudo_link"></span>
             <? if( ! $_hide_infos ): ?>
@@ -195,7 +202,11 @@ if( $_POST["mode"] != "create" )
             <?= $current_module->language->user_account_form->alt_email ?>
         </div>
         <div class="field_input">
-            <input type="text" name="alt_email" maxlength="255" value="<?= htmlspecialchars($xaccount->alt_email) ?>">
+            <? $placeholder = $account->has_admin_rights_to_module("accounts")
+                ? $current_module->language->user_account_form->admin_ommitable
+                : ""; ?>
+            <input type="text" name="alt_email" maxlength="255" value="<?= htmlspecialchars($xaccount->alt_email) ?>"
+                   placeholder="<?= $placeholder ?>">
             <? if( ! $_hide_infos ): ?>
                 <div class="framed_content state_ok">
                     <span class="fa fa-info-circle"></span>
@@ -208,6 +219,12 @@ if( $_POST["mode"] != "create" )
     <div class="cell">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->password ?>
+            <? if( $account->has_admin_rights_to_module("accounts"))
+                echo "
+                    <span class='pseudo_link' onclick=\"prompt( '{$current_module->language->user_account_form->copy_random_password}', Math.random().toString(36).slice(2).substr(1, 12) )\">
+                        <i class='fa fa-cog fa-fw'></i>{$current_module->language->user_account_form->set_random_password}
+                    </span>
+                "; ?>
         </div>
         <div class="field_input">
             <input type="password" name="password" value="<?= htmlspecialchars(stripslashes($_POST["password"])) ?>">
