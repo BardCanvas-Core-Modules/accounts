@@ -183,7 +183,7 @@ $res = $database->query($query);
         </span>
     <? endif; ?>
     
-    <button onclick="top.location.href='<?= $_SERVER["PHP_SELF"] ?>?mode=show_creation_form&wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
+    <button onclick="location.href='<?= $_SERVER["PHP_SELF"] ?>?mode=show_creation_form&wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
         <span class="fa fa-plus"></span>
         <?= $current_module->language->admin->record_nav->create ?>
     </button>

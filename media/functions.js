@@ -105,7 +105,7 @@ function change_device_label(id_device, current_label)
             return;
         } // end if
         
-        top.location.href = url;
+        location.href = url;
     });
 }
 
@@ -131,7 +131,7 @@ function change_device_state(state, id_device)
             return;
         } // end if
         
-        top.location.href = url;
+        location.href = url;
     });
 }
 

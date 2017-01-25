@@ -110,7 +110,7 @@
         </a>
         
         <a class="main_menu_item" href="<?=$config->full_root_path?>/"
-           onclick="top.location.href='<?=$config->full_root_path?>/accounts/scripts/logout.php'; return false;">
+           onclick="location.href='<?=$config->full_root_path?>/accounts/scripts/logout.php'; return false;">
             <span class="fa fa-sign-out fa-fw"></span>
             <?= $this_module->language->logout ?>
         </a>
