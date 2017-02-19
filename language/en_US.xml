@@ -39,7 +39,7 @@
             <any_level>Any level</any_level>
             <column_titles>
                 <state>
-                    <layout xalign="center" xwidth="20" xnowrap="true" />
+                    <layout xalign="center" xnowrap="true" />
                     <caption><![CDATA[ <span class="fa fa-flag"></span> ]]></caption>
                 </state>
                 <full_name>
@@ -49,11 +49,11 @@
                     <order_desc id="4">Order by display name descending</order_desc>
                 </full_name>
                 <details>
-                    <layout xalign="left" xwidth="60%" />
+                    <layout xalign="left" />
                     <caption>and details</caption>
                 </details>
                 <country>
-                    <layout xalign="left" xwidth="20%" />
+                    <layout xalign="left" />
                     <caption>Country</caption>
                     <order_asc  id="5">Order by country name + state + display name ascending</order_asc>
                     <order_desc id="6">Order by country name + state + display name descending</order_desc>
@@ -65,7 +65,7 @@
                     <order_desc id="8">Order by level +, display name descending</order_desc>
                 </level>
                 <online>
-                    <layout xalign="center" xwidth="20" xnowrap="true" />
+                    <layout xalign="center" xnowrap="true" />
                     <caption>Activity</caption>
                     <order_asc  id="15">Order by last activity date ascending</order_asc>
                     <order_desc id="16">Order by last activity date descending</order_desc>
@@ -120,6 +120,7 @@
                 <enable>Enable</enable>
                 <disable>Disable</disable>
                 <edit>Edit</edit>
+                <grant_admin>Grant/revoce...</grant_admin>
                 <show_devices>Show devices</show_devices>
             </actions>
             <action_messages>
@@ -135,7 +136,6 @@
                 <no_upper_level_allowed>You can't assign a user level above yours.</no_upper_level_allowed>
                 <invalid_level_specified>Invalid level specified.</invalid_level_specified>
                 <level_change_ok>{$user} level has been changed to {$level} ({$level_name}). If the user is online, he/she might get warnings or errors until their session is restarted.</level_change_ok>
-                <grant_admin_to_modules>Specify a comma separated list of module names for which this user will have admin rights. Note: this list may be modified by other modules!</grant_admin_to_modules>
             </action_messages>
             <devices_and_login_infos>Devices and login info</devices_and_login_infos>
         </record_nav>
@@ -145,6 +145,13 @@
         <create_account>
             <page_title>New account</page_title>
         </create_account>
+        <modules_dialog>
+            <title>Change administrative privileges</title>
+            <info><![CDATA[
+                Select the modules to which you want to grant administrative privileges to this user.<br>
+                <b>Note:</b> the list may be altered by other modules.
+            ]]></info>
+        </modules_dialog>
     </admin>
     
     <login>Login</login>

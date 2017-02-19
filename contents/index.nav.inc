@@ -158,6 +158,12 @@ $query = "
 ";
 $res = $database->query($query);
 #endregion
+
+$module_captions = array();
+foreach( preg_split('/,\s*/', $overrides) as $module_name )
+    $module_captions[] = empty($modules[$module_name])
+        ? $module_name
+        : $modules[$module_name]->language->display_name;
 ?>
 
 <h1 style="margin-top: 0;" class="clearfix">
@@ -355,7 +361,8 @@ $res = $database->query($query);
             <tr class="<? if( $row->id_account == $account->id_account ) echo "self"; else echo $row->state; ?>"
                 id_account="<?= $row->id_account ?>">
                 
-                <td data-for="state" width="20">
+                <!-- State -->
+                <td nowrap data-for="state">
                     <?
                     switch( $row->state )
                     {
@@ -366,7 +373,8 @@ $res = $database->query($query);
                     ?>
                 </td>
                 
-                <td width="60%" colspan="2">
+                <!-- Alias and other details -->
+                <td width="50%" colspan="2">
                     
                     <div class="pseudo_link clipboard-copy" data-clipboard-text="<?= $row->id_account ?>">
                         <code>#<?= $row->id_account ?><span class="fa fa-copy fa-fw"></span></code>
@@ -465,8 +473,10 @@ $res = $database->query($query);
                     
                 </td>
                 
+                <!-- Country -->
                 <td width="20%"><?= $row->country_name ?></td>
                 
+                <!-- Level -->
                 <td nowrap align="center">
                     <? if($row->id_account == $account->id_account || $row->level > $account->level):
                         if( isset($config->user_levels_by_level[$row->level]) )
@@ -493,12 +503,14 @@ $res = $database->query($query);
                     <? endif; ?>
                 </td>
                 
-                <td width="20" align="center">
+                <!-- Activity -->
+                <td nowrap align="center">
                     <? $online_flag = $row->last_activity >= date("Y-m-d H:i:s", strtotime("now - 1 minute")) ? "online" : "offline"; ?>
                     <img src="<?= $config->full_root_path ?>/media/icons/user-<?= $online_flag ?>.png" border="0" width="16" height="16"><br>
                     <?= time_elapsed_string_alternate($row->last_activity) ?>
                 </td>
                 
+                <!-- Created -->
                 <td align="left">
                     <?= time_today_string($row->creation_date) ?><br>
                     (<?= time_elapsed_string($row->creation_date) ?>)<br>
@@ -537,20 +549,34 @@ $res = $database->query($query);
                     <? endif; ?>
                     
                 </td>
+                
+                <!-- Updated -->
                 <td nowrap align="center"><?= time_elapsed_string($row->last_update) ?></td>
                 
+                <!-- Additional columns -->
                 <? $current_module->load_extensions("records_browser", "additional_columns"); ?>
                 
-                <? if($account->_is_admin): ?>
-                    <td>
+                <!-- Module overrides -->
+                <? if( ! $account->_is_admin ): ?>
+                    &mdash;
+                <? else: ?>
+                    <td nowrap>
                         <?
                         $overrides = get_account_admin_module_overrides($row->id_account);
-                        echo empty($overrides) ? "&mdash;": $overrides;
-                        if( $row->id_account != $account->id_account ) echo "
-                            <br>
-                            <span class=\"pseudo_link\" onclick=\"set_modules_for_account('{$row->id_account}', '{$overrides}')\">
+                        $captions  = array();
+                        
+                        foreach( preg_split('/,\s*/', $overrides) as $module_name )
+                            $captions[] = empty($modules[$module_name])
+                                ? $module_name
+                                : $modules[$module_name]->language->display_name;
+                        
+                        if( ! empty($overrides) ) echo implode(",<br>", $captions) . "<br>";
+                        
+                        if( $row->id_account == $account->id_account ) echo "&mdash;";
+                        else echo "
+                            <span class=\"pseudo_link\" onclick=\"show_modules_for_account('{$row->id_account}', '{$overrides}')\">
                                 <i class='fa fa-pencil'></i>
-                                {$current_module->language->admin->record_nav->actions->edit}
+                                {$current_module->language->admin->record_nav->actions->grant_admin}
                             </span>
                         ";
                         ?>
@@ -566,18 +592,80 @@ $res = $database->query($query);
     <? $browser->render_pagination_controls("paginate", $pagination); ?>
 </div><!-- /.pagination -->
 
+<div id="modules_selector" style="display: none;" title="<?= $current_module->language->admin->modules_dialog->title ?>"
+     data-ok-button="<?= $language->ok ?>" data-cancel-button="<?= $language->cancel ?>">
+    <div class="framed_content state_highlight" style="margin-top: 0;">
+        <i class="fa fa-info-circle"></i>
+        <?= $current_module->language->admin->modules_dialog->info ?>
+    </div>
+    
+    <form id="account_modules">
+        <input type="hidden" name="id_account" value="">
+        <div class="active_modules_list">
+            <?
+            $output = array();
+            foreach($modules as $module) $output[$module->name] = trim($module->language->display_name);
+            ksort($output);
+            
+            foreach($output as $key => $val)
+                echo "<label><input type='checkbox' name='{$key}' value='true'> {$val}</label><br>\n";
+            ?>
+        </div>
+        <div class="dynamic_modules_list"></div>
+    </form>
+</div>
 <script type="text/javascript">
-    function set_modules_for_account(id_account, current_list)
+    function show_modules_for_account(id_account, user_list)
     {
-        var message = '<?= $current_module->language->admin->record_nav->action_messages->grant_admin_to_modules ?>';
-        var res     = prompt(message, current_list);
-        if( res == null || res == current_list ) return;
+        var $form     = $('#account_modules');
+        var $dynamics = $form.find('.dynamic_modules_list');
         
+        $dynamics.html('');
+        $form[0].reset();
+        
+        $form.find('input[name="id_account"]').val(id_account);
+        
+        if( user_list != '' )
+        {
+            var user_modules = user_list.split(',');
+            for(var i in user_modules)
+            {
+                var user_module = $.trim(user_modules[i]);
+                var $active_module = $form.find(sprintf('.active_modules_list input[type="checkbox"][name="%s"]', user_module));
+                
+                if( $active_module.length > 0 )
+                    $active_module.prop('checked', true);
+                else
+                    $dynamics.append(sprintf("<label><input type='checkbox' name='%1$s' checked value='true'> %1$s</label><br>", user_module));
+            }
+        }
+        
+        $form.find('.active_modules_list input[type="checkbox"]').each(function()
+        {
+            var $this = $(this);
+            var name  = $this.attr('name');
+        });
+        
+        $('#modules_selector').dialog('open');
+    }
+    
+    function set_modules_for_account()
+    {
+        var $form      = $('#account_modules');
+        var id_account = $form.find('input[name="id_account"]').val();
+        var checked    = [];
+        
+        $form.find('input[type="checkbox"]:checked').each(function()
+        {
+            checked[checked.length] = $(this).attr('name');
+        });
+        
+        var value  = checked.join(', ');
         var url    = $_FULL_ROOT_PATH + '/accounts/scripts/set_engine_pref.php';
         var params = {
             'id_account': id_account,
             'key':        'granted_admin_to_modules',
-            'value':      res,
+            'value':      value,
             'wasuuup':    wasuuup()
         };
         
@@ -593,9 +681,44 @@ $res = $database->query($query);
             $('#filter_form').submit();
         });
     }
+    
+    $(document).ready(function()
+    {
+        var width  = $(window).width() - 20;
+        var height = $(window).height() - 20;
+        if( width  > 400 ) width = 400;
+        if( width  < 400 ) width = 400;
+        if( height > 400 ) height = 400;
+        if( height < 400 ) height = 400;
+        
+        var $dialog        = $('#modules_selector');
+        var cancel_caption = $dialog.attr('data-cancel-button');
+        var submit_caption = $dialog.attr('data-ok-button');
+        
+        $dialog.dialog({
+            autoOpen: false,
+            modal:    true,
+            width:    width,
+            height:   height,
+            buttons:  [
+                {
+                    text:  cancel_caption,
+                    icons: { primary: "ui-icon-cancel" },
+                    click: function() { $(this).dialog( "close" ); }
+                },
+                {
+                    text: submit_caption,
+                    icons: { primary: "ui-icon-check" },
+                    click: function() { set_modules_for_account(); }
+                }
+            ]
+        });
+    });
 </script>
 
 <?
+$current_module->load_extensions("records_browser", "pre_eof");
+
 function get_account_admin_module_overrides($id_account)
 {
     global $database;

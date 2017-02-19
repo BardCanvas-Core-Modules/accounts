@@ -49,11 +49,11 @@
                     <order_desc id="4">Ordenar por alias descendente</order_desc>
                 </full_name>
                 <details>
-                    <layout xalign="left" xwidth="60%" />
+                    <layout xalign="left" />
                     <caption>y otros detalles</caption>
                 </details>
                 <country>
-                    <layout xalign="left" xwidth="20%" />
+                    <layout xalign="left" />
                     <caption>País</caption>
                     <order_asc  id="5">Ordenar por ubicación + alias ascendente</order_asc>
                     <order_desc id="6">Ordenar por ubicación + alias descendente</order_desc>
@@ -65,7 +65,7 @@
                     <order_desc id="8">Ordenar por nivel + alias descendente</order_desc>
                 </level>
                 <online>
-                    <layout xalign="center" xwidth="20" xnowrap="true" />
+                    <layout xalign="center" xnowrap="true" />
                     <caption>Actividad</caption>
                     <order_asc  id="15">Ordenar por fecha de última actividad ascendente</order_asc>
                     <order_desc id="16">Ordenar por fecha de última actividad descendente</order_desc>
@@ -120,6 +120,7 @@
                 <enable>Activar</enable>
                 <disable>Desactivar</disable>
                 <edit>Editar</edit>
+                <grant_admin>Otorgar/revocar...</grant_admin>
                 <show_devices>Ver dispositivos</show_devices>
             </actions>
             <action_messages>
@@ -135,7 +136,6 @@
                 <no_upper_level_allowed>No puedes asignar un nivel sobre el tuyo.</no_upper_level_allowed>
                 <invalid_level_specified>Nivel inválido</invalid_level_specified>
                 <level_change_ok>Nivel de {$user} cambiado a {$level} ({$level_name}). Si el usuario tiene una sesión abierta, puede recibir alertas o errores hasta que reabra su sesión.</level_change_ok>
-                <grant_admin_to_modules>Especifica una lista separada por comas de los nombres de módulos a los cuales se le otorgarán privilegios de administrador a este usuario. Nota: la lista puede ser alterada por otros módulos!</grant_admin_to_modules>
             </action_messages>
             <devices_and_login_infos>Información de dispositivos y sesiones</devices_and_login_infos>
         </record_nav>
@@ -145,6 +145,13 @@
         <create_account>
             <page_title>Nueva cuenta</page_title>
         </create_account>
+        <modules_dialog>
+            <title>Cambiar privilegios administrativos</title>
+            <info><![CDATA[
+                Selecciona los módulos a los cuales se le otorgarán privilegios de administrador a este usuario.<br>
+                <b>Nota:</b> la lista puede ser alterada por otros módulos.
+            ]]></info>
+        </modules_dialog>
     </admin>
     
     <login>Abrir sesión</login>
