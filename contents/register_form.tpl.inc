@@ -17,7 +17,6 @@
 use hng2_base\config;
 use hng2_base\module;
 use hng2_base\settings;
-
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?= $config->full_root_path ?>/lib/jscalendar/calendar-blue.css">
@@ -35,16 +34,6 @@ use hng2_base\settings;
     
     <?= empty($_form_title) ? $current_module->language->register_form->form_title : $_form_title ?>
 </h1>
-
-<? if( $settings->get("engine.recaptcha_private_key") == "" || $settings->get("engine.recaptcha_public_key") == "" ): ?>
-    
-    <div class="framed_content state_ko">
-        <span class="fa fa-warning"></span>
-        <?= $current_module->language->errors->registration->recaptcha_not_configured ?>
-    </div>
-    
-    <? return; ?>
-<? endif; ?>
 
 <? if( ! $_no_flag_check ): ?>
     <? if( $settings->get("modules:accounts.register_enabled") != "true" ): ?>
@@ -173,7 +162,7 @@ if( $_POST["mode"] != "create" )
             </div>
             <div class="field_input">
                 <select name="country">
-                    <option value=""><?= htmlspecialchars(trim($current_module->language->user_account_form->country_select)) ?></option>
+                    <option value=""><?= trim($current_module->language->user_account_form->country_select) ?></option>
                     <? foreach($_country_list as $key => $val): ?>
                         <option <? if($key == $_current_user_country) echo "selected"; ?> value="<?= $key ?>"><?= $val ?></option>
                     <? endforeach; ?>
@@ -249,7 +238,7 @@ if( $_POST["mode"] != "create" )
     
     <div align="center">
         
-        <? if( ! $_hide_captcha ): ?>
+        <? if( $settings->get("engine.recaptcha_public_key") != "" && ! $_hide_captcha ): ?>
             <?= recaptcha_get_html($settings->get("engine.recaptcha_public_key"), null, $_SERVER["HTTPS"]) ?>
             <br>
         <? endif; ?>

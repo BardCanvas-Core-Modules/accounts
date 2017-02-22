@@ -69,8 +69,11 @@ if( $_POST["mode"] == "create" )
         $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
     
     # Validations: captcha
-    $res = recaptcha_check_answer($settings->get("engine.recaptcha_private_key"), get_remote_address(), $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
-    if( ! $res->is_valid ) $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+    if( $settings->get("engine.recaptcha_private_key") != "" )
+    {
+        $res = recaptcha_check_answer($settings->get("engine.recaptcha_private_key"), get_remote_address(), $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+        if( ! $res->is_valid ) $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+    }
     
     # Pre-check for double accounts (by display name)
     if( count($errors) == 0 )
