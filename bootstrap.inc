@@ -7,7 +7,8 @@ use hng2_cache\disk_cache;
 
 $editable_prefs = array();
 $version        = $config->module_versions_hash;
-$temp_cache     = new disk_cache("{$config->datafiles_location}/cache/editable_prefs_{$version}.dat");
+$cache_file     = "{$config->datafiles_location}/cache/editable_prefs_{$version}-{$settings->get("engine.default_language")}.dat";
+$temp_cache     = new disk_cache($cache_file);
 if( $temp_cache->loaded )
 {
     $editable_prefs = $temp_cache->get_all();
