@@ -18,6 +18,7 @@
  */
 
 use hng2_base\account;
+use hng2_base\accounts_repository;
 use hng2_base\config;
 use hng2_base\module;
 use hng2_base\settings;
@@ -133,6 +134,56 @@ switch( $_REQUEST["mode"] )
                 array($user_account->display_name, $user_account->level, $config->user_levels_by_level[$user_account->level])
             )
         );
+        
+        die("OK");
+        break;
+    }
+    case "delete":
+    {
+        $repository   = new accounts_repository();
+        $user_account = $repository->get($_GET["id_account"]);
+        
+        if( ! $user_account->_exists )
+            die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
+        
+        if( $account->id_account == $user_account->id_account )
+            die( $current_module->language->admin->record_nav->action_messages->no_self_delete );
+        
+        if( $account->level < $user_account->level )
+            die( $current_module->language->admin->record_nav->action_messages->deletion_above_level_denied );
+        
+        if( $_GET["id_account"] == "100000000000000" )
+            die( $current_module->language->admin->record_nav->action_messages->system_account_cannot_be_deleted );
+        
+        $config->globals["deletions_log"] = array();
+        $config->globals["notify_deletion_progress"] = false;
+        //send_notification($account->id_account, "information", $current_module->language->admin->record_nav->action_messages->deletion_progress->start);
+        //sleep(1);
+        $repository->delete($_GET["id_account"]);
+        
+        if( ! empty($config->globals["deletions_log"]) )
+        {
+            $ops_log = implode("</li>\n<li>", $config->globals["deletions_log"]);
+            $subject = "[{$settings->get("engine.website_name")}] Account #{$user_account->id_account} deletion operations report";
+            $body    = unindent("
+                <p><b>Account details:</b></p>
+                <ul>
+                    <li><b>Display name:</b> {$user_account->display_name}</li>
+                    <li><b>Main email:</b> {$user_account->email}</li>
+                    <li><b>Created on:</b> {$user_account->creation_date}</li>
+                    <li><b>Issued by:</b> {$account->display_name}</li>
+                </ul>
+                
+                <p><b>Operations log:</b></p>
+                <ul>
+                    <li>$ops_log</li>
+                </ul>
+            ");
+            
+            # @file_put_contents("/tmp/bc_user_deletion_log.html", $body);
+            broadcast_mail_between_levels( $config::ADMIN_USER_LEVEL, $config::ADMIN_USER_LEVEL, $subject, $body );
+        }
+        send_notification($account->id_account, "information", $current_module->language->admin->record_nav->action_messages->deletion_progress->end);
         
         die("OK");
         break;

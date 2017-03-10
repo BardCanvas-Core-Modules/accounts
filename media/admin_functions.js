@@ -86,6 +86,38 @@ function toggle_account(id_account, new_mode, trigger, callback)
     });
 }
 
+function delete_account(id_account)
+{
+    var message = $('#deletion_confirmation_message').text();
+    if( ! confirm(message) ) return;
+    
+    var url = $_FULL_ROOT_PATH + '/accounts/scripts/toolbox.php';
+    var params = {
+        id_account: id_account,
+        mode:       'delete',
+        wasuuup:    wasuuup()
+    };
+    
+    var $tr = $('#accounts_nav').find('tr[id_account="' + id_account + '"]');
+    $.blockUI(blockUI_default_params);
+    
+    // stop_notifications_getter();
+    $.get(url, params, function(response)
+    {
+        if( response != 'OK' )
+        {
+            alert( response );
+            $.unblockUI();
+            // start_notifications_getter();
+            
+            return;
+        }
+    
+        $.unblockUI();
+        $tr.fadeOut('fast', function() { $tr.remove(); });
+    });
+}
+
 function open_level_switcher(trigger, id_account, current_level, reload_on_change)
 {
     if( typeof reload_on_change == 'undefined' ) reload_on_change = true;

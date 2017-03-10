@@ -122,6 +122,7 @@
                 <edit>Editar</edit>
                 <grant_admin>Otorgar/revocar...</grant_admin>
                 <show_devices>Ver dispositivos</show_devices>
+                <delete>Eliminar</delete>
             </actions>
             <action_messages>
                 <target_not_exists>La cuenta especificada no existe en la base de datos.</target_not_exists>
@@ -136,6 +137,23 @@
                 <no_upper_level_allowed>No puedes asignar un nivel sobre el tuyo.</no_upper_level_allowed>
                 <invalid_level_specified>Nivel inválido</invalid_level_specified>
                 <level_change_ok>Nivel de {$user} cambiado a {$level} ({$level_name}). Si el usuario tiene una sesión abierta, puede recibir alertas o errores hasta que reabra su sesión.</level_change_ok>
+                <no_self_delete>No puedes borrar tu propia cuenta!</no_self_delete>
+                <deletion_confirmation><![CDATA[
+                    El borrado de una cuenta implica la eliminación de todo lo relacionado con ella
+                    de todos los módulos que dependen de la tabla de cuentas de usuario con una excepción:
+                    aquellos items que no puedan ser eliminados serán reasignados a la cuenta del sistema.
+                     
+                    Este proceso puede tomar más de unos segundos, no puede detenerse
+                    y no puede deshacerse.
+                     
+                    ¿Deseas continuar?
+                ]]></deletion_confirmation>
+                <system_account_cannot_be_deleted>¡La cuenta del sistema no puede ser eliminada!</system_account_cannot_be_deleted>
+                <deletion_above_level_denied>No puedes borrar una cuenta de un nivel superior al tuyo.</deletion_above_level_denied>
+                <deletion_progress>
+                    <start>Borrado de cuenta iniciando.</start>
+                    <end>Borrado de cuenta finalizado. Un correo con los detalles se ha enviado a los administradores.</end>
+                </deletion_progress>
             </action_messages>
             <devices_and_login_infos>Información de dispositivos y sesiones</devices_and_login_infos>
         </record_nav>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.9.8</version>
+    <version>1.10</version>
     <group>System</group>
     <admin_only>false</admin_only>
     
@@ -39,6 +39,7 @@
         Registration: after initializing submitted data.
         Profile edition: after initializing submitted data.
         Records browser: pre-EOF.
+        Accounts Repository: account deletion.
     ]]></extension_areas_info>
     
 </module>

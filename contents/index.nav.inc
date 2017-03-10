@@ -469,6 +469,16 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                             <? endif; ?>
                             
                         <? endif; ?>
+                        
+                        <? if( $account->level >= $config::MODERATOR_USER_LEVEL
+                               && $row->id_account != "100000000000000"
+                               && $row->id_account != $account->id_account ): ?>
+                            <span class="action pseudo_link" onclick="delete_account( '<?= $row->id_account ?>' )">
+                                <span class="fa fa-times"></span>
+                                <?= $current_module->language->admin->record_nav->actions->delete ?>
+                            </span>
+                        <? endif; ?>
+                        
                     </div>
                     
                 </td>
@@ -715,6 +725,8 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         });
     });
 </script>
+
+<div id="deletion_confirmation_message" style="display: none;"><?= unindent($current_module->language->admin->record_nav->action_messages->deletion_confirmation) ?></div>
 
 <?
 $current_module->load_extensions("records_browser", "pre_eof");

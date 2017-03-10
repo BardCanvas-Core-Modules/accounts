@@ -89,7 +89,7 @@
                 <country>Country:</country>
                 <address_state>State:</address_state>
                 <creation_host>Created from:</creation_host>
-                <granted_admin_to_modules>>Granted admin to</granted_admin_to_modules>
+                <granted_admin_to_modules>Granted admin to</granted_admin_to_modules>
             </row_extras>
             <devices_columns>
                 <id_device>Device id</id_device>
@@ -120,8 +120,9 @@
                 <enable>Enable</enable>
                 <disable>Disable</disable>
                 <edit>Edit</edit>
-                <grant_admin>Grant/revoce...</grant_admin>
+                <grant_admin>Grant/revoke...</grant_admin>
                 <show_devices>Show devices</show_devices>
+                <delete>Delete</delete>
             </actions>
             <action_messages>
                 <target_not_exists>The specified account doesn't exist in the databse.</target_not_exists>
@@ -136,6 +137,23 @@
                 <no_upper_level_allowed>You can't assign a user level above yours.</no_upper_level_allowed>
                 <invalid_level_specified>Invalid level specified.</invalid_level_specified>
                 <level_change_ok>{$user} level has been changed to {$level} ({$level_name}). If the user is online, he/she might get warnings or errors until their session is restarted.</level_change_ok>
+                <no_self_delete>You can't delete your own account!</no_self_delete>
+                <deletion_confirmation><![CDATA[
+                    Deleting an account implies deleting everything related to it
+                    form all modules relying on the user accounts table with one exception:
+                    those items that can't be deleted will be assigned to the system account.
+                     
+                    This process may take more than a few seconds, it can't be stopped
+                    and it can't be undone.
+                     
+                    Do you want to proceed?
+                ]]></deletion_confirmation>
+                <system_account_cannot_be_deleted>System account can't be deleted!</system_account_cannot_be_deleted>
+                <deletion_above_level_denied>You can't delete an account with a level above yours.</deletion_above_level_denied>
+                <deletion_progress>
+                    <start>Account deletion starting now.</start>
+                    <end>Account deletion finished. An email has been sent to all administrators.</end>
+                </deletion_progress>
             </action_messages>
             <devices_and_login_infos>Devices and login info</devices_and_login_infos>
         </record_nav>

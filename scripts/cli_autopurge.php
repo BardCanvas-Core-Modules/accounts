@@ -24,9 +24,10 @@ chdir(__DIR__);
 include "../../config.php";
 include "../../includes/bootstrap.inc";
 
-$repository = new accounts_repository();
-$boundary   = date("Y-m-d H:i:s", strtotime("now - 12 hours"));
-$rows       = $repository->find(array("state = 'new'", "creation_date < '$boundary'"), 0, 0, "creation_date asc");
+$current_module = $modules["accounts"];
+$repository     = new accounts_repository();
+$boundary       = date("Y-m-d H:i:s", strtotime("now - 12 hours"));
+$rows           = $repository->find(array("state = 'new'", "creation_date < '$boundary'"), 0, 0, "creation_date asc");
 
 if( count($rows) == 0 ) exit;
 
