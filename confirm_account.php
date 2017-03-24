@@ -39,8 +39,17 @@ if( count($errors) == 0 )
 {
     # Let's check if the account is already activated
     $xaccount = new account($id_account);
-    if($xaccount->state != "new")
-        $errors[] = $current_module->language->errors->confirmation->already_activated;
+    if($xaccount->state == "enabled")
+    {
+        header("Location: {$config->full_root_url}");
+        
+        die("<a href='{$config->full_root_url}'>{$current_module->language->click_to_continue}</a>");
+    }
+    
+    if($xaccount->state == "disabled")
+    {
+        $errors[] = $current_module->language->errors->account_disabled;
+    }
 }
 
 if( count($errors) == 0 )
