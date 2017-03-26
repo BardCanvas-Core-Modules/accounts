@@ -63,6 +63,7 @@
         <div class="ERROR_WRONG_PASSWORD"><?= $this_module->language->errors->wrong_password ?></div>
         <div class="ERROR_ENGINE_DISABLED"><?= $this_module->language->errors->engine_disabled ?></div>
         <div class="ERROR_DEVICE_DISABLED"><?= $this_module->language->errors->device_disabled ?></div>
+        <? $this_module->load_extensions("login", "additional_errors"); ?>
     </div>
     <div id="device_messages" style="display: none;">
         <div class="UNREGISTERED"><?= $this_module->language->errors->device_unregistered ?></div>

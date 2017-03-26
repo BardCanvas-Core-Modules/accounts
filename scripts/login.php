@@ -41,6 +41,9 @@ if( trim($_POST["user_name"]) == "" || trim($_POST["password"])  == "" )
     die("ERROR_MISSING_PARAMS");
 
 $account = new account(trim(stripslashes($_POST["user_name"])));
+
+$current_module->load_extensions("login", "pre_validations");
+
 if( ! $account->_exists )
     die("ERROR_ACCOUNT_UNEXISTENT");
 
@@ -62,7 +65,7 @@ if( $settings->get("engine.enabled") != "true" &&
 
 #==========================================#
 # Session opening and new device detection #
-#===========================================#
+#==========================================#
 
 $device = new device($account->id_account);
 

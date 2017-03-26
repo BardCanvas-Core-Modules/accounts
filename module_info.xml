@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.10.2</version>
+    <version>1.10.3</version>
     <group>core_modules</group>
     <admin_only>false</admin_only>
     
@@ -40,6 +40,7 @@
         Profile edition: after initializing submitted data.
         Records browser: pre-EOF.
         Accounts Repository: account deletion.
+        Login: pre-validations, additional login error messages (in dialog defs).
     ]]></extension_areas_info>
     
 </module>
