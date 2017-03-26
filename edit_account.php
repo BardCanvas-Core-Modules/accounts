@@ -38,6 +38,24 @@ if( $_POST["mode"] == "save" )
     foreach( array("display_name", "country", "email" ) as $field )
         if( trim(stripslashes($_POST[$field])) == "" ) $errors[] = $current_module->language->errors->registration->missing->{$field};
     
+    if( $account->level < config::MODERATOR_USER_LEVEL && $account->display_name != $xaccount->display_name )
+    {
+        $blacklist = trim($settings->get("modules:accounts.displaynames_blacklist"));
+        if( ! empty($blacklist) )
+        {
+            foreach(explode("\n", $blacklist) as $line)
+            {
+                $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
+                if( preg_match($pattern, $xaccount->display_name) )
+                {
+                    $errors[] = $current_module->language->errors->registration->invalid->display_name_blacklisted;
+                    
+                    break;
+                }
+            }
+        }
+    }
+    
     if(
         $settings->get("modules:accounts.automatic_user_names") == "true"
         && $origin_account->display_name != $xaccount->display_name

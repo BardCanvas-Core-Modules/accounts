@@ -45,9 +45,39 @@ if( $_POST["mode"] == "create" )
     {
         if( empty($user_name) )
             $errors[] = $current_module->language->errors->registration->missing->user_name;
-    
+        
         if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
             $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
+    }
+    
+    # Blacklist validations
+    $blacklist = trim($settings->get("modules:accounts.usernames_blacklist"));
+    if( ! empty($blacklist) )
+    {
+        foreach(explode("\n", $blacklist) as $line)
+        {
+            $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
+            if( preg_match($pattern, $user_name) )
+            {
+                $errors[] = $current_module->language->errors->registration->invalid->user_name_blacklisted;
+                
+                break;
+            }
+        }
+    }
+    $blacklist = trim($settings->get("modules:accounts.displaynames_blacklist"));
+    if( ! empty($blacklist) )
+    {
+        foreach(explode("\n", $blacklist) as $line)
+        {
+            $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
+            if( preg_match($pattern, $xaccount->display_name) )
+            {
+                $errors[] = $current_module->language->errors->registration->invalid->display_name_blacklisted;
+                
+                break;
+            }
+        }
     }
     
     if( $settings->get("modules:accounts.non_mandatory_country") != "true" && empty($country) )

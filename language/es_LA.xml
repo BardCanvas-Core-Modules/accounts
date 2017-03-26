@@ -240,6 +240,8 @@
                 <mails_must_be_different>Ambas direcciones de correo deben ser distintas.</mails_must_be_different>
                 <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
                 <chars_in_user_name>Caracteres inválidos en nombre de usuario (usar solo letras, números, guiones y guiones bajos).</chars_in_user_name>
+                <user_name_blacklisted>No puedes usar ese nombre de usuario. Por favor especifica otro.</user_name_blacklisted>
+                <display_name_blacklisted>No puedes usar ese alias. Por favor especifica otro..</display_name_blacklisted>
                 <user_name_taken>El nombre de usuario que especificaste ya existe. Elige otro.</user_name_taken>
                 <display_name_taken>El alias que especificaste ya existe. Elige otro.</display_name_taken>
                 <main_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como principal.</main_email_exists>
@@ -694,6 +696,40 @@
                 <image_size>full</image_size>
             </options>
         </specs>
+        
+        <specs key="usernames_blacklist">
+            <title><![CDATA[
+                Lista negra de nombres de usuario
+            ]]></title>
+            <description><![CDATA[
+                Lista de palabras que son rechazadas cuando un usuario trata de registrar una cuenta.<br>
+                <hr>
+                Escribe una palabra o frase por línea. Deshabilita entradas añadiendo un <code>#</code>
+                al inicio de la línea.<br>
+                Los siguientes comodines son aceptados:
+                <code>?</code> para buscar un caracter sencillo y <code>*</code> para cualquier cantidad de caracteres.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: la comparación no es sensible a mayúsculas/minúsculas.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        <specs key="displaynames_blacklist">
+            <title><![CDATA[
+                Lista negra de aliases
+            ]]></title>
+            <description><![CDATA[
+                Lista de palabras que son rechazadas en el alias de las cuentas durante el registro o la edición del perfil.<br>
+                <hr>
+                Escribe una palabra o frase por línea. Deshabilita entradas añadiendo un <code>#</code>
+                al inicio de la línea.<br>
+                Los siguientes comodines son aceptados:
+                <code>?</code> para buscar un caracter sencillo y <code>*</code> para cualquier cantidad de caracteres.<br>
+                <span class="fa fa-info-circle"></span>
+                Nota: la comparación no es sensible a mayúsculas/minúsculas.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
     </settings_data>
     
     <user_profile_tabs>

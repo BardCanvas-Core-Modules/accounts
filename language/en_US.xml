@@ -238,8 +238,10 @@
                 <mails_must_be_different>Main and alternate e-mail addresses must be different.</mails_must_be_different>
                 <captcha_invalid>Invalid captcha. Please try again.</captcha_invalid>
                 <chars_in_user_name>Invalid characters in user name.</chars_in_user_name>
+                <user_name_blacklisted>You can't use that user name. Please specify another.</user_name_blacklisted>
+                <display_name_blacklisted>You can't use that display name. Please specify another.</display_name_blacklisted>
                 <user_name_taken>The user name you've specified has been taken. Please choose another.</user_name_taken>
-                <user_name_taken>The display name you've specified has been taken. Please choose another.</user_name_taken>
+                <display_name_taken>The display name you've specified has been taken. Please choose another.</display_name_taken>
                 <main_email_exists>There is another account registered with the main email you've provided. Please provide a different one.</main_email_exists>
                 <alt_email_exists>There is another account registered with the alternate email you've provided. Please provide a different one.</alt_email_exists>
                 <birthdate>Please specify a valid birth date in the next format: yyyy-mm-dd.</birthdate>
@@ -697,6 +699,41 @@
                 <image_size>full</image_size>
             </options>
         </specs>
+        
+        <specs key="usernames_blacklist">
+            <title><![CDATA[
+                User names blacklist
+            ]]></title>
+            <description><![CDATA[
+                List of user names that are not allowed when a user tries to register an account.<br>
+                <hr>
+                Type one word per each line.
+                You can disable entries by adding a <code>#</code> at the beginning of the line.<br>
+                The next wildcards are supported:
+                <code>?</code> for a single character or <code>*</code> for any characters.<br>
+                <span class="fa fa-info-circle"></span>
+                Note: comparison is not case sensitive.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        <specs key="displaynames_blacklist">
+            <title><![CDATA[
+                Display names blacklist
+            ]]></title>
+            <description><![CDATA[
+                List of user display names that are not allowed when users try to register an account 
+                or edit their profiles.<br>
+                <hr>
+                Type one word per each line.
+                You can disable entries by adding a <code>#</code> at the beginning of the line.<br>
+                The next wildcards are supported:
+                <code>?</code> for a single character or <code>*</code> for any characters.<br>
+                <span class="fa fa-info-circle"></span>
+                Note: comparison is not case sensitive.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
     </settings_data>
     
     <user_profile_tabs>
