@@ -1,7 +1,7 @@
 
 # Accounts Module Change Log
 
-## [Unreleased]
+## [1.10.4]
 
 - Added missing checks on blacklists for account registration.
 - Added changelog.
