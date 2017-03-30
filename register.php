@@ -56,6 +56,10 @@ if( $_POST["mode"] == "create" )
     {
         foreach(explode("\n", $blacklist) as $line)
         {
+            $line = trim($line);
+            if( empty($line) ) continue;
+            if( substr($line, 0, 1) == "#" ) continue;
+            
             $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
             if( preg_match($pattern, $user_name) )
             {
@@ -70,6 +74,10 @@ if( $_POST["mode"] == "create" )
     {
         foreach(explode("\n", $blacklist) as $line)
         {
+            $line = trim($line);
+            if( empty($line) ) continue;
+            if( substr($line, 0, 1) == "#" ) continue;
+            
             $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
             if( preg_match($pattern, $xaccount->display_name) )
             {
