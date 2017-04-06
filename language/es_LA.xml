@@ -194,6 +194,7 @@
         
         <!-- Login related -->
         <invalid_login_info>Especifica un nombre de usuario y una contraseña.</invalid_login_info>
+        <no_email_as_user_name>No puedes usar una dirección de correo para abrir sesión.</no_email_as_user_name>
         <missing_params>Especifica un nombre de usuario y una contraseña.</missing_params>
         <account_unexistent>El nombre de usuario especificado no existe.</account_unexistent>
         <account_disabled>Tu cuenta está desactivada.</account_disabled>

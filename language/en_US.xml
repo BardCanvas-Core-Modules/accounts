@@ -194,6 +194,7 @@
         
         <!-- Login related -->
         <invalid_login_info>Please type in a user name and a password.</invalid_login_info>
+        <no_email_as_user_name>You can't use an email address to login.</no_email_as_user_name>
         <missing_params>Please provide a user name and a password.</missing_params>
         <account_unexistent>The specified user name is not registered.</account_unexistent>
         <account_disabled>Your account is disabled.</account_disabled>
