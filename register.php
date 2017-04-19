@@ -29,7 +29,7 @@ if( $_POST["mode"] == "create" )
     $current_module->load_extensions("registration", "after_init");
     
     # Validations: missing fields
-    foreach( array("display_name", "email", "password", "password2", "recaptcha_response_field") as $field )
+    foreach( array("display_name", "email", "password", "password2") as $field )
         if( trim(stripslashes($_POST[$field])) == "" ) $errors[] = $current_module->language->errors->registration->missing->{$field};
     
     $user_name = trim(stripslashes($_POST["user_name"]));
