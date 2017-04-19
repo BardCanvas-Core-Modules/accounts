@@ -637,6 +637,13 @@
             ]]></description>
             <type>yes/no</type>
         </specs>
+        <specs key="hide_birthdate_input">
+            <title>Hide birthdate input on registration form?</title>
+            <description><![CDATA[
+                Birthdate input is not mandatory. It can be hidden if you don't use it.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
         <specs key="allow_duplicate_emails">
             <title>Allow duplicate emails?</title>
             <description><![CDATA[

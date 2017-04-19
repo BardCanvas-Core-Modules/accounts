@@ -633,6 +633,14 @@
             ]]></description>
             <type>yes/no</type>
         </specs>
+        <specs key="hide_birthdate_input">
+            <title>¿Ocultar fecha de nacimiento en forma de registro?</title>
+            <description><![CDATA[
+                La introducción de fecha de nacimiento no es obligatoria.
+                Si no la usas, puedes ocultarla de la forma.
+            ]]></description>
+            <type>yes/no</type>
+        </specs>
         <specs key="allow_duplicate_emails">
             <title>Permitir cuentas de correo duplicadas?</title>
             <description><![CDATA[

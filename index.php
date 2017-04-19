@@ -126,7 +126,8 @@ switch( $_REQUEST["mode"] )
             if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
                 $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
         
-        if( $account->level < config::MODERATOR_USER_LEVEL )
+        if( $account->level < config::MODERATOR_USER_LEVEL
+            && $settings->get("modules:accounts.hide_birthdate_input") != "true" )
         {
             if( empty($_POST["birthdate"]) )
                 $errors[] = $current_module->language->errors->registration->invalid->birthdate;

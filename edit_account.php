@@ -91,10 +91,13 @@ if( $_POST["mode"] == "save" )
         if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
             $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
     
-    if( empty($_POST["birthdate"]) )
-        $errors[] = $current_module->language->errors->registration->invalid->birthdate;
-    elseif( ! @checkdate(substr($_POST["birthdate"], 5, 2), substr($_POST["birthdate"], 8, 2), substr($_POST["birthdate"], 0, 4)) )
-        $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+    if( $settings->get("modules:accounts.hide_birthdate_input") != "true" )
+    {
+        if( empty($_POST["birthdate"]) )
+            $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+        elseif( ! @checkdate(substr($_POST["birthdate"], 5, 2), substr($_POST["birthdate"], 8, 2), substr($_POST["birthdate"], 0, 4)) )
+            $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+    }
     
     # Impersonation tries
     if( $_POST["email"] != $origin_account->email && $xaccount->level < config::MODERATOR_USER_LEVEL )

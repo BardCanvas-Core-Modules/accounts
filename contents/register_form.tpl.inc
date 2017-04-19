@@ -122,7 +122,8 @@ if( $_POST["mode"] != "create" )
         </div>
     </div>
     
-    <div class="cell">
+    <? $style = $settings->get("modules:accounts.hide_birthdate_input") == "true" ? "display: none" : ""; ?>
+    <div class="cell" style="<?= $style ?>">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->birthdate ?>
         </div>
