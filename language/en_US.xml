@@ -753,6 +753,9 @@
         <title>About {$user}</title>
         <info>
             <title>Info</title>
+            <member_since>Member since:</member_since>
+            <last_seen>Last seen:</last_seen>
+            <level>Level:</level>
             <country>Country:</country>
             <home_page>Website/home page:</home_page>
             <feed>Feed RSS:</feed>
