@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.10.7] - 2017-04-23
+
+- Added fields to user profile info section.
+
 ## [1.10.6] - 2017-04-19
 
 - Removed bogus captcha check from registration form.
