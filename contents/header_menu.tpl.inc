@@ -44,6 +44,18 @@ if( ! $account->_exists )
 }
 else
 {
+    if( $account->has_admin_rights_to_module("accounts") )
+        $template->add_menu_item(
+            "notify_online_users",
+            "
+            <span class='main_menu_item pseudo_link highlighted always_visible pull-right' data-module='accounts' onclick='notify_online_users()'
+                  title='{$this_module->language->notify_online_users->title}'>
+               <span class='fa fa-send fa-fw'></span>
+            </span>
+            ",
+            960
+        );
+    
     $added_class = preg_match('#/accounts/edit_account.php|/accounts/devices.php|/accounts/preferences.php#i', $_SERVER["PHP_SELF"]) ? "current" : "";
     $locked      = $account->_is_locked ? "fa-lock" : "fa-info-circle";
     

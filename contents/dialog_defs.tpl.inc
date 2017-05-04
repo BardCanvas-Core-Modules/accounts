@@ -133,3 +133,22 @@
         <option value="!@cancel">&lt;<?= $language->cancel ?>&gt;</option>
     </select>
 </div>
+
+<div id="online_users_notification_target" style="display: none;"></div>
+<div id="online_users_notification_dialog" style="display: none;"
+     title="<?= $this_module->language->notify_online_users->title ?>"
+     data-ok-caption="<?= $language->submit ?>" data-cancel-caption="<?= $language->cancel ?>">
+    <form method="post" id="online_users_notification" action="<?= $this_module->get_url() ?>/scripts/notify_online_users.php">
+        
+        <p style="margin-bottom: 10px;"><?= $this_module->language->notify_online_users->select_type ?></p>
+        <p style="margin-top: 0;">
+            <? foreach($this_module->language->notify_online_users->types->type as $index => $type): ?>
+                <label><input type="radio" <? if(trim($type["key"]) == "information") echo "checked"; ?> name="type"
+                              value="<?= $type["key"] ?>"><?= $type ?></input></label><br>
+            <? endforeach; ?>
+        </p>
+        
+        <p style="margin-bottom: 10px;"><?= $this_module->language->notify_online_users->type_message ?></p>
+        <textarea name="message" style="width: 100%" rows="4" wrap="soft"></textarea>
+    </form>
+</div>

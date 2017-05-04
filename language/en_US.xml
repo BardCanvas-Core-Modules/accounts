@@ -768,4 +768,22 @@
         </bio>
     </user_profile_page>
     
+    <notify_online_users>
+        <title>Send notification to online users</title>
+        <select_type>Select a type:</select_type>
+        <types>
+            <type key="information">Generic Information</type>
+            <type key="success"    >Green note</type>
+            <type key="alert"      >Alert</type>
+            <type key="warning"    >Warning</type>
+            <type key="error"      >Critical message</type>
+        </types>
+        <type_message>Type the message to send:</type_message>
+        <messages>
+            <none_online>There are no users present</none_online>
+            <invalid_type>Please specify a valid type</invalid_type>
+            <empty_message>Please specify a message to send</empty_message>
+        </messages>
+    </notify_online_users>
+    
 </language>

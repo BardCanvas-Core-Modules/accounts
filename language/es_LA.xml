@@ -765,4 +765,22 @@
         </bio>
     </user_profile_page>
     
+    <notify_online_users>
+        <title>Enviar notificación a usuarios en línea</title>
+        <select_type>Selecciona un tipo:</select_type>
+        <types>
+            <type key="information">Información genérica</type>
+            <type key="success"    >Nota verde</type>
+            <type key="alert"      >Alerta</type>
+            <type key="warning"    >Advertencia</type>
+            <type key="error"      >Mensaje crítico</type>
+        </types>
+        <type_message>Introduce el mensaje a enviar:</type_message>
+        <messages>
+            <none_online>No hay ningún usuario presente.</none_online>
+            <invalid_type>Por favor especifica un tipo válido</invalid_type>
+            <empty_message>Por favor especifica un mensaje a enviar</empty_message>
+        </messages>
+    </notify_online_users>
+    
 </language>

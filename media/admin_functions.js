@@ -194,3 +194,58 @@ function change_user_level(trigger)
             location.href = $_PHP_SELF + '?wasuuup=' + wasuuup();
     });
 }
+
+function prepare_online_users_notification_submission(formData, $form, options)
+{
+    $form.closest('.ui-dialog').block(blockUI_medium_params);
+}
+
+function process_online_users_notification_response(responseText, statusText, xhr, $form)
+{
+    $form.closest('.ui-dialog').unblock();
+    
+    if( responseText != 'OK' )
+    {
+        alert( responseText );
+        
+        return;
+    }
+    
+    $('#online_users_notification_dialog').dialog('close');
+}
+
+function notify_online_users()
+{
+    $('#online_users_notification')[0].reset();
+    $('#online_users_notification_dialog').dialog('open');
+}
+
+$(document).ready(function()
+{
+    $('#online_users_notification').ajaxForm({
+        target:       '#online_users_notification_target',
+        beforeSubmit: prepare_online_users_notification_submission,
+        success:      process_online_users_notification_response
+    });
+    
+    var $dialog        = $('#online_users_notification_dialog');
+    var submit_caption = $dialog.attr('data-ok-caption');
+    var cancel_caption = $dialog.attr('data-cancel-caption');
+    
+    $dialog.dialog({
+        modal:    true,
+        autoOpen: false,
+        buttons:  [
+            {
+                text:  cancel_caption,
+                icons: { primary: "ui-icon-cancel" },
+                click: function() { $(this).dialog( "close" ); }
+            },
+            {
+                text: submit_caption,
+                icons: { primary: "ui-icon-check" },
+                click: function() { $('#online_users_notification').submit(); }
+            }
+        ]
+    });
+});
