@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.11.0] - 2017-05-05
+
+- Added helper to broadcast a notification to all online users.
+
 ## [1.10.7] - 2017-04-23
 
 - Added fields to user profile info section.
