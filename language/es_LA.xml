@@ -620,6 +620,8 @@
             <info>Muestra la forma de apertura de sesión para visitantes y datos del usuario conectado cuando se tiene sesión abierta.</info>
         </login>
         <meta>
+            <title>Meta</title>
+            <info>Controles adaptables de sesión de usuario</info>
             <edit_profile>Editar perfil</edit_profile>
         </meta>
     </widgets>

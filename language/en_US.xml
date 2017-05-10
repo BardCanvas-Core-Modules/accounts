@@ -624,6 +624,8 @@
             <info>Shows login form for visitors and avatar/name/logout link for logged in users.</info>
         </login>
         <meta>
+            <title>Meta</title>
+            <info>Adaptive user session controls</info>
             <edit_profile>Edit profile</edit_profile>
         </meta>
     </widgets>
