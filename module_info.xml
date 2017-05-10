@@ -30,7 +30,7 @@
     </template_includes>
     
     <widgets>
-        <widget for="right_sidebar" id="login" type="php" is_clonable="false" file="login/widget.inc" />
+        <widget for="right_sidebar" id="login" type="php" is_clonable="false" file="right_sidebar_login.inc" />
         <widget for="left_sidebar"  id="meta"  type="php" is_clonable="false" file="left_sidebar_meta.inc"
                 added_classes="account_meta" />
     </widgets>
