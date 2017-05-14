@@ -1,6 +1,12 @@
 
 # Accounts Module Change Log
 
+## [1.12.0] - 2017-05-13
+
+- Renamed file for right sidebar "meta" widget.
+- Added missing widget infos in language file.
+- Minor tuning of the online users notification helper.
+
 ## [1.11.0] - 2017-05-05
 
 - Added helper to broadcast a notification to all online users.
