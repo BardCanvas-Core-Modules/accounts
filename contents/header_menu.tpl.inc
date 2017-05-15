@@ -44,7 +44,7 @@ if( ! $account->_exists )
 }
 else
 {
-    if( $account->has_admin_rights_to_module("accounts") )
+    if( $account->has_admin_rights_to_module("accounts") && $modules["messaging"]->enabled )
         $template->add_menu_item(
             "notify_online_users",
             "
