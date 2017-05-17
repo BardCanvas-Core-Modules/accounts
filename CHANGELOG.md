@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.12.1] - 2017-05-16
+
+- Removed the broadcast notification helper when the messaging module is not present or disabled.
+
 ## [1.12.0] - 2017-05-13
 
 - Renamed file for right sidebar "meta" widget.
