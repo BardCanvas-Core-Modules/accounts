@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.12.2] - 2017-05-17
+
+- Language adjustments.
+
 ## [1.12.1] - 2017-05-16
 
 - Removed the broadcast notification helper when the messaging module is not present or disabled.
