@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.13.0] - 2017-05-23
+
+- Added support for "external" preference fields.
+
 ## [1.12.2] - 2017-05-17
 
 - Language adjustments.
