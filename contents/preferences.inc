@@ -56,6 +56,8 @@ $account_prefs  = $account->get_editable_prefs();
     });
 </script>
 
+<? $current_module->load_extensions("prefs_editor", "script_preloads"); ?>
+
 <form method="post" id="preferences" action="<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<?=md5(mt_rand(1,65535))?>">
     
     <?
@@ -138,7 +140,7 @@ $account_prefs  = $account->get_editable_prefs();
     <? endforeach; ?>
     
     <p align="right">
-        <button type="submit">
+        <button type="submit" class="big_form_submit_button">
             <span class="fa fa-check"></span>
             <?= $language->save ?>
         </button>
@@ -150,7 +152,7 @@ $account_prefs  = $account->get_editable_prefs();
 $generation_index = 0;
 function render_pref_editor($type, $name, $value, $specs = null)
 {
-    global $language, $generation_index;
+    global $language, $generation_index, $config;
     
     $generation_index++;
     $type = trim($type);
@@ -221,6 +223,25 @@ function render_pref_editor($type, $name, $value, $specs = null)
     {
         echo "
             <textarea class='CodeMirror' id='ta_$generation_index' name='engine_prefs[{$name}]'>" . htmlspecialchars($value) . "</textarea>
+        ";
+        
+        return;
+    }
+    
+    if( $type == "external" )
+    {
+        $id  = "ee_" . uniqid();
+        $url = "{$config->full_root_path}/{$specs->options->url}?wasuuup=" . md5(mt_rand(1, 65535));
+        echo "
+            <div id='$id' class='external_editor_target' data-pref-name='{$name}'>
+                <div class='framed_content aligncenter' style='margin: 0;'>
+                    <i class='fa fa-spinner fa-pulse fa-lg'></i>
+                </div>
+            </div>
+            
+            <script type='text/javascript'>
+                $(document).ready(function() { $('#{$id}').load('{$url}'); });
+            </script>
         ";
         
         return;

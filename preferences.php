@@ -14,6 +14,8 @@ if( ! empty($_POST["engine_prefs"]) )
 {
     $messages = array();
     
+    $current_module->load_extensions("prefs_editor", "before_saving");
+    
     # echo "<pre>" . print_r($account->engine_prefs, true) . "</pre>";
     foreach($_POST["engine_prefs"] as $key => $val)
     {
@@ -30,6 +32,8 @@ if( ! empty($_POST["engine_prefs"]) )
             );
         }
     }
+    
+    $current_module->load_extensions("prefs_editor", "after_saving");
     
     if( count($messages) > 0 )
         send_notification($account->id_account, "success", implode("\n", $messages));
