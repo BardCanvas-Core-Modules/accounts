@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.13.2] - 2017-06-08
+
+- Added extension points on the toolbox.
+
 ## [1.13.1] - 2017-06-08
 
 - Replaced error message when a user has no open account and tries to set an engine pref with a false confirmation.
