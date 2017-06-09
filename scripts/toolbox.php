@@ -64,6 +64,7 @@ switch( $_REQUEST["mode"] )
         if( $account->id_account == $user_account->id_account )
             die( $current_module->language->admin->record_nav->action_messages->no_self_enable_disable );
         
+        $current_module->load_extensions("toolbox", "before_enable_account");
         $user_account->enable();
         $current_module->load_extensions("toolbox", "enable_account");
         
@@ -87,6 +88,7 @@ switch( $_REQUEST["mode"] )
         if( $account->id_account == $user_account->id_account )
             die( $current_module->language->admin->record_nav->action_messages->no_self_enable_disable );
         
+        $current_module->load_extensions("toolbox", "before_disable_account");
         $user_account->disable();
         $current_module->load_extensions("toolbox", "disable_account");
         
