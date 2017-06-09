@@ -19,7 +19,7 @@ include "../../config.php";
 include "../../includes/bootstrap.inc";
 
 $_current_page_requires_login = true;
-if( ! $account->_exists ) die( $language->errors->page_requires_login );
+if( ! $account->_exists ) die("OK");
 
 $key = trim(stripslashes($_REQUEST["key"]));
 if( empty($key) ) die($current_module->language->errors->prefs_setting->empty_key);
