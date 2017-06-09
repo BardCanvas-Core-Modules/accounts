@@ -121,6 +121,7 @@ switch( $_REQUEST["mode"] )
         if( ! isset($config->user_levels_by_level[$_GET["level"]]))
             die( $current_module->language->admin->record_nav->action_messages->invalid_level_specified );
         
+        $current_module->load_extensions("toolbox", "before_level_change");
         $previous_level = $user_account->level;
         $user_account->set_level( $_GET["level"] );
         if( $previous_level != $_GET["level"] ) $current_module->load_extensions("toolbox", "account_level_changed");
@@ -155,6 +156,7 @@ switch( $_REQUEST["mode"] )
         if( $_GET["id_account"] == "100000000000000" )
             die( $current_module->language->admin->record_nav->action_messages->system_account_cannot_be_deleted );
         
+        $current_module->load_extensions("toolbox", "before_delete");
         $config->globals["deletions_log"] = array();
         $config->globals["notify_deletion_progress"] = false;
         //send_notification($account->id_account, "information", $current_module->language->admin->record_nav->action_messages->deletion_progress->start);

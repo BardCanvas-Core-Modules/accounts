@@ -81,6 +81,9 @@ switch( $_REQUEST["mode"] )
             break;
         }
         
+        $config->globals["accounts:processing_account"] = $xaccount;
+        $current_module->load_extensions("account_admin_editor", "after_init");
+        
         # This keeps the whole posted data prepped for output on the form
         $user_name = $xaccount->user_name;
         $xaccount->assign_from_posted_form();
