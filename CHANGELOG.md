@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.13.1] - 2017-06-08
+
+- Replaced error message when a user has no open account and tries to set an engine pref with a false confirmation.
+- Added extension points on the toolbox and the accounts admin editor.
+
 ## [1.13.0] - 2017-05-23
 
 - Added support for "external" preference fields.
