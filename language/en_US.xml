@@ -235,6 +235,8 @@
             <invalid>
                 <email>Please specify a valid e-mail address.</email>
                 <alt_email>Please specify a valid alternate e-mail address.</alt_email>
+                <mail_domain>The domain of your main email address is not allowed here.</mail_domain>
+                <alt_mail_domain>The domain of your alternate email address is not allowed here.</alt_mail_domain>
                 <passwords_mismatch>The passwords you've specified don't match. Please re-type them.</passwords_mismatch>
                 <mails_must_be_different>Main and alternate e-mail addresses must be different.</mails_must_be_different>
                 <captcha_invalid>Invalid captcha. Please try again.</captcha_invalid>
@@ -741,6 +743,26 @@
                 <code>?</code> for a single character or <code>*</code> for any characters.<br>
                 <span class="fa fa-info-circle"></span>
                 Note: comparison is not case sensitive.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        <specs key="email_domains_blacklist">
+            <title><![CDATA[
+                Email domains blacklist
+            ]]></title>
+            <description><![CDATA[
+                List of domains that aren't allowed on email fields when registering or
+                editing an account.<br>
+                You can find disposable domain lists for copy/paste here:
+                <ul>
+                    <li><a href="https://github.com/martenson/disposable-email-domains/blob/master/disposable_email_blacklist.conf" target="_blank">github.com/martenson/.../disposable_email_blacklist.conf</a></li>
+                    <li><a href="https://gist.github.com/hassanazimi/d6e49469258d7d06f9f4" target="_blank">gist.github.com/hassanazimi/d6e49469258d7d06f9f4</a></li>
+                </ul>
+                <hr>
+                Type one domain per each line.
+                You can disable entries by adding a <code>#</code> at the beginning.<br>
+                <i class="fa fa-info-circle"></i>
+                <b>Note:</b> this list may be ignored by automated account creation enabled modules.
             ]]></description>
             <type>code</type>
         </specs>

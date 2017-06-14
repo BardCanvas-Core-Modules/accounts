@@ -87,6 +87,32 @@ if( $_POST["mode"] == "create" )
             }
         }
     }
+    $blacklist = trim($settings->get("modules:accounts.email_domains_blacklist"));
+    if( ! empty($blacklist) )
+    {
+        $main_domain = end(explode("@", $xaccount->email));
+        $alt_domain  = end(explode("@", $xaccount->alt_email));
+        foreach(explode("\n", $blacklist) as $line)
+        {
+            $line = trim($line);
+            if( empty($line) ) continue;
+            if( substr($line, 0, 1) == "#" ) continue;
+            
+            if( $line == $main_domain )
+            {
+                $errors[] = $current_module->language->errors->registration->invalid->mail_domain;
+                
+                break;
+            }
+            
+            if( $line == $alt_domain )
+            {
+                $errors[] = $current_module->language->errors->registration->invalid->alt_mail_domain;
+                
+                break;
+            }
+        }
+    }
     
     if( $settings->get("modules:accounts.non_mandatory_country") != "true" && empty($country) )
         $errors[] = $current_module->language->errors->registration->missing->country;

@@ -237,6 +237,8 @@
             <invalid>
                 <email>Especifica una dirección principal de correo electrónico váilda.</email>
                 <alt_email>Especifica una dirección alterna de correo electrónico válida.</alt_email>
+                <mail_domain>El dominio de tu dirección de correo principal no está permitido aquí.</mail_domain>
+                <alt_mail_domain>El dominio de tu dirección de correo alterno no está permitido aquí.</alt_mail_domain>
                 <passwords_mismatch>Las contraseñas no coinciden.</passwords_mismatch>
                 <mails_must_be_different>Ambas direcciones de correo deben ser distintas.</mails_must_be_different>
                 <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
@@ -738,6 +740,25 @@
                 <code>?</code> para buscar un caracter sencillo y <code>*</code> para cualquier cantidad de caracteres.<br>
                 <span class="fa fa-info-circle"></span>
                 Nota: la comparación no es sensible a mayúsculas/minúsculas.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        <specs key="email_domains_blacklist">
+            <title><![CDATA[
+                Lista negra de dominios para correo
+            ]]></title>
+            <description><![CDATA[
+                Lista de dominios que no se permiten en campos de correo cuando se registra o edita una cuenta.<br>
+                Puedes encontar listas de dominios desechables para copiar/pegar aquí:
+                <ul>
+                    <li><a href="https://github.com/martenson/disposable-email-domains/blob/master/disposable_email_blacklist.conf" target="_blank">github.com/martenson/.../disposable_email_blacklist.conf</a></li>
+                    <li><a href="https://gist.github.com/hassanazimi/d6e49469258d7d06f9f4" target="_blank">gist.github.com/hassanazimi/d6e49469258d7d06f9f4</a></li>
+                </ul>
+                <hr>
+                Escribe un  dominio por línea. Deshabilita entradas añadiendo un <code>#</code>
+                al inicio.<br>
+                <i class="fa fa-info-circle"></i>
+                <b>Nota:</b> esta lista puede ser ignorada por módulos que crean cuentas de usuario automáticamente.
             ]]></description>
             <type>code</type>
         </specs>

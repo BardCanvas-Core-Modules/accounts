@@ -38,18 +38,49 @@ if( $_POST["mode"] == "save" )
     foreach( array("display_name", "country", "email" ) as $field )
         if( trim(stripslashes($_POST[$field])) == "" ) $errors[] = $current_module->language->errors->registration->missing->{$field};
     
-    if( $account->level < config::MODERATOR_USER_LEVEL && $account->display_name != $xaccount->display_name )
+    # Blacklist validations
+    if( $account->level < config::MODERATOR_USER_LEVEL )
     {
-        $blacklist = trim($settings->get("modules:accounts.displaynames_blacklist"));
+        if( $account->display_name != $xaccount->display_name )
+        {
+            $blacklist = trim($settings->get("modules:accounts.displaynames_blacklist"));
+            if( ! empty($blacklist) )
+            {
+                foreach(explode("\n", $blacklist) as $line)
+                {
+                    $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
+                    if( preg_match($pattern, $xaccount->display_name) )
+                    {
+                        $errors[] = $current_module->language->errors->registration->invalid->display_name_blacklisted;
+                        
+                        break;
+                    }
+                }
+            }
+        }
+        
+        $blacklist = trim($settings->get("modules:accounts.email_domains_blacklist"));
         if( ! empty($blacklist) )
         {
+            $main_domain = end(explode("@", $xaccount->email));
+            $alt_domain  = end(explode("@", $xaccount->alt_email));
             foreach(explode("\n", $blacklist) as $line)
             {
-                $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
-                if( preg_match($pattern, $xaccount->display_name) )
+                $line = trim($line);
+                if( empty($line) ) continue;
+                if( substr($line, 0, 1) == "#" ) continue;
+            
+                if( $line == $main_domain )
                 {
-                    $errors[] = $current_module->language->errors->registration->invalid->display_name_blacklisted;
-                    
+                    $errors[] = $current_module->language->errors->registration->invalid->mail_domain;
+                
+                    break;
+                }
+            
+                if( $line == $alt_domain )
+                {
+                    $errors[] = $current_module->language->errors->registration->invalid->alt_mail_domain;
+                
                     break;
                 }
             }
