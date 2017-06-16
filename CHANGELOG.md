@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.14.0] - 2017-06-16
+
+- Added support for email domain blacklists.
+
 ## [1.13.2] - 2017-06-08
 
 - Added extension points on the toolbox.
