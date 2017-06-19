@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.14.1] - 2017-06-19
+
+- Fixed login redirect for subdirectory based installs.
+
 ## [1.14.0] - 2017-06-16
 
 - Added support for email domain blacklists.
