@@ -125,7 +125,7 @@ ob_start(); ?>
                 return;
             }
             
-            if( parts[3] != '' ) location.href = $_FULL_ROOT_PATH + parts[3];
+            if( parts[3] != '' ) location.href = parts[3];
             
             return;
         }
