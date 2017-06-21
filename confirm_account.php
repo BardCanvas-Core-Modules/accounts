@@ -65,6 +65,8 @@ if( count($errors) == 0 )
     $device->save();
 }
 
+$current_module->load_extensions("registration", "after_confirmation");
+
 $_errors = $errors;
 $template->set_page_title($current_module->language->page_titles->account_confirmation);
 $template->page_contents_include = "confirm_account.tpl.inc";

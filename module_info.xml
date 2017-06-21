@@ -36,7 +36,7 @@
     </widgets>
     
     <extension_areas_info><![CDATA[
-        Registration: after initializing submitted data.
+        Registration: after initializing submitted data, after confirmation.
         Profile edition: after initializing submitted data.
         Records browser: pre-EOF.
         Accounts Repository: account deletion.
