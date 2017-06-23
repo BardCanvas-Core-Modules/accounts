@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.14.2] - 2017-06-22
+
+- Added exension point on account confirmation.
+
 ## [1.14.1] - 2017-06-19
 
 - Fixed login redirect for subdirectory based installs.
