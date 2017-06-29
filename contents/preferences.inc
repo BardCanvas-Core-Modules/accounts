@@ -102,7 +102,7 @@ $account_prefs  = $account->get_editable_prefs();
                     ?>
                     
                     <tr class="<?= $class ?>">
-                        <td width="70%">
+                        <td class="details">
                             <div class="principal_data">
                                 <? if($specs["is_locked"] == "true") echo "<span class='fa fa-lock'></span>" ?>
                                 <?= $specs->title ?>
@@ -116,7 +116,7 @@ $account_prefs  = $account->get_editable_prefs();
                                 <?= $specs->description ?>
                             </blockquote>
                         </td>
-                        <td class="control" nowrap width="30%">
+                        <td class="control" nowrap>
                             <?
                             $selector_default = trim($specs["selector_default"]);
                             $value = $account_prefs[$key];
