@@ -156,6 +156,13 @@ $query = "
     order by $sqlorder
     limit $offset, $limit
 ";
+$config->globals["accounts_browser_query_parts"] = (object) array(
+    "filter" => $query_filter,
+    "order"  => $sqlorder,
+    "offset" => $offset,
+    "limit"  => $limit
+);
+$current_module->load_extensions("records_browser", "before_running_query");
 $res = $database->query($query);
 #endregion
 
@@ -248,6 +255,8 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         document.filter_form.submit();
     }
 </script>
+
+<? $current_module->load_extensions("records_browser", "additional_scripts"); ?>
 
 <div class="filtering clearfix">
     
@@ -356,7 +365,9 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         </thead>
         
         <tbody>
-        <? while( $row = $database->fetch_object($res) ): /** @var account_record $row */ ?>
+        <?
+        $current_module->load_extensions("records_browser", "before_loop_start");
+        while( $row = $database->fetch_object($res) ): /** @var account_record $row */ ?>
             
             <tr class="<? if( $row->id_account == $account->id_account ) echo "self"; else echo $row->state; ?>"
                 id_account="<?= $row->id_account ?>">
@@ -479,6 +490,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                             </span>
                         <? endif; ?>
                         
+                        <? $current_module->load_extensions("records_browser", "per_row_actions"); ?>
                     </div>
                     
                 </td>
