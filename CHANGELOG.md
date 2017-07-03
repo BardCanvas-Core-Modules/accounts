@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.14.3] - 207-07-03
+
+- Improved preferences editor responsiveness.
+- Added extension points to the accounts browser.
+
 ## [1.14.2] - 2017-06-22
 
 - Added exension point on account confirmation.
