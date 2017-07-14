@@ -123,7 +123,7 @@ use hng2_base\module;
         </div>
         <div class="field_input">
             <select name="country">
-                <option value=""><?= htmlspecialchars(trim($current_module->language->user_account_form->country_select)) ?></option>
+                <option value=""><?= trim($current_module->language->user_account_form->country_select) ?></option>
                 <? foreach($_country_list as $key => $val): ?>
                     <option <? if($key == $_current_user_country) echo "selected"; ?> value="<?= $key ?>"><?= $val ?></option>
                 <? endforeach; ?>
