@@ -167,6 +167,8 @@ use hng2_base\module;
         </div>
     </div>
     
+    <br>
+    
     <div class="cell">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->avatar->caption ?>
