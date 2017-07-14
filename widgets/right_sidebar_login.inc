@@ -73,6 +73,8 @@ ob_start(); ?>
             </span>
         </div>
         
+        <? $this_module->load_extensions("login_form", "before_submit_button"); ?>
+        
         <div class="field alignright">
             <button type="submit">
                 <span class="fa fa-sign-in"></span>

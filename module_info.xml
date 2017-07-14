@@ -43,6 +43,7 @@
         Login: pre-validations, additional login error messages (in dialog defs).
         Prefs editor: script preloads.
         Prefs editor: before saving, after saving.
+        Login form: before submit button
     ]]></extension_areas_info>
     
 </module>

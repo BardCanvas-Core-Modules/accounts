@@ -20,6 +20,8 @@
                 <?= $this_module->language->reset_password ?>
             </span>
             
+            <? $this_module->load_extensions("login_form", "before_submit_button"); ?>
+            
             <p align="right" style="margin-bottom: 0;">
                 <button type="submit">
                     <?= $language->submit ?>
