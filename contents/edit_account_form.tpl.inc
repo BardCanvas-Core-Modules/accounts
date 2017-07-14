@@ -64,6 +64,8 @@ use hng2_base\module;
         <input type="hidden" name="id_account" value="<?= $xaccount->id_account ?>">
     <? endif; ?>
     
+    <? $current_module->load_extensions("edit_account_form", "top"); ?>
+    
     <div class="cell">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->user_name ?>

@@ -86,6 +86,8 @@ if( $_POST["mode"] != "create" )
     <input type="hidden" name="mode"      value="create">
     <input type="hidden" name="redir_url" value="<?= empty($_REQUEST["redir_url"]) ? "" : $_REQUEST["redir_url"] ?>">
     
+    <? $current_module->load_extensions("register_form", "top"); ?>
+    
     <? if( $settings->get("modules:accounts.automatic_user_names") != "true" || $_no_flag_check ): ?>
         <div class="cell">
             <div class="field_caption">
