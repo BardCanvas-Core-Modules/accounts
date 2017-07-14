@@ -1,6 +1,13 @@
 
 # Accounts Module Change Log
 
+## [1.15.0] - 2017-07-14
+
+- Added blocking to login forms on submission.
+- Added extension points on login, registration and account editing forms.
+- Minor layout adjustments to registration/account editing forms.
+- Minor language fixes.
+
 ## [1.14.3] - 207-07-03
 
 - Improved preferences editor responsiveness.
