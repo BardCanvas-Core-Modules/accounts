@@ -11,15 +11,16 @@ function show_login_form()
     return false;
 }
 
-function validate_login_form()
+function validate_login_form(formData, $form, options)
 {
-    var $login_form = $('#login_form');
-    if( $login_form.find('input[name="user_name"]').val().trim() == "" ||
-        $login_form.find('input[name="user_name"]').val().trim() == "" )
+    if( $form.find('input[name="user_name"]').val().trim() == "" ||
+        $form.find('input[name="user_name"]').val().trim() == "" )
     {
         alert( $('#login_errors').find('.invalid_login_info').text().replace(/\n\s+/g, ' ') );
         return false;
     }
+    
+    $form.block(blockUI_medium_params);
     
     return true;
 }
@@ -54,9 +55,9 @@ function validate_register_form()
     return true;
 }
 
-function process_login_result()
+function process_login_result(result, statusText, xhr, $form)
 {
-    var result = $('#login_targetarea').text();
+    $form.unblock();
     
     if( result.indexOf('ERROR') < 0 )
     {

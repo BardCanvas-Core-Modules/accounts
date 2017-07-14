@@ -92,8 +92,9 @@ ob_start(); ?>
         success:       process_sidebar_login_result
     });
     
-    function validate_sidebar_login_form()
+    function validate_sidebar_login_form(formData, $form, options)
     {
+        $form.block(blockUI_medium_params);
         var $login_form = $('#sidebar_login_form');
         if( $login_form.find('input[name="user_name"]').val().trim() == "" ||
             $login_form.find('input[name="user_name"]').val().trim() == "" ) {
@@ -104,8 +105,10 @@ ob_start(); ?>
         return true;
     }
     
-    function process_sidebar_login_result(result)
+    function process_sidebar_login_result(result, statusText, xhr, $form)
     {
+        $form.unblock();
+        
         if( result.indexOf('ERROR') < 0 )
         {
             // result > username > device_message > redirect
@@ -122,6 +125,7 @@ ob_start(); ?>
                 $('#loggedin_icon').hide();
                 $('#loggedin_icon_locked').show();
                 alert( $('#device_messages .' + parts[2]).text().replace(/\n\s+/g, ' ') );
+                
                 return;
             }
             
