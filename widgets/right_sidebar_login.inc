@@ -56,6 +56,8 @@ ob_start(); ?>
             </a>
         <? endif; ?>
         
+        <? $this_module->load_extensions("login_form", "top"); ?>
+        
         <div class="field">
             <div class="caption"><?= $this_module->language->user_name ?></div>
             <div class="input"><input type="text" name="user_name"></div>

@@ -7,6 +7,9 @@
         <div id="login_targetarea" style="display: none;"></div>
         <form name="login_form" id="login_form" method="post" action="<?=$config->full_root_path?>/accounts/scripts/login.php">
             <input type="hidden" name="goto" value="<?= $_SERVER["REQUEST_URI"] ?>">
+    
+            <? $this_module->load_extensions("login_form", "top"); ?>
+            
             <span class="field">
                 <span class="caption"><?= $this_module->language->user_name ?></span>
                 <input type="text" name="user_name">
