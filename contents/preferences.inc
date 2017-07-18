@@ -99,10 +99,12 @@ $account_prefs  = $account->get_editable_prefs();
                     $class = "";
                     if($specs["is_locked"] == "true") $class .= " disabled";
                     if($specs["highlight_class"])     $class .= " {$specs["highlight_class"]}";
+                    
+                    $full_layout = isset($specs->options->full_layout);
                     ?>
                     
                     <tr class="<?= $class ?>">
-                        <td class="details">
+                        <td class="details" <? if($full_layout) echo "colspan='2'"; ?> >
                             <div class="principal_data">
                                 <? if($specs["is_locked"] == "true") echo "<span class='fa fa-lock'></span>" ?>
                                 <?= $specs->title ?>
@@ -115,8 +117,8 @@ $account_prefs  = $account->get_editable_prefs();
                             <blockquote>
                                 <?= $specs->description ?>
                             </blockquote>
-                        </td>
-                        <td class="control" nowrap>
+                        <? if( ! $full_layout ): ?></td><? endif; ?>
+                        <? if( ! $full_layout ): ?><td class="control" nowrap><? endif; ?>
                             <?
                             $selector_default = trim($specs["selector_default"]);
                             $value = $account_prefs[$key];
