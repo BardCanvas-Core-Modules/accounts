@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.15.1] - 2017-07-18
+
+- Added "full layout" option for specs in preferences editor-
+
 ## [1.15.0] - 2017-07-14
 
 - Added blocking to login forms on submission.
