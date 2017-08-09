@@ -20,8 +20,8 @@ include "../../includes/bootstrap.inc";
 
 if( ! $account->has_admin_rights_to_module("accounts") ) throw_fake_401();
 
-$type    = trim(stripslashes($type));
-$message = trim(stripslashes($message));
+$type    = trim(stripslashes($_POST["type"]));
+$message = trim(stripslashes($_POST["message"]));
 
 if( empty($type) )    die($current_module->language->notify_online_users->messages->invalid_type);
 if( empty($message) ) die($current_module->language->notify_online_users->messages->empty_message);
