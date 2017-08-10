@@ -56,6 +56,7 @@ if( ! empty($search_for) )
                     $where_line .= "display_name    like '%" . trim($this_term) . "%' or ";
                     $where_line .= "email           like '%" . trim($this_term) . "%' or ";
                     $where_line .= "alt_email       like '%" . trim($this_term) . "%' or ";
+                    $where_line .= "creation_host   like '%" . trim($this_term) . "%' or ";
                     $where_line .= "countries.name  like '%" . trim($this_term) . "%' or ";
                 }
                 $current_module->load_extensions("records_browser", "search_additions");
@@ -79,6 +80,7 @@ if( ! empty($search_for) )
             $where_line .= "display_name    like '%" . trim($this_term) . "%' or ";
             $where_line .= "email           like '%" . trim($this_term) . "%' or ";
             $where_line .= "alt_email       like '%" . trim($this_term) . "%' or ";
+            $where_line .= "creation_host   like '%" . trim($this_term) . "%' or ";
             $where_line .= "countries.name  like '%" . trim($this_term) . "%' or ";
         }
         $current_module->load_extensions("records_browser", "search_additions");
