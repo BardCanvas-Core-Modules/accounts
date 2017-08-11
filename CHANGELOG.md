@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.15.2] - 2017-08-11
+
+- Fixed issue on the online users notification sender.
+- Added searching by creation host/ip on the accounts browser.
+
 ## [1.15.1] - 2017-07-18
 
 - Added "full layout" option for specs in preferences editor-
