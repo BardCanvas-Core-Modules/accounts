@@ -35,6 +35,23 @@ foreach($built_vars as $key => $val) $$key = $val;
 
 $where_lines = array("account.country = countries.alpha_2");
 $search_for  = empty($search_for) ? "" : trim($search_for);
+
+# Implemented search for pref:pref_name:=value
+$search_rest = "";
+if( substr($search_for, 0, 5) == "pref:" )
+{
+    list($search_pref, $search_val) = explode(":=", str_replace("pref:", "", $search_for));
+    $search_rest = $search_for;
+    $search_for  = "";
+    
+    $where_lines[] = "
+        account.id_account in (
+            select aep.id_account from account_engine_prefs aep
+            where aep.name = '$search_pref' and aep.value = '\"$search_val\"'
+        )
+    ";
+}
+
 if( ! empty($search_for) )
 {
     if( strpos($search_for, ",") !== false )
@@ -89,6 +106,8 @@ if( ! empty($search_for) )
         unset($where_line);
     }
 }
+
+if( ! empty($search_rest) ) $search_for = $search_rest;
 
 if( ! empty($search_state) ) $where_lines[] = "state = '$search_state'";
 if( ! empty($search_level) ) $where_lines[] = "level = '$search_level'";
