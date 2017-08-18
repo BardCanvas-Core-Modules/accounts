@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.15.3] - 2017-08-18
+
+- Added search by preferences on the users browser. syntax: `pref:name:=value`
+
 ## [1.15.2] - 2017-08-11
 
 - Fixed issue on the online users notification sender.
