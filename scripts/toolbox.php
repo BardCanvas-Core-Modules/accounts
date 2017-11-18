@@ -91,6 +91,7 @@ switch( $_REQUEST["mode"] )
         $current_module->load_extensions("toolbox", "before_disable_account");
         $user_account->disable();
         $current_module->load_extensions("toolbox", "disable_account");
+        $mem_cache->delete("account:{$user_account->id_account}");
         
         send_notification(
             $account->id_account,
@@ -164,6 +165,7 @@ switch( $_REQUEST["mode"] )
         //send_notification($account->id_account, "information", $current_module->language->admin->record_nav->action_messages->deletion_progress->start);
         //sleep(1);
         $repository->delete($_GET["id_account"]);
+        $mem_cache->delete("account:{$user_account->id_account}");
         
         if( ! empty($config->globals["deletions_log"]) )
         {
