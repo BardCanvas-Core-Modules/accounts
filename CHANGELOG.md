@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.15.4] - 2017-11-18
+
+- Added cache purging after accounts disabling/deletion.
+
 ## [1.15.3] - 2017-08-18
 
 - Added search by preferences on the users browser. syntax: `pref:name:=value`
