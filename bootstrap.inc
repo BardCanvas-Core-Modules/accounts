@@ -11,10 +11,10 @@ $cache_file     = "{$config->datafiles_location}/cache/editable_prefs_{$version}
 $temp_cache     = new disk_cache($cache_file);
 if( $temp_cache->loaded )
 {
-    $editable_prefs = $temp_cache->get_all();
-    foreach($editable_prefs as $title => &$prefs)
-        foreach($prefs as $key => &$spec)
-            $spec = simplexml_load_string($spec);
+    $incoming = $temp_cache->get_all();
+    foreach($incoming as $title => $prefs)
+        foreach($prefs as $key => $spec)
+            $editable_prefs[$title][$key] = simplexml_load_string($spec);
     
     $config->globals["editable_prefs_collection"] = $editable_prefs;
     return;
