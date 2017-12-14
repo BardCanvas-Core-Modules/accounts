@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.15.5] - 2017-14-12
+
+- Fixed collision on the profile preferences editor caused when loading the editable preferences collection.
+
 ## [1.15.4] - 2017-11-18
 
 - Added cache purging after accounts disabling/deletion.
