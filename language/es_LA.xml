@@ -237,6 +237,7 @@
             <invalid>
                 <email>Especifica una dirección principal de correo electrónico váilda.</email>
                 <alt_email>Especifica una dirección alterna de correo electrónico válida.</alt_email>
+                <same_emails>El correo alterno y el correo principal son idénticos. Por favor especifica uno distinto.</same_emails>
                 <mail_domain>El dominio de tu dirección de correo principal no está permitido aquí.</mail_domain>
                 <alt_mail_domain>El dominio de tu dirección de correo alterno no está permitido aquí.</alt_mail_domain>
                 <passwords_mismatch>Las contraseñas no coinciden.</passwords_mismatch>

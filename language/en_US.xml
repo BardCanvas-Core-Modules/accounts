@@ -235,6 +235,7 @@
             <invalid>
                 <email>Please specify a valid e-mail address.</email>
                 <alt_email>Please specify a valid alternate e-mail address.</alt_email>
+                <same_emails>Alternate e-mail is the same as main e-mail. Please specify a different address.</same_emails>
                 <mail_domain>The domain of your main email address is not allowed here.</mail_domain>
                 <alt_mail_domain>The domain of your alternate email address is not allowed here.</alt_mail_domain>
                 <passwords_mismatch>The passwords you've specified don't match. Please re-type them.</passwords_mismatch>
