@@ -61,7 +61,7 @@
     
     <div id="login_errors" style="display: none;">
         <div class="invalid_login_info"><?= $this_module->language->errors->invalid_login_info ?></div>
-        <div class="NO_EMAIL_AS_USER_NAME"><?= $this_module->language->errors->no_email_as_user_name ?></div>
+        <div class="ERROR_NO_EMAIL_AS_USER_NAME"><?= $this_module->language->errors->no_email_as_user_name ?></div>
         <div class="ERROR_MISSING_PARAMS"><?= $this_module->language->errors->missing_params ?></div>
         <div class="ERROR_ACCOUNT_UNEXISTENT"><?= $this_module->language->errors->account_unexistent ?></div>
         <div class="ERROR_ACCOUNT_DISABLED"><?= $this_module->language->errors->account_disabled ?></div>

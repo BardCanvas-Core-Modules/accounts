@@ -38,7 +38,7 @@ header("Content-Type: text/plain; charset=utf-8");
 #=====================#
 
 if( stristr($_POST["user_name"], "@") !== false )
-    die("NO_EMAIL_AS_USER_NAME");
+    die("ERROR_NO_EMAIL_AS_USER_NAME");
 
 if( trim($_POST["user_name"]) == "" || trim($_POST["password"])  == "" )
     die("ERROR_MISSING_PARAMS");
