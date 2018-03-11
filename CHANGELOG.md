@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.15.6] - 2018-03-10
+
+- Added missing language captions.
+- Fixed empty alert when trying to login using an email address.
+
 ## [1.15.5] - 2017-14-12
 
 - Fixed collision on the profile preferences editor caused when loading the editable preferences collection.
