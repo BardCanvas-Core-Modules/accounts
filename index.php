@@ -53,7 +53,7 @@ switch( $_REQUEST["mode"] )
             
             $_include_account_id    = true;
             $_current_user_country  = $xaccount->country;
-            $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?wasuuup=" . md5(mt_rand(1, 65535));
+            $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?offset={$_REQUEST["offset"]}&wasuuup=" . md5(mt_rand(1, 65535));
             $_submit_button_caption = $language->save;
             $template->page_contents_include  = "contents/edit_account_form.tpl.inc";
             $template->set_page_title($current_module->language->admin->edit_account->page_title);
@@ -201,7 +201,7 @@ switch( $_REQUEST["mode"] )
             
             $_include_account_id    = true;
             $_current_user_country  = $xaccount->country;
-            $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?wasuuup=" . md5(mt_rand(1, 65535));
+            $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?offset={$_REQUEST["offset"]}&wasuuup=" . md5(mt_rand(1, 65535));
             $_submit_button_caption = $language->save;
             $_messages              = $messages;
             $_errors                = $errors;
@@ -228,7 +228,7 @@ switch( $_REQUEST["mode"] )
         
         $_include_account_id    = true;
         $_current_user_country  = strtolower(get_geoip_location_data(get_remote_address()));
-        $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?wasuuup=" . md5(mt_rand(1, 65535));
+        $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?offset={$_REQUEST["offset"]}&wasuuup=" . md5(mt_rand(1, 65535));
         $_hide_captcha          = true;
         $_form_title            = $current_module->language->register_form->creation;
         $_no_flag_check         = true;

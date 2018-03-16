@@ -30,8 +30,12 @@ $browser    = new record_browser("{$config->website_key}_{$current_module->name}
  */
 #region Nav filters
 
+if( $_REQUEST["mode"] == "set_filter" ) $browser->save_nav_filters();
 $built_vars = $browser->build_vars(20, 16);
 foreach($built_vars as $key => $val) $$key = $val;
+$nav_filters = $browser->get_nav_filters();
+foreach($nav_filters as $key => $val) $$key = $val;
+if( ! empty($_REQUEST["offset"]) ) $offset = $_REQUEST["offset"];
 
 $where_lines = array("account.country = countries.alpha_2");
 $search_for  = empty($search_for) ? "" : trim($search_for);
@@ -217,7 +221,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         </span>
     <? endif; ?>
     
-    <button onclick="location.href='<?= $_SERVER["PHP_SELF"] ?>?mode=show_creation_form&wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
+    <button onclick="location.href='<?= $_SERVER["PHP_SELF"] ?>?mode=show_creation_form&offset=<?= $offset ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
         <span class="fa fa-plus"></span>
         <?= $current_module->language->admin->record_nav->create ?>
     </button>
@@ -273,7 +277,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         document.filter_form.limit.value                = 20;
         document.filter_form.order.value                = 16;
         document.filter_form.offset.value               = 0;
-        document.filter_form.submit();
+        $('#filter_form').submit();
     }
 </script>
 
@@ -312,8 +316,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         <?= $language->record_nav->search ?>
         <input type="text" name="search_for"
                value="<?= htmlspecialchars($search_for) ?>" size="30"
-               title="<?= $current_module->language->admin->record_nav->search_title ?>"
-               onkeypress="">
+               title="<?= $current_module->language->admin->record_nav->search_title ?>">
         
         <select name="search_state" onchange="$('#filter_form').submit();">
             <option <? if( $search_state == "" ) echo "selected"; ?>         value=""        >&lt;<?= $current_module->language->admin->record_nav->any_state ?>&gt;</option>
@@ -467,7 +470,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                         <? render_user_devices_trigger($row); ?>
                         
                         <? if( $row->id_account != $account->id_account && ($account->_is_admin || $row->level < $account->level) ): ?>
-                            <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=edit&id_account=<?= $row->id_account ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
+                            <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=edit&id_account=<?= $row->id_account ?>&offset=<?= $offset ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
                                 <span class="fa fa-pencil"></span>
                                 <?= $current_module->language->admin->record_nav->actions->edit ?>
                             </a>

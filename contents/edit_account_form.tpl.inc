@@ -59,7 +59,8 @@ use hng2_base\module;
 <form name="account_data_form" id="account_data_form" class="userdata_form" method="post"
       enctype="multipart/form-data" action="<?=$_SERVER["PHP_SELF"]?>">
     
-    <input type="hidden" name="mode" value="save">
+    <input type="hidden" name="mode"   value="save">
+    <input type="hidden" name="offset" value="<?= $_REQUEST["offset"] ?>">
     <? if($_include_account_id): ?>
         <input type="hidden" name="id_account" value="<?= $xaccount->id_account ?>">
     <? endif; ?>
