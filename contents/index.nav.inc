@@ -116,6 +116,8 @@ if( ! empty($search_rest) ) $search_for = $search_rest;
 if( ! empty($search_state) ) $where_lines[] = "state = '$search_state'";
 if( ! empty($search_level) ) $where_lines[] = "level = '$search_level'";
 
+$current_module->load_extensions("records_browser", "before_query_filters_integration");
+
 if( ! empty($where_lines) )
 {
     $where = "";
@@ -277,6 +279,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         document.filter_form.limit.value                = 20;
         document.filter_form.order.value                = 16;
         document.filter_form.offset.value               = 0;
+        document.filter_form.resetting.value            = 'true';
         $('#filter_form').submit();
     }
 </script>
@@ -304,46 +307,59 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         <input type="hidden" name="mode"         value="set_filter">
         <input type="hidden" name="order"        value="<?= $order ?>">
         <input type="hidden" name="offset"       value="<?= $offset ?>">
+        <input type="hidden" name="resetting"    value="">
         
-        <span style="float: right;">
-            <?= $browser->get_pagination_button("previous", "paginate", $pagination) ?>
-            <?= $language->record_nav->page ?>
-            <?= $pagination["this_page_number"]; ?>/<?= $pagination["total_pages"]; ?>
-            (<?= $pagination["total_records"]; ?> <?= $language->record_nav->entries ?>)
-            <?= $browser->get_pagination_button("next", "paginate", $pagination) ?>
-        </span>
-        
-        <?= $language->record_nav->search ?>
-        <input type="text" name="search_for"
-               value="<?= htmlspecialchars($search_for) ?>" size="30"
-               title="<?= $current_module->language->admin->record_nav->search_title ?>">
-        
-        <select name="search_state" onchange="$('#filter_form').submit();">
-            <option <? if( $search_state == "" ) echo "selected"; ?>         value=""        >&lt;<?= $current_module->language->admin->record_nav->any_state ?>&gt;</option>
-            <option <? if( $search_state == "new" ) echo "selected"; ?>      value="new"     ><?= $current_module->language->admin->record_nav->rec_states->new ?></option>
-            <option <? if( $search_state == "enabled" ) echo "selected"; ?>  value="enabled" ><?= $current_module->language->admin->record_nav->rec_states->enabled ?></option>
-            <option <? if( $search_state == "disabled" ) echo "selected"; ?> value="disabled"><?= $current_module->language->admin->record_nav->rec_states->disabled ?></option>
-        </select>
-        
-        <select name="search_level" onchange="$('#filter_form').submit();">
-            <option <? if( $search_level == "" ) echo "selected"; ?> value="">&lt;<?= $current_module->language->admin->record_nav->any_level ?>&gt;</option>
-            <? foreach($config->user_levels_by_level as $level => $name): if($level < 1) continue; ?>
-                <option <? if( $search_level == $level ) echo "selected"; ?> value="<?= $level ?>"><?= $level ?>: <?= $name ?></option>
-            <? endforeach; ?>
-        </select>
-        
-        <span class="inline-block">
-            <?= $language->record_nav->show ?>
-            <select name="limit" onchange="$('#filter_form').submit();">
-                <? foreach(array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500) as $recs): ?>
-                    <option <? if($limit == $recs) echo "selected" ?>><?= $recs ?></option>
+        <div class="base_filters clearfix">
+            <span style="float: right;">
+                <?= $browser->get_pagination_button("previous", "paginate", $pagination) ?>
+                <?= $language->record_nav->page ?>
+                <?= $pagination["this_page_number"]; ?>/<?= $pagination["total_pages"]; ?>
+                (<?= $pagination["total_records"]; ?> <?= $language->record_nav->entries ?>)
+                <?= $browser->get_pagination_button("next", "paginate", $pagination) ?>
+            </span>
+            
+            <?= $language->record_nav->search ?>
+            <input type="text" name="search_for"
+                   value="<?= htmlspecialchars($search_for) ?>" size="30"
+                   title="<?= $current_module->language->admin->record_nav->search_title ?>">
+            
+            <select name="search_state" onchange="$('#filter_form').submit();">
+                <option <? if( $search_state == "" ) echo "selected"; ?>         value=""        >&lt;<?= $current_module->language->admin->record_nav->any_state ?>&gt;</option>
+                <option <? if( $search_state == "new" ) echo "selected"; ?>      value="new"     ><?= $current_module->language->admin->record_nav->rec_states->new ?></option>
+                <option <? if( $search_state == "enabled" ) echo "selected"; ?>  value="enabled" ><?= $current_module->language->admin->record_nav->rec_states->enabled ?></option>
+                <option <? if( $search_state == "disabled" ) echo "selected"; ?> value="disabled"><?= $current_module->language->admin->record_nav->rec_states->disabled ?></option>
+            </select>
+            
+            <select name="search_level" onchange="$('#filter_form').submit();">
+                <option <? if( $search_level == "" ) echo "selected"; ?> value="">&lt;<?= $current_module->language->admin->record_nav->any_level ?>&gt;</option>
+                <? foreach($config->user_levels_by_level as $level => $name): if($level < 1) continue; ?>
+                    <option <? if( $search_level == $level ) echo "selected"; ?> value="<?= $level ?>"><?= $level ?>: <?= $name ?></option>
                 <? endforeach; ?>
             </select>
-            <?= $language->record_nav->recs_per_page ?>
             
-            <button type="submit"><?= $language->record_nav->buttons->apply ?></button>
-            <button onclick="reset_filter();"><?= $language->record_nav->buttons->reset ?></button>
-        </span>
+            <span class="inline-block">
+                <?= $language->record_nav->show ?>
+                <select name="limit" onchange="$('#filter_form').submit();">
+                    <? foreach(array(5, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500) as $recs): ?>
+                        <option <? if($limit == $recs) echo "selected" ?>><?= $recs ?></option>
+                    <? endforeach; ?>
+                </select>
+                <?= $language->record_nav->recs_per_page ?>
+                
+                <button type="submit"><?= $language->record_nav->buttons->apply ?></button>
+                <button onclick="reset_filter();"><?= $language->record_nav->buttons->reset ?></button>
+            </span>
+        </div>
+        
+        <?
+        $custom_filters = array();
+        $current_module->load_extensions("records_browser", "custom_filter_defs");
+        if( ! empty($custom_filters) ): ?>
+            <div class="extra_filters" style="margin-top: 10px;">
+                <? foreach($custom_filters as $filter) echo $filter; ?>
+            </div>
+        <? endif; ?>
+        
     </form>
 </div>
 
