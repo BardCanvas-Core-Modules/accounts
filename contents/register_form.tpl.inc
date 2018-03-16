@@ -242,7 +242,8 @@ if( $_POST["mode"] != "create" )
     <div align="center">
         
         <? if( $settings->get("engine.recaptcha_public_key") != "" && ! $_hide_captcha ): ?>
-            <?= recaptcha_get_html($settings->get("engine.recaptcha_public_key"), null, $_SERVER["HTTPS"]) ?>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <div class="g-recaptcha" data-sitekey="<?= $settings->get("engine.recaptcha_public_key") ?>"></div>
             <br>
         <? endif; ?>
         

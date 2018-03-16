@@ -27,7 +27,7 @@ function validate_login_form(formData, $form, options)
 
 function validate_register_form()
 {
-    var fields = ['display_name', 'user_name', 'email', 'password', 'password2', 'recaptcha_response_field'];
+    var fields = ['display_name', 'user_name', 'email', 'password', 'password2'];
     var errors = [];
     
     var $register_form = $('#register_form');

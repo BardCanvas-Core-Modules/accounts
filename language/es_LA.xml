@@ -243,6 +243,7 @@
                 <passwords_mismatch>Las contraseñas no coinciden.</passwords_mismatch>
                 <mails_must_be_different>Ambas direcciones de correo deben ser distintas.</mails_must_be_different>
                 <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
+                <captcha_api_error>No se ha logrado validar el Captcha: {$error}</captcha_api_error>
                 <chars_in_user_name>Caracteres inválidos en nombre de usuario (usar solo letras, números, guiones y guiones bajos).</chars_in_user_name>
                 <user_name_blacklisted>No puedes usar ese nombre de usuario. Por favor especifica otro.</user_name_blacklisted>
                 <display_name_blacklisted>No puedes usar ese alias. Por favor especifica otro..</display_name_blacklisted>

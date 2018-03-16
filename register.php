@@ -15,7 +15,6 @@ use hng2_base\module;
 
 include "../config.php";
 include "../includes/bootstrap.inc";
-include "../lib/recaptcha-php-1.11/recaptchalib.php";
 
 $repository = new accounts_repository();
 
@@ -135,8 +134,43 @@ if( $_POST["mode"] == "create" )
     # Validations: captcha
     if( $settings->get("engine.recaptcha_private_key") != "" )
     {
-        $res = recaptcha_check_answer($settings->get("engine.recaptcha_private_key"), get_remote_address(), $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
-        if( ! $res->is_valid ) $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+        if( ! isset($_POST['g-recaptcha-response']) )
+        {
+            $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+        }
+        else
+        {
+            $cap = trim(stripslashes($_POST['g-recaptcha-response']));
+            $ch  = curl_init("https://www.google.com/recaptcha/api/siteverify?secret={$settings->get("engine.recaptcha_private_key")}&response={$cap}");
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $res = curl_exec($ch);
+            
+            if( curl_error($ch) )
+            {
+                $errors[] = replace_escaped_objects(
+                    $current_module->language->errors->registration->invalid->captcha_api_error,
+                    array('{$error}' => curl_error($ch))
+                );
+            }
+            else
+            {
+                $obj = json_decode($res);
+                if( empty($obj) )
+                {
+                    $errors[] = replace_escaped_objects(
+                        $current_module->language->errors->registration->invalid->captcha_api_error,
+                        array('{$error}' => print_r($res))
+                    );
+                }
+                else
+                {
+                    if( ! $obj->success )
+                        $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+                }
+            }
+            curl_close($ch);
+        }
     }
     
     # Pre-check for double accounts (by display name)
