@@ -23,6 +23,8 @@ use hng2_base\settings;
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/calendar.js"></script>
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/lang/calendar-<?= $language->info->iso ?>.js"></script>
 <script type="text/javascript"          src="<?= $config->full_root_path ?>/lib/jscalendar/calendar-setup.js"></script>
+<script type="text/javascript"          src="<?=$config->full_root_path?>/lib/jquery.exptextarea.js"></script>
+<script type="text/javascript"> $(document).ready(function() { $('.expandible_textarea').expandingTextArea(); }); </script>
 
 <h1 class="clearfix">
     <? if( ! empty($_cancelation_redirect) ): ?>
@@ -238,6 +240,9 @@ if( $_POST["mode"] != "create" )
             <?= $current_module->language->user_account_form->password_message ?>
         </div>
     <? endif; ?>
+    
+    <? if( $config->globals["include_bottom_fields"] )
+        $current_module->load_extensions("register_form", "bottom"); ?>
     
     <div align="center">
         

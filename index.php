@@ -55,6 +55,9 @@ switch( $_REQUEST["mode"] )
             $_current_user_country  = $xaccount->country;
             $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?offset={$_REQUEST["offset"]}&wasuuup=" . md5(mt_rand(1, 65535));
             $_submit_button_caption = $language->save;
+            
+            $config->globals["include_bottom_fields"] = true;
+            
             $template->page_contents_include  = "contents/edit_account_form.tpl.inc";
             $template->set_page_title($current_module->language->admin->edit_account->page_title);
         }
@@ -183,6 +186,8 @@ switch( $_REQUEST["mode"] )
             $xaccount->save();
             $messages[] = $current_module->language->edit_account_form->saved_ok;
             
+            $current_module->load_extensions("account_admin_editor", "after_saving");
+            
             $template->set_page_title($current_module->language->admin->record_nav->page_title);
             include "{$template->abspath}/admin.php";
             break;
@@ -205,6 +210,8 @@ switch( $_REQUEST["mode"] )
             $_submit_button_caption = $language->save;
             $_messages              = $messages;
             $_errors                = $errors;
+            
+            $config->globals["include_bottom_fields"] = true;
             
             $template->page_contents_include  = "contents/edit_account_form.tpl.inc";
             $template->set_page_title($current_module->language->admin->edit_account->page_title);
@@ -233,6 +240,8 @@ switch( $_REQUEST["mode"] )
         $_form_title            = $current_module->language->register_form->creation;
         $_no_flag_check         = true;
         $_hide_infos            = true;
+        
+        $config->globals["include_bottom_fields"] = true;
         
         $template->page_contents_include = "contents/register_form.tpl.inc";
         $template->set_page_title($current_module->language->admin->create_account->page_title);
@@ -299,6 +308,8 @@ switch( $_REQUEST["mode"] )
             $xaccount->enable();
             $xaccount->set_level(config::NEWCOMER_USER_LEVEL);
             $messages[] = $current_module->language->register_form->account_manually_created;
+    
+            $current_module->load_extensions("account_admin_editor", "after_creating");
             
             $template->set_page_title($current_module->language->admin->record_nav->page_title);
             include "{$template->abspath}/admin.php";
@@ -326,6 +337,8 @@ switch( $_REQUEST["mode"] )
             $_hide_infos            = true;
             $_messages              = $messages;
             $_errors                = $errors;
+            
+            $config->globals["include_bottom_fields"] = true;
             
             $template->page_contents_include  = "contents/register_form.tpl.inc";
             $template->set_page_title($current_module->language->admin->create_account->page_title);
