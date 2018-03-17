@@ -1,6 +1,13 @@
 
 # Accounts Module Change Log
 
+## [1.16.0] - 2018-03-16
+
+- Implemented Google ReCaptcha API v2.
+- Added accounts browser page return pointers for addition/edition forms.
+- Added records browser support for custom filters (via extensions).
+- Added extension points on admin edition/creation forms to allow field injections.
+
 ## [1.15.6] - 2018-03-10
 
 - Added missing language captions.
