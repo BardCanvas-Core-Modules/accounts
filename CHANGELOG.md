@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.16.1] - 2018-08-04
+
+- Refactored editable prefs generator to properly handle user selected language.
+
 ## [1.16.0] - 2018-03-16
 
 - Implemented Google ReCaptcha API v2.
