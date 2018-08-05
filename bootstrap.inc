@@ -5,9 +5,17 @@
 
 use hng2_cache\disk_cache;
 
+$language_cookie_val = $_COOKIE[$config->language_cookie_var];
+if( empty($language_cookie_val) && isset($account->engine_prefs["!core:user_language"]))
+    $language_cookie_val = $account->engine_prefs["!core:user_language"];
+if( empty($language_cookie_val) )
+    $language_cookie_val = $settings->get("engine.default_language");
+if( empty($language_cookie_val) )
+    $language_cookie_val = "en_US";
+
 $editable_prefs = array();
 $version        = $config->module_versions_hash;
-$cache_file     = "{$config->datafiles_location}/cache/editable_prefs_{$version}-{$settings->get("engine.default_language")}.dat";
+$cache_file     = "{$config->datafiles_location}/cache/editable_prefs_{$version}-{$language_cookie_val}.dat";
 $temp_cache     = new disk_cache($cache_file);
 if( $temp_cache->loaded )
 {
