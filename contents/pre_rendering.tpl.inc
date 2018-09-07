@@ -2,7 +2,6 @@
 
 if( ! $account->_exists ) return;
 if( ! empty($account->email) ) return;
-if( ! empty($account->alt_email) ) return;
 
 $now      = date("Y-m-d H:i:s");
 $boundary = date("Y-m-d H:i:s", strtotime("now - 24 hours"));
