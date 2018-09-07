@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 - Added notification to accounts with missing email set on profile.
+- Restructured level check on the toolbox and registrations chart.
 
 ## [1.16.1] - 2018-08-04
 

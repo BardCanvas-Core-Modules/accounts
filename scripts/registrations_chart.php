@@ -16,6 +16,10 @@ include "../../includes/bootstrap.inc";
 include "../../lib/phplot-6.1.0/rgb.inc.php";
 include "../../lib/phplot-6.1.0/phplot.php";
 
+if( ! $account->has_admin_rights_to_module("accounts") )
+    if( $account->level < $config::MODERATOR_USER_LEVEL )
+        throw_fake_401();
+
 $date  = date("Y-m-d 00:00:00", strtotime("today - 30 days"));
 $data  = array();
 $query = "select date(creation_date) as creation_date, count(id_account) as total 

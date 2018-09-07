@@ -26,7 +26,10 @@ use hng2_base\template;
 
 include "../../config.php";
 include "../../includes/bootstrap.inc";
-if( $account->level < $config::MODERATOR_USER_LEVEL ) throw_fake_404();
+
+if( ! $account->has_admin_rights_to_module("accounts") )
+    if( $account->level < $config::MODERATOR_USER_LEVEL )
+        throw_fake_401();
 
 header("Content-Type: text/plain; charset=utf-8");
 switch( $_REQUEST["mode"] )
