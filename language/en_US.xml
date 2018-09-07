@@ -813,4 +813,11 @@
         </messages>
     </notify_online_users>
     
+    <missing_email><![CDATA[
+        <b>Important!</b> your account doesn't have a main or an alternate
+        email set. You wont receive any email notifications at all unless you edit
+        your profile and add an email address.<br><br>
+        <a href="{$url}"><i class="fa fa-play"></i> Edit my profile now</a>
+    ]]></missing_email>
+    
 </language>

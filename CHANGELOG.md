@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [Unreleased]
+
+- Added notification to accounts with missing email set on profile.
+
 ## [1.16.1] - 2018-08-04
 
 - Refactored editable prefs generator to properly handle user selected language.

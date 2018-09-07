@@ -809,4 +809,11 @@
         </messages>
     </notify_online_users>
     
+    <missing_email><![CDATA[
+        <b>Importante!</b> tu cuenta no tiene especificado un correo principal o
+        alterno. No recibirás notificaciones por correo electrónico a menos
+        que edites tu perfil y añadas una dirección de correo.<br><br>
+        <a href="{$url}"><i class="fa fa-play"></i> Editar mi perfil ahora</a>
+    ]]></missing_email>
+    
 </language>
