@@ -1,7 +1,7 @@
 
 # Accounts Module Change Log
 
-## [Unreleased]
+## [1.17.0] - 2018-09-07
 
 - Added notification to accounts with missing email set on profile.
 - Restructured level check on the toolbox and registrations chart.
