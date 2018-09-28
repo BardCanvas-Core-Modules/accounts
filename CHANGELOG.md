@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.17.1] - 2018-09-28
+
+- Added extension points on the registration form and account confirmation page.
+
 ## [1.17.0] - 2018-09-07
 
 - Added notification to accounts with missing email set on profile.
