@@ -23,4 +23,6 @@
     
     <?= $current_module->language->account_confirmation->content ?>
     
+    <? $current_module->load_extensions("confirm_account_page", "after_successful_confirmation"); ?>
+    
 <? endif; ?>
