@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.18.0] - 2018-11-22
+
+- Added API keys management support.
+
 ## [1.17.1] - 2018-09-28
 
 - Added extension points on the registration form and account confirmation page.
