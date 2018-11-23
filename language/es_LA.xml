@@ -612,6 +612,49 @@
         
     </email_templates>
     
+    <api_keys>
+        <title>Llaves de acceso a API</title>
+        <info><![CDATA[
+            Usa esta forma para crear llaves de acceso a la API para aplicaciones de terceros.
+            Se recomienda crear un par por cada aplicación que requiera acceso a tu cuenta, para,
+            en cuanto se requiera, se pueda desactivar el acceso en cada caso.
+        ]]></info>
+        <public_key>Llave pública:</public_key>
+        <secret_key>Llave secreta:</secret_key>
+        <app_name>Nombre de la app:</app_name>
+        <type_a_name>Escribe un nombre para la app</type_a_name>
+        <last_access>Último acceso:</last_access>
+        <regenerate>Regenerar</regenerate>
+        <disable>Deshabilitar</disable>
+        <enable>Habilitar</enable>
+        <add>Añadir</add>
+        <delete>Borrar</delete>
+        <copy>Copiar</copy>
+        <access_template><![CDATA[
+            {$date} ({$elapsed}) desde {$ip} ({$hostname}) en {$location}.
+        ]]></access_template>
+        <disable_prompt><![CDATA[
+            ¿Deseas deshabilitar esta llave?
+             
+            Nota: esto no puede deshacerse una vez que guardes tu perfil.
+        ]]></disable_prompt>
+        <delete_prompt><![CDATA[
+            ¿Deseas borrar esta llave?
+             
+            Nota: esto no puede deshacerse una vez que guardes tu perfil.
+        ]]></delete_prompt>
+        <regen_prompt><![CDATA[
+            Advertencia: una vez que guardes tu perfil, la aplicación asociada con
+            esta llave perderá el acceso ahsta que actualices la llave secreta
+            en su sitio web.
+             
+            ¿Deseas generar una nueva llave secreta?
+        ]]></regen_prompt>
+        <never>Nunca</never>
+        <none_defined>No se han creado llaves. Da click en "Añadir" para crear una ahora.</none_defined>
+        <unnamed>App sin nombre</unnamed>
+    </api_keys>
+    
     <widgets>
         <registrations_chart>
             <title>Nuevas cuentas</title>
@@ -763,6 +806,28 @@
                 <b>Nota:</b> esta lista puede ser ignorada por módulos que crean cuentas de usuario automáticamente.
             ]]></description>
             <type>code</type>
+        </specs>
+        
+        <specs key="api_keys_support_enabled">
+            <title><![CDATA[
+                Soporte para llaves de API
+            ]]></title>
+            <description><![CDATA[
+                Al activarse, esta opción extiende el editor de perfil de usuario con un generador de llaves de API.<br>
+                <b>Nota:</b> el soporte para llaves de API no es necesario a menos que un módulo lo requiera de forma
+                específica. Dado el caso, es posible que cualquier módulo habilite este soporte si lo deshabilitas.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        <specs key="api_keys_access_level">
+            <title><![CDATA[
+                Nivel requerido para usar llaves de API
+            ]]></title>
+            <description><![CDATA[
+                De forma predeterminada, usuarios nivel 10 (novatos) en adelante pueden
+                usar el soporte de llaves API si este está habilitado.
+            ]]></description>
+            <type>user_level_selector</type>
         </specs>
         
     </settings_data>

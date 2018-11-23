@@ -616,6 +616,48 @@
         
     </email_templates>
     
+    <api_keys>
+        <title>API access keys</title>
+        <info><![CDATA[
+            Use this form to create API keys for different third party applications. Try to set a key pair
+            for every application that request access to your account, so, when needed, disable access on
+            a case basis.
+        ]]></info>
+        <public_key>Public key:</public_key>
+        <secret_key>Secret key:</secret_key>
+        <app_name>App name:</app_name>
+        <type_a_name>Type a name for the app</type_a_name>
+        <last_access>Last access:</last_access>
+        <regenerate>Regenerate</regenerate>
+        <disable>Disable</disable>
+        <enable>Enable</enable>
+        <add>Add</add>
+        <delete>Delete</delete>
+        <copy>Copy</copy>
+        <access_template><![CDATA[
+            {$date} ({$elapsed}) from {$ip} ({$hostname}) at {$location}.
+        ]]></access_template>
+        <disable_prompt><![CDATA[
+            Are you sure that you want to disable this key pair?
+             
+            Note: this cannot be undone once you save your profile.
+        ]]></disable_prompt>
+        <delete_prompt><![CDATA[
+            Are you sure that you want to delete this key pair?
+             
+            Note: this cannot be undone once you save your profile.
+        ]]></delete_prompt>
+        <regen_prompt><![CDATA[
+            Warning: once you save your profile, the application associated with this
+            key will loose access until you update the secret key on its website.
+             
+            Do you want to generate a new secret key?
+        ]]></regen_prompt>
+        <never>Never</never>
+        <none_defined>No API keys defined. Click on "Add" below to create one.</none_defined>
+        <unnamed>Unnamed app</unnamed>
+    </api_keys>
+    
     <widgets>
         <registrations_chart>
             <title>Registrations</title>
@@ -767,6 +809,27 @@
                 <b>Note:</b> this list may be ignored by automated account creation enabled modules.
             ]]></description>
             <type>code</type>
+        </specs>
+        
+        <specs key="api_keys_support_enabled">
+            <title><![CDATA[
+                API keys support
+            ]]></title>
+            <description><![CDATA[
+                When enabled, this setting extends the user profile editing page with an API key pair generator.<br>
+                <b>Note:</b> API keys support is not needed unless a module specifically requires it. In such case,
+                is it possible that any module should enable this setting if you manually disable it.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        <specs key="api_keys_access_level">
+            <title><![CDATA[
+                Access level required to use API keys
+            ]]></title>
+            <description><![CDATA[
+                By default, newcomers can use the API keys support when enabled.
+            ]]></description>
+            <type>user_level_selector</type>
         </specs>
         
     </settings_data>

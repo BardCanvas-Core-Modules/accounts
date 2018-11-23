@@ -184,6 +184,30 @@ switch( $_REQUEST["mode"] )
             $xaccount->set_avatar_from_post();
             $xaccount->set_banner_from_post();
             $xaccount->save();
+            
+            if( ! empty($_POST["api_keys"]) )
+            {
+                $api_keys = array();
+                foreach($_POST["api_keys"]["enabled"] as $index => $enabled )
+                {
+                    $app_name = stripslashes($_POST["api_keys"]["app_name"][$index]);
+                    if( empty($app_name) ) $app_name = trim($current_module->language->api_keys->unnamed);
+                    
+                    $secret_key = trim(stripslashes($_POST["api_keys"]["secret_key"][$index]));
+                    $secret_key = three_layer_encrypt($secret_key, $config->encryption_key, $account->id_account, $account->creation_date);
+                    $api_keys[] = array(
+                        "enabled"     => $enabled,
+                        "app_name"    => $app_name,
+                        "public_key"  => $_POST["api_keys"]["public_key"][$index],
+                        "secret_key"  => $secret_key,
+                    );
+                }
+            }
+            $xaccount->set_engine_pref("api_keys", $api_keys);
+            if( ! empty($_POST["deleted_api_keys"]) )
+                foreach(explode(",", $_POST["deleted_api_keys"]) as $deleted_key)
+                    $xaccount->set_engine_pref("api_access.last:{$deleted_key}", "");
+            
             $messages[] = $current_module->language->edit_account_form->saved_ok;
             
             $current_module->load_extensions("account_admin_editor", "after_saving");
@@ -305,6 +329,30 @@ switch( $_REQUEST["mode"] )
             $xaccount->password = md5(trim(stripslashes($_POST["password"])));
             $xaccount->set_new_id();
             $xaccount->save();
+            
+            if( ! empty($_POST["api_keys"]) )
+            {
+                $api_keys = array();
+                foreach($_POST["api_keys"]["enabled"] as $index => $enabled )
+                {
+                    $app_name = stripslashes($_POST["api_keys"]["app_name"][$index]);
+                    if( empty($app_name) ) $app_name = trim($current_module->language->api_keys->unnamed);
+                    
+                    $secret_key = trim(stripslashes($_POST["api_keys"]["secret_key"][$index]));
+                    $secret_key = three_layer_encrypt($secret_key, $config->encryption_key, $account->id_account, $account->creation_date);
+                    $api_keys[] = array(
+                        "enabled"     => $enabled,
+                        "app_name"    => $app_name,
+                        "public_key"  => $_POST["api_keys"]["public_key"][$index],
+                        "secret_key"  => $secret_key,
+                    );
+                }
+            }
+            $xaccount->set_engine_pref("api_keys", $api_keys);
+            if( ! empty($_POST["deleted_api_keys"]) )
+                foreach(explode(",", $_POST["deleted_api_keys"]) as $deleted_key)
+                    $xaccount->set_engine_pref("api_access.last:{$deleted_key}", "");
+            
             $xaccount->enable();
             $xaccount->set_level(config::NEWCOMER_USER_LEVEL);
             $messages[] = $current_module->language->register_form->account_manually_created;
