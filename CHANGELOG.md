@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.19.0] - 2018-12-16
+
+- Tuned modules & editable prefs caches.
+
 ## [1.18.0] - 2018-11-22
 
 - Added API keys management support.
