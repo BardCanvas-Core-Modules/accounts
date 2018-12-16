@@ -14,18 +14,21 @@ if( empty($language_cookie_val) )
     $language_cookie_val = "en_US";
 
 $editable_prefs = array();
-$version        = $config->module_versions_hash;
-$cache_file     = "{$config->datafiles_location}/cache/editable_prefs_{$version}-{$language_cookie_val}.dat";
-$temp_cache     = new disk_cache($cache_file);
-if( $temp_cache->loaded )
+
+if( $settings->get("modules:modules_manager.disable_cache") != "true" )
 {
-    $incoming = $temp_cache->get_all();
-    foreach($incoming as $title => $prefs)
-        foreach($prefs as $key => $spec)
-            $editable_prefs[$title][$key] = simplexml_load_string($spec);
-    
-    $config->globals["editable_prefs_collection"] = $editable_prefs;
-    return;
+    $cache_file     = "{$config->datafiles_location}/cache/editable_prefs-{$language_cookie_val}.dat";
+    $temp_cache     = new disk_cache($cache_file);
+    if( $temp_cache->loaded )
+    {
+        $incoming = $temp_cache->get_all();
+        foreach($incoming as $title => $prefs)
+            foreach($prefs as $key => $spec)
+                $editable_prefs[$title][$key] = simplexml_load_string($spec);
+        
+        $config->globals["editable_prefs_collection"] = $editable_prefs;
+        return;
+    }
 }
 
 $prefs_for_cache = array();
@@ -55,6 +58,8 @@ foreach($modules as $module_name => $module)
         $prefs_for_cache[$title]["@{$module_name}:{$key}"] = $spec->asXML();
     }
 }
-$temp_cache->prefill($prefs_for_cache);
+
+if( $settings->get("modules:modules_manager.disable_cache") != "true" )
+    $temp_cache->prefill($prefs_for_cache);
 
 $config->globals["editable_prefs_collection"] = $editable_prefs;
