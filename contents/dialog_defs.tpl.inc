@@ -10,18 +10,20 @@
     
             <? $this_module->load_extensions("login_form", "top"); ?>
             
-            <span class="field">
-                <span class="caption"><?= $this_module->language->user_name ?></span>
-                <input type="text" name="user_name">
-            </span>
-            <span class="field">
-                <span class="caption"><?= $this_module->language->password ?></span>
-                <input type="password" name="password">
-            </span>
-            <span class="pseudo_link" onclick="$('#login_dialog').dialog('close'); reset_password();">
-                <span class="fa fa-key"></span>
-                <?= $this_module->language->reset_password ?>
-            </span>
+            <? if( empty($config->globals["@accounts:login_form.no_standard_fields"]) ): ?>
+                <span class="field standard_user_name">
+                    <span class="caption"><?= $this_module->language->user_name ?></span>
+                    <input type="text" name="user_name">
+                </span>
+                <span class="field standard_password">
+                    <span class="caption"><?= $this_module->language->password ?></span>
+                    <input type="password" name="password">
+                </span>
+                <span class="pseudo_link standard_password_reset" onclick="$('#login_dialog').dialog('close'); reset_password();">
+                    <span class="fa fa-key"></span>
+                    <?= $this_module->language->reset_password ?>
+                </span>
+            <? endif; ?>
             
             <? $this_module->load_extensions("login_form", "before_submit_button"); ?>
             
@@ -42,7 +44,10 @@
             
             <div class="framed_content state_highlight" style="margin-top: 0;">
                 <span class="fa fa-info-circle"></span>
-                <?=$this_module->language->reset_form->intro ?>
+                <span class="standard_intro">
+                    <?=$this_module->language->reset_form->intro ?>
+                </span>
+                <? $this_module->load_extensions("reset_password_dialog", "extra_intro"); ?>
             </div>
             
             <?=$this_module->language->reset_form->your_email ?>
@@ -72,7 +77,7 @@
         <? $this_module->load_extensions("login", "additional_errors"); ?>
     </div>
     <div id="device_messages" style="display: none;">
-        <div class="UNREGISTERED"><?= $this_module->language->errors->device_unregistered ?></div>
+        <div class="UNREGISTERED"><?= unindent($this_module->language->errors->device_unregistered) ?></div>
     </div>
     
     <div id="reset_messages" style="display: none;">
@@ -149,7 +154,7 @@
         <p style="margin-top: 0;">
             <? foreach($this_module->language->notify_online_users->types->type as $index => $type): ?>
                 <label><input type="radio" <? if(trim($type["key"]) == "information") echo "checked"; ?> name="type"
-                              value="<?= $type["key"] ?>"><?= $type ?></input></label><br>
+                              value="<?= $type["key"] ?>"><?= $type ?></label><br>
             <? endforeach; ?>
         </p>
         

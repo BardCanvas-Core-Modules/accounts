@@ -82,7 +82,17 @@ function process_login_result(result, statusText, xhr, $form)
         return;
     }
     
-    alert( $('#login_errors .' + result).text().replace(/\n\s+/g, ' ') );
+    // alert( $('#login_errors .' + result).text().replace(/\n\s+/g, ' ') );
+    if( result.match(/[^a-zA-Z0-9_]/) !== null )
+    {
+        alert( result );
+        
+        return;
+    }
+    
+    var $msgelement = $('#login_errors').find('.' + result);
+    var message     = $msgelement.length > 0 ? $msgelement.text() : result;
+    alert( message );
 }
 
 function change_device_label(id_device, current_label)

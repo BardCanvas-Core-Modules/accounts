@@ -33,6 +33,8 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: text/plain; charset=utf-8");
 
+$current_module->load_extensions("login", "bootstrap");
+
 #=====================#
 # Account validations #
 #=====================#

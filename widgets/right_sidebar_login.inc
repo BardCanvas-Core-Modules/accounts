@@ -58,22 +58,24 @@ ob_start(); ?>
         
         <? $this_module->load_extensions("login_form", "top"); ?>
         
-        <div class="field">
-            <div class="caption"><?= $this_module->language->user_name ?></div>
-            <div class="input"><input type="text" name="user_name"></div>
-        </div>
-        
-        <div class="field">
-            <div class="caption"><?= $this_module->language->password ?></div>
-            <div class="input"><input type="password" name="password"></div>
-        </div>
-        
-        <div class="field">
-            <span class="pseudo_link" onclick="$('#login_dialog').dialog('close'); reset_password();">
-                <span class="fa fa-key"></span>
-                <?= $this_module->language->reset_password ?>
-            </span>
-        </div>
+        <? if( empty($config->globals["@accounts:login_form.no_standard_fields"]) ): ?>
+            <div class="field standard_user_name">
+                <div class="caption"><?= $this_module->language->user_name ?></div>
+                <div class="input"><input type="text" name="user_name"></div>
+            </div>
+            
+            <div class="field standard_password">
+                <div class="caption"><?= $this_module->language->password ?></div>
+                <div class="input"><input type="password" name="password"></div>
+            </div>
+            
+            <div class="field standard_password_reset">
+                <span class="pseudo_link" onclick="$('#login_dialog').dialog('close'); reset_password();">
+                    <span class="fa fa-key"></span>
+                    <?= $this_module->language->reset_password ?>
+                </span>
+            </div>
+        <? endif; ?>
         
         <? $this_module->load_extensions("login_form", "before_submit_button"); ?>
         
@@ -138,7 +140,17 @@ ob_start(); ?>
             return;
         }
         
-        alert( $('#login_errors .' + result).text().replace(/\n\s+/g, ' ') );
+        // alert( $('#login_errors .' + result).text().replace(/\n\s+/g, ' ') );
+        if( result.match(/[^a-zA-Z0-9_]/) !== null )
+        {
+            alert( result );
+            
+            return;
+        }
+        
+        var $msgelement = $('#login_errors').find('.' + result);
+        var message     = $msgelement.length > 0 ? $msgelement.text() : result;
+        alert( message );
     }
 </script>
 

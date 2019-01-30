@@ -69,7 +69,7 @@ use hng2_base\module;
     
     <? $current_module->load_extensions("edit_account_form", "top"); ?>
     
-    <div class="cell">
+    <div class="cell user_name">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->user_name ?>
         </div>
@@ -79,7 +79,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell">
+    <div class="cell display_name">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->display_name ?>
         </div>
@@ -90,7 +90,7 @@ use hng2_base\module;
     </div>
     
     <? $style = $settings->get("modules:accounts.hide_birthdate_input") == "true" ? "display: none" : ""; ?>
-    <div class="cell" style="<?= $style ?>">
+    <div class="cell birthdate" style="<?= $style ?>">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->birthdate ?>
         </div>
@@ -122,7 +122,7 @@ use hng2_base\module;
         <? endif; ?>
     </div>
     
-    <div class="cell">
+    <div class="cell country">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->country ?>
         </div>
@@ -136,7 +136,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell">
+    <div class="cell email">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->email ?>
         </div>
@@ -145,7 +145,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell">
+    <div class="cell alt_email">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->alt_email ?>
         </div>
@@ -154,7 +154,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell">
+    <div class="cell password_change">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->password_change ?>
         </div>
@@ -163,7 +163,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell">
+    <div class="cell password_change">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->password2 ?>
         </div>
@@ -174,7 +174,7 @@ use hng2_base\module;
     
     <br>
     
-    <div class="cell">
+    <div class="cell avatar">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->avatar->caption ?>
         </div>
@@ -204,7 +204,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell">
+    <div class="cell profile_banner">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->banner->caption ?>
         </div>
@@ -222,7 +222,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell full_width">
+    <div class="cell bio full_width">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->bio->caption ?>
         </div>
@@ -232,7 +232,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell full_width">
+    <div class="cell signature full_width">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->signature->caption ?>
         </div>
@@ -242,7 +242,7 @@ use hng2_base\module;
         </div>
     </div>
     
-    <div class="cell full_width">
+    <div class="cell homepage_url full_width">
         <div class="field_caption">
             <?= $current_module->language->user_account_form->homepage_url->caption ?>
         </div>

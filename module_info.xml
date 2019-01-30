@@ -43,7 +43,8 @@
         Profile edition: after initializing submitted data, after saving, after creating.
         Records browser: Before query filters integration, Before running query, Additional scripts, Custom filter defs, Before loop start, per row actions, pre-EOF.
         Accounts Repository: account deletion.
-        Login: pre-validations, additional login error messages (in dialog defs).
+        Login: bootstrap, pre-validations, additional login error messages (in dialog defs).
+        Reset password dialog: extra intro.
         Prefs editor: script preloads.
         Prefs editor: before saving, after saving.
         Login form: top, before submit button
