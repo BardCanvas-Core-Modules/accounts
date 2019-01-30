@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.20.0] - 2019-01-29
+
+- Added markup changes to facilitate hooks on the user login and account edition forms.
+- Added extension points.
+
 ## [1.19.0] - 2018-12-16
 
 - Tuned modules & editable prefs caches.
