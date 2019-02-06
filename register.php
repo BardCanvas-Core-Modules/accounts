@@ -47,6 +47,24 @@ if( $_POST["mode"] == "create" )
         
         if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
             $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
+        
+        if( strlen($user_name) < 3 )
+            $errors[] = $current_module->language->errors->registration->invalid->user_name_length;
+        
+        if( is_numeric($user_name) )
+            $errors[] = $current_module->language->errors->registration->invalid->numeric_user_name;
+        
+        if( preg_match('/[^a-z0-9]/i', $user_name) )
+            $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols;
+        
+        if( strlen($xaccount->display_name) < 3 )
+            $errors[] = $current_module->language->errors->registration->invalid->display_name_length;
+        
+        if( is_numeric($xaccount->display_name) )
+            $errors[] = $current_module->language->errors->registration->invalid->numeric_display_name;
+        
+        if( preg_match('/[^a-z0-9]/i', $xaccount->display_name) )
+            $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols2;
     }
     
     # Blacklist validations
@@ -185,12 +203,33 @@ if( $_POST["mode"] == "create" )
     {
         if( $settings->get("modules:accounts.automatic_user_names") == "true" )
         {
-            $user_name = str_replace("_", "-", wp_sanitize_filename($xaccount->display_name));
-            if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
+            if( strlen($xaccount->display_name) < 3 )
+                $errors[] = $current_module->language->errors->registration->invalid->display_name_length;
+            
+            if( is_numeric($xaccount->display_name) )
+                $errors[] = $current_module->language->errors->registration->invalid->numeric_display_name;
+            
+            if( preg_match('/[^a-z0-9]/i', $xaccount->display_name) )
+                $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols2;
+            
+            if( count($errors) == 0 )
             {
-                $errors[] = $current_module->language->errors->registration->user_name_cant_be_forged;
+                $user_name = str_replace("_", "-", wp_sanitize_filename($xaccount->display_name));
+                
+                if( is_numeric($user_name) )
+                    $errors[] = $current_module->language->errors->registration->invalid->numeric_user_name;
+                
+                if( strlen($user_name) < 3 )
+                    $errors[] = $current_module->language->errors->registration->invalid->user_name_length;
+                
+                if( preg_match('/[^a-z0-9]/i', $user_name) )
+                    $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols;
+                
+                if( preg_match('/[^a-z0-9\-_]/i', $user_name) )
+                    $errors[] = $current_module->language->errors->registration->user_name_cant_be_forged;
             }
-            else
+            
+            if( count($errors) == 0 )
             {
                 $count = $repository->get_record_count(array("user_name like '$user_name%'"));
                 if( $count == 0 )

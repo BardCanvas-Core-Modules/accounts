@@ -243,6 +243,12 @@
                 <captcha_invalid>Invalid captcha. Please try again.</captcha_invalid>
                 <captcha_api_error>Couldn't verify Captcha: {$error}</captcha_api_error>
                 <chars_in_user_name>Invalid characters in user name.</chars_in_user_name>
+                <user_name_length>Invalid user name length. It must be at least 3 chars long.</user_name_length>
+                <numeric_user_name>Invalid user name. It must contain alphanumeric characters.</numeric_user_name>
+                <not_only_special_symbols>Invalid user name. Must contain letters and/or numbers.</not_only_special_symbols>
+                <display_name_length>Invalid display name length. It must be at least 3 chars long.</display_name_length>
+                <numeric_display_name>Invalid display name. It must contain alphanumeric characters.</numeric_display_name>
+                <not_only_special_symbols2>Invalid display name. Must contain letters and/or numbers.</not_only_special_symbols2>
                 <user_name_blacklisted>You can't use that user name. Please specify another.</user_name_blacklisted>
                 <display_name_blacklisted>You can't use that display name. Please specify another.</display_name_blacklisted>
                 <user_name_taken>The user name you've specified has been taken. Please choose another.</user_name_taken>

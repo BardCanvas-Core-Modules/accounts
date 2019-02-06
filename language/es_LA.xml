@@ -245,6 +245,12 @@
                 <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
                 <captcha_api_error>No se ha logrado validar el Captcha: {$error}</captcha_api_error>
                 <chars_in_user_name>Caracteres inválidos en nombre de usuario (usar solo letras, números, guiones y guiones bajos).</chars_in_user_name>
+                <user_name_length>Longitud de nombre de usuario inválida. Debe tener al menos 3 caracteres.</user_name_length>
+                <numeric_user_name>Nombre de usuario inválido. Debe tener caracteres alfanuméricos.</numeric_user_name>
+                <not_only_special_symbols>Nombre de usuario inválido. Debe tener letras y/o números.</not_only_special_symbols>
+                <display_name_length>Longitud de alias inválida. Debe tener al menos 3 caracteres.</display_name_length>
+                <numeric_display_name>Alias inválido. Debe tener caracteres alfanuméricos.</numeric_display_name>
+                <not_only_special_symbols2>Alias inválido. Debe tener letras y/o números.</not_only_special_symbols2>
                 <user_name_blacklisted>No puedes usar ese nombre de usuario. Por favor especifica otro.</user_name_blacklisted>
                 <display_name_blacklisted>No puedes usar ese alias. Por favor especifica otro..</display_name_blacklisted>
                 <user_name_taken>El nombre de usuario que especificaste ya existe. Elige otro.</user_name_taken>
