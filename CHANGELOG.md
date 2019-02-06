@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.20.1] - 2019-02-06
+
+- Added registration validation cases.
+
 ## [1.20.0] - 2019-01-29
 
 - Added markup changes to facilitate hooks on the user login and account edition forms.
