@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.20.2] - 2019-02-15
+
+- Added missing page tags on devices, profile editor and preferences pages.
+
 ## [1.20.1] - 2019-02-06
 
 - Added registration validation cases.
