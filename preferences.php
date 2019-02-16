@@ -40,5 +40,6 @@ if( ! empty($_POST["engine_prefs"]) )
 }
 
 $template->page_contents_include = "preferences.inc";
+$template->set("page_tag", "user_home");
 $template->set_page_title($current_module->language->page_titles->preferences);
 include "{$template->abspath}/main.php";

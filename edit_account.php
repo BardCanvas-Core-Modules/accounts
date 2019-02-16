@@ -192,5 +192,6 @@ $_country_list         = $countries;
 $_current_user_country = strtolower($current_user_country);
 
 $template->set_page_title($current_module->language->page_titles->edit_account);
+$template->set("page_tag", "user_home");
 $template->page_contents_include = "edit_account_form.tpl.inc";
 include "{$template->abspath}/main.php";

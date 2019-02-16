@@ -75,5 +75,6 @@ if( $_POST["mode"] == "set_state" )
 }
 
 $template->set_page_title($current_module->language->page_titles->user_devices);
+$template->set("page_tag", "user_home");
 $template->page_contents_include = "user_devices.tpl.inc";
 include "{$template->abspath}/main.php";
