@@ -10,10 +10,19 @@ use hng2_base\config;
 
 $editable_prefs = $config->globals["editable_prefs_collection"];
 $account_prefs  = $account->get_editable_prefs();
+
+$url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
+     . ( empty($_REQUEST["bcm_platform"]     ) ? "" : "&bcm_platform="      . $_REQUEST["bcm_platform"]      )
+     . ( empty($_REQUEST["bcm_version"]      ) ? "" : "&bcm_version="       . $_REQUEST["bcm_version"]       )
+     . ( empty($_REQUEST["bcm_access_token"] ) ? "" : "&bcm_access_token="  . $_REQUEST["bcm_access_token"]  )
+     . ( empty($_REQUEST["bcm_force_session"]) ? "" : "&bcm_force_session=" . $_REQUEST["bcm_force_session"] )
+     . ( empty($_REQUEST["bcm_force_session"]) ? "" : "&bcm_output_type="   . "HTML"                         )
+;
+
 ?>
 
 <h1 class="clearfix">
-    <button class="pull-right" onclick="location.href = '<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
+    <button class="pull-right" onclick="location.href = '<?= $url ?>'">
         <span class="fa fa-refresh"></span>
         <?= $language->reload ?>
     </button>
@@ -59,6 +68,12 @@ $account_prefs  = $account->get_editable_prefs();
 <? $current_module->load_extensions("prefs_editor", "script_preloads"); ?>
 
 <form method="post" id="preferences" action="<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<?=md5(mt_rand(1,65535))?>">
+    
+    <input type="hidden" name="bcm_platform"      value="<?= $_REQUEST["bcm_platform"] ?>">
+    <input type="hidden" name="bcm_version"       value="<?= $_REQUEST["bcm_version"] ?>">
+    <input type="hidden" name="bcm_access_token"  value="<?= $_REQUEST["bcm_access_token"] ?>">
+    <input type="hidden" name="bcm_force_session" value="<?= $_REQUEST["bcm_force_session"] ?>">
+    <input type="hidden" name="bcm_output_type"   value="<? if( ! empty($_REQUEST["bcm_force_session"]) ) echo "HTML"; ?>">
     
     <?
     $sanitized_list = array();
@@ -233,7 +248,14 @@ function render_pref_editor($type, $name, $value, $specs = null)
     if( $type == "external" )
     {
         $id  = "ee_" . uniqid();
-        $url = "{$config->full_root_path}/{$specs->options->url}?wasuuup=" . md5(mt_rand(1, 65535));
+        $url = "{$config->full_root_path}/{$specs->options->url}"
+             . "?wasuuup=" . md5(mt_rand(1, 65535))
+             . ( empty($_REQUEST["bcm_platform"]     ) ? "" : "&bcm_platform="      . $_REQUEST["bcm_platform"]      )
+             . ( empty($_REQUEST["bcm_version"]      ) ? "" : "&bcm_version="       . $_REQUEST["bcm_version"]       )
+             . ( empty($_REQUEST["bcm_access_token"] ) ? "" : "&bcm_access_token="  . $_REQUEST["bcm_access_token"]  )
+             . ( empty($_REQUEST["bcm_force_session"]) ? "" : "&bcm_force_session=" . $_REQUEST["bcm_force_session"] )
+             . ( empty($_REQUEST["bcm_force_session"]) ? "" : "&bcm_output_type="   . "HTML"                         )
+        ;
         echo "
             <div id='$id' class='external_editor_target' data-pref-name='{$name}'>
                 <div class='framed_content aligncenter' style='margin: 0;'>
