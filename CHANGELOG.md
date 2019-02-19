@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.20.3] - 2019-02-19
+
+- Added BardCanvas Mobile support on the preferences editor.
+
 ## [1.20.2] - 2019-02-15
 
 - Added missing page tags on devices, profile editor and preferences pages.
