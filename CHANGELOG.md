@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.20.4] - 2019-02-20
+
+- Tuned preferences saving snippet.
+
 ## [1.20.3] - 2019-02-19
 
 - Added BardCanvas Mobile support on the preferences editor.
