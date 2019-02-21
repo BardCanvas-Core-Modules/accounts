@@ -16,12 +16,10 @@ if( ! empty($_POST["engine_prefs"]) )
     
     $current_module->load_extensions("prefs_editor", "before_saving");
     
-    # echo "<pre>" . print_r($account->engine_prefs, true) . "</pre>";
     foreach($_POST["engine_prefs"] as $key => $val)
     {
-        # echo "$key => $val<br>";
-    
-        $val = trim(stripslashes($val));
+        if( is_string($val) ) $val = trim(stripslashes($val));
+        
         if( $val != $account->engine_prefs[$key] )
         {
             $account->set_engine_pref($key, $val);
