@@ -126,7 +126,9 @@
             <span class="fa fa-sign-out fa-fw"></span>
             <?= $this_module->language->logout ?>
         </a>
-    
+        
+        <? $this_module->load_extensions("user_menu", "extra_commands"); ?>
+        
     </div>
     
 <? endif; ?>
