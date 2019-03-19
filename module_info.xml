@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.20.4</version>
+    <version>1.20.5</version>
     <group>core_modules</group>
     <admin_only>false</admin_only>
     
@@ -47,7 +47,8 @@
         Reset password dialog: extra intro.
         Prefs editor: script preloads.
         Prefs editor: before saving, after saving.
-        Login form: top, before submit button
+        Login form: top, before submit button.
+        User menu: extra commands.
     ]]></extension_areas_info>
     
 </module>

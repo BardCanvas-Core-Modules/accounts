@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.20.5] - 2019-03-19
+
+- Added extension point on the user dropdown menu.
+
 ## [1.20.4] - 2019-02-20
 
 - Tuned preferences saving snippet.
