@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.20.6] - 2019-05-21
+
+- Added password recovery check to avoid leakages.
+
 ## [1.20.5] - 2019-03-19
 
 - Added extension point on the user dropdown menu.
