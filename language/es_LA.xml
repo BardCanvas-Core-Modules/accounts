@@ -316,6 +316,9 @@
         <prefs_setting>
             <empty_key>No se ha especificado una llave de preferencia a guardar. Este es un error de programación. Favor de contactar al personal de soporte técnico.</empty_key>
         </prefs_setting>
+        
+        <!-- Other -->
+        <invalid_email>Correo inválido</invalid_email>
     </errors>
     
     <register_form>

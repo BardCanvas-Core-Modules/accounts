@@ -14,7 +14,10 @@ include "../includes/bootstrap.inc";
 
 if( ! empty($_POST["email"]) )
 {
-    $email = addslashes(trim(stripslashes($_POST["email"])));
+    $email = trim(stripslashes($_POST["email"]));
+    if( ! filter_var($email, FILTER_VALIDATE_EMAIL) )
+        die($current_module->language->errors->invalid_email);
+    
     $query = "
         select id_account, user_name, display_name, email, alt_email, state
         from account where email = '$email' or alt_email = '$email'

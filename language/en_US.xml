@@ -312,6 +312,9 @@
         <prefs_setting>
             <empty_key>No key of preference to set has been provided. This should be a programming error. Please contact the tech support staff.</empty_key>
         </prefs_setting>
+        
+        <!-- Other -->
+        <invalid_email>Invalid email</invalid_email>
     </errors>
     
     <register_form>
