@@ -1,6 +1,12 @@
 
 # Accounts Module Change Log
 
+## [1.21.0] - 2019-06-07
+
+- Devices code cleanup.
+- Added reload button to devices page.
+- Removed device from screen instead of reloading the whole page when deleting a device.
+
 ## [1.20.6] - 2019-05-21
 
 - Added password recovery check to avoid leakages.
