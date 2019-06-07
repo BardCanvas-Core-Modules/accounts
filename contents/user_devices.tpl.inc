@@ -13,70 +13,71 @@ use hng2_base\device;
 <h1><?= $current_module->language->devices_nav->page_title ?></h1>
 
 <?
-    $query = "
-        select * from account_devices where
-        id_account = '$account->id_account' and
-        state <> 'deleted'
-        order by device_label asc
-    ";
-    $res = $database->query($query);
+$query = "
+    select * from account_devices where
+    id_account = '$account->id_account' and
+    state <> 'deleted'
+    order by device_label asc
+";
+$res = $database->query($query);
 ?>
 
 <?
-    # [+] Header presets
-    #===================
-    {
-        $table_header = array(
-            (object) array(
-                "content"   => $current_module->language->devices_nav->column_titles->login_date,
-                "xalign"    => "center",
-                "xnowrap"   => true,
-                "xclass"    => "",
-                "sort_asc"  => (object) array( "enabled" => false, "order" =>  0, "alt" => "" ),
-                "sort_desc" => (object) array( "enabled" => false, "order" =>  0, "alt" => "" )
-            ),
-            (object) array(
-                "content"   => $current_module->language->devices_nav->column_titles->ip,
-                "xalign"    => "center",
-                "xnowrap"   => true,
-                "xclass"    => "",
-                "sort_asc"  => (object) array( "enabled" => false, "order" =>  0, "alt" => "" ),
-                "sort_desc" => (object) array( "enabled" => false, "order" =>  0, "alt" => "" )
-            ),
-            (object) array(
-                "content"   => $current_module->language->devices_nav->column_titles->hostname,
-                "xalign"    => "center",
-                "xnowrap"   => true,
-                "xclass"    => "",
-                "sort_asc"  => (object) array( "enabled" => false, "order" =>  0, "alt" => "" ),
-                "sort_desc" => (object) array( "enabled" => false, "order" =>  0, "alt" => "" )
-            ),
-            (object) array(
-                "content"   => $current_module->language->devices_nav->column_titles->location,
-                "xalign"    => "center",
-                "xwidth"    => "100%",
-                "xclass"    => "",
-                "sort_asc"  => (object) array( "enabled" => false, "order" =>  0, "alt" => "" ),
-                "sort_desc" => (object) array( "enabled" => false, "order" =>  0, "alt" => "" )
-            ),
-        );
-    }
-    #===================
-    # [-] Header presets
+# [+] Header presets
+#===================
+{
+    $table_header = array(
+        (object) array(
+            "content"   => $current_module->language->devices_nav->column_titles->login_date,
+            "xalign"    => "center",
+            "xnowrap"   => true,
+            "xclass"    => "",
+            "sort_asc"  => (object) array( "enabled" => false, "order" =>  0, "alt" => "" ),
+            "sort_desc" => (object) array( "enabled" => false, "order" =>  0, "alt" => "" )
+        ),
+        (object) array(
+            "content"   => $current_module->language->devices_nav->column_titles->ip,
+            "xalign"    => "center",
+            "xnowrap"   => true,
+            "xclass"    => "",
+            "sort_asc"  => (object) array( "enabled" => false, "order" =>  0, "alt" => "" ),
+            "sort_desc" => (object) array( "enabled" => false, "order" =>  0, "alt" => "" )
+        ),
+        (object) array(
+            "content"   => $current_module->language->devices_nav->column_titles->hostname,
+            "xalign"    => "center",
+            "xnowrap"   => true,
+            "xclass"    => "",
+            "sort_asc"  => (object) array( "enabled" => false, "order" =>  0, "alt" => "" ),
+            "sort_desc" => (object) array( "enabled" => false, "order" =>  0, "alt" => "" )
+        ),
+        (object) array(
+            "content"   => $current_module->language->devices_nav->column_titles->location,
+            "xalign"    => "center",
+            "xwidth"    => "100%",
+            "xclass"    => "",
+            "sort_asc"  => (object) array( "enabled" => false, "order" =>  0, "alt" => "" ),
+            "sort_desc" => (object) array( "enabled" => false, "order" =>  0, "alt" => "" )
+        ),
+    );
+}
+#===================
+# [-] Header presets
 ?>
 
-<? $current_device = new device($account->id_account); ?>
-<? while( $this_device = $database->fetch_object($res) ): ?>
+<?
+$current_device = new device($account->id_account);
+
+while( $this_device = $database->fetch_object($res) ):
     
-    <?
-        /** @var device $this_device */
-        switch($this_device->state)
-        {
-            case "enabled":      $class = "";              break;
-            case "disabled":     $class = "state_warning"; break;
-            case "unregistered": $class = "state_ko";      break;
-        } // end switch
-        if( $this_device->id_device == $current_device->id_device ) $class = "state_active";
+    /** @var device $this_device */
+    switch($this_device->state)
+    {
+        case "enabled":      $class = "";              break;
+        case "disabled":     $class = "state_warning"; break;
+        case "unregistered": $class = "state_ko";      break;
+    } // end switch
+    if( $this_device->id_device == $current_device->id_device ) $class = "state_active";
     ?>
     
     <div class="framed_content <?=$class?>">
@@ -119,12 +120,12 @@ use hng2_base\device;
             </span>
         </h2>
         
-        <? if( $this_device->state == "enabled" ): ?>
-            <?
-                $query2 = "select * from account_logins where id_account = '$account->id_account' and id_device = '$this_device->id_device' order by login_date desc limit 10";
-                $res2   = $database->query($query2);
-            ?>
-            <? if( $database->num_rows($res) == 0 ): ?>
+        <? if( $this_device->state == "enabled" ):
+            
+            $query2 = "select * from account_logins where id_account = '$account->id_account' and id_device = '$this_device->id_device' order by login_date desc limit 10";
+            $res2   = $database->query($query2);
+            
+            if( $database->num_rows($res) == 0 ): ?>
                 
                 <div class="framed_content state_ko">
                     <span class="fa fa-info-circle"></span>
