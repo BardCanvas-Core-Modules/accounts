@@ -133,15 +133,23 @@ function change_device_state(state, id_device)
         'id_device':    id_device,
         'state':        state
     };
+    
+    var $frame = $(sprintf('.device[data-device-id="%s"]', id_device));
+    if( state === 'deleted' ) $frame.block(blockUI_medium_params);
     $.post(url, params, function(response)
     {
         if( response != 'OK' )
         {
             alert(response);
+            if( state === 'deleted' ) $frame.unblock();
+            
             return;
-        } // end if
+        }
         
-        location.href = url;
+        if( state === 'deleted' )
+            $frame.unblock().hide('fast', function() { $(this).remove(); });
+        else
+            location.href = url;
     });
 }
 
