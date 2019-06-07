@@ -10,7 +10,13 @@ use hng2_base\device;
     .nav_table th { text-align: left; }
 </style>
 
-<h1><?= $current_module->language->devices_nav->page_title ?></h1>
+<h1 class="clearfix">
+    <?= $current_module->language->devices_nav->page_title ?>
+    <button class="pull-right" onclick="location.href='<?= $_SERVER["PHP_SELF"] ?>?wasuuup=<?= md5(mt_rand(1, 65535)) ?>'">
+        <i class="fa fa-refresh"></i>
+        <?= $language->reload ?>
+    </button>
+</h1>
 
 <?
 $query = "
