@@ -86,7 +86,7 @@ while( $this_device = $database->fetch_object($res) ):
     if( $this_device->id_device == $current_device->id_device ) $class = "state_active";
     ?>
     
-    <div class="framed_content <?=$class?>">
+    <div class="device framed_content <?=$class?>" data-device-id="<?=$this_device->id_device?>">
         
         <h2 style="<? if($this_device->state != "enabled") echo "margin-bottom: 0;"; ?>">
             <span style="float: right;">
