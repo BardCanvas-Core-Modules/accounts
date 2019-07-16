@@ -122,19 +122,23 @@ use hng2_base\module;
         <? endif; ?>
     </div>
     
-    <div class="cell country">
-        <div class="field_caption">
-            <?= $current_module->language->user_account_form->country ?>
+    <? if( $settings->get("modules:accounts.non_mandatory_country") == "true" ): ?>
+        <input type="hidden" name="country" value="<?= $_current_user_country ?>">
+    <? else: ?>
+        <div class="cell country">
+            <div class="field_caption">
+                <?= $current_module->language->user_account_form->country ?>
+            </div>
+            <div class="field_input">
+                <select name="country">
+                    <option value=""><?= trim($current_module->language->user_account_form->country_select) ?></option>
+                    <? foreach($_country_list as $key => $val): ?>
+                        <option <? if($key == $_current_user_country) echo "selected"; ?> value="<?= $key ?>"><?= $val ?></option>
+                    <? endforeach; ?>
+                </select>
+            </div>
         </div>
-        <div class="field_input">
-            <select name="country">
-                <option value=""><?= trim($current_module->language->user_account_form->country_select) ?></option>
-                <? foreach($_country_list as $key => $val): ?>
-                    <option <? if($key == $_current_user_country) echo "selected"; ?> value="<?= $key ?>"><?= $val ?></option>
-                <? endforeach; ?>
-            </select>
-        </div>
-    </div>
+    <? endif; ?>
     
     <div class="cell email">
         <div class="field_caption">
