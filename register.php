@@ -288,6 +288,8 @@ if( $_POST["mode"] == "create" )
     if( $settings->get("modules:accounts.non_mandatory_country") == "true" && empty($xaccount->country) )
         $xaccount->country = get_geoip_location_data(get_remote_address());
     
+    if( count($errors) == 0 ) $current_module->load_extensions("registration", "before_insertion");
+    
     # Proceed to insert the account and notify the user to confirm it
     if( count($errors) == 0 )
     {
@@ -301,7 +303,7 @@ if( $_POST["mode"] == "create" )
             header("Location: " . $_REQUEST["redir_url"]);
             die("<a href='".$_REQUEST["redir_url"]."'>".$current_module->language->click_to_continue."</a>");
         }
-    
+        
         $template->set_page_title($current_module->language->page_titles->registration_form_submitted);
         $template->page_contents_include = "register_form_submitted.tpl.inc";
         include "{$template->abspath}/main.php";

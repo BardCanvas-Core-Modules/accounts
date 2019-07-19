@@ -144,6 +144,8 @@ if( $_POST["mode"] == "save" )
         if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
     }
     
+    if( count($errors) == 0 ) $current_module->load_extensions("profile_editor", "before_saving");
+    
     # Actual save
     if( count($errors) == 0 )
     {

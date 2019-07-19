@@ -35,10 +35,16 @@ if( count($errors) == 0 )
     if( date("Y-m-d H:i:s") > $limit ) $errors[] = $current_module->language->errors->confirmation->expired_token;
 }
 
+if( ! is_numeric($id_account) ) $errors[] = $current_module->language->errors->confirmation->invalid_token;
+
 if( count($errors) == 0 )
 {
-    # Let's check if the account is already activated
     $xaccount = new account($id_account);
+    $current_module->load_extensions("registration", "before_state_check");
+}
+
+if( count($errors) == 0 )
+{
     if($xaccount->state == "enabled")
     {
         header("Location: {$config->full_root_url}");

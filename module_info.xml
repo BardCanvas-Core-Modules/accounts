@@ -37,10 +37,10 @@
     </widgets>
     
     <extension_areas_info><![CDATA[
-        User registration: after initializing submitted data, after confirmation.
+        User registration: after initializing submitted data, before insertion, before state check on confirmation, after confirmation.
         Registration form: top (before rendering fields), bottom (before submission buttons)
         Profile edition form: top (before rendering fields), bottom (before submission buttons)
-        Profile edition: after initializing submitted data, after saving, after creating.
+        Profile edition: after initializing submitted data, before saving, after saving, after creating.
         Records browser: Before query filters integration, Before running query, Additional scripts, Custom filter defs, Before loop start, per row actions, pre-EOF.
         Accounts Repository: account deletion.
         Login: bootstrap, pre-validations, additional login error messages (in dialog defs).
