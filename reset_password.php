@@ -92,9 +92,12 @@ if( ! empty($_GET["token"]) )
     
     if( count($errors) == 0 )
     {
-        $raw_password = randomPassword(8);
+        $raw_password       = randomPassword(8);
         $xaccount->password = md5($raw_password);
         $xaccount->save();
+        
+        $current_module->load_extensions("reset_password", "after_saving");
+        
         $messages[] = replace_escaped_vars(
             $current_module->language->reset_form->password_updated,
             array('{$password}', '{$website_name}'),

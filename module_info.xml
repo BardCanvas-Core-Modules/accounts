@@ -45,6 +45,7 @@
         Accounts Repository: account deletion.
         Login: bootstrap, pre-validations, additional login error messages (in dialog defs).
         Reset password dialog: extra intro.
+        Reset password script: after saving.
         Prefs editor: script preloads.
         Prefs editor: before saving, after saving.
         Login form: top, before submit button.
