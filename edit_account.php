@@ -144,14 +144,18 @@ if( $_POST["mode"] == "save" )
         if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
     }
     
-    if( count($errors) == 0 ) $current_module->load_extensions("profile_editor", "before_saving");
-    
-    # Actual save
     if( count($errors) == 0 )
     {
         if( trim(stripslashes($_POST["password"])) != "" ) $xaccount->password = md5($xaccount->_raw_password);
         $xaccount->set_avatar_from_post();
         $xaccount->set_banner_from_post();
+    }
+    
+    if( count($errors) == 0 ) $current_module->load_extensions("profile_editor", "before_saving");
+    
+    # Actual save
+    if( count($errors) == 0 )
+    {
         $xaccount->save();
         
         if( ! empty($_POST["api_keys"]) )
@@ -176,6 +180,8 @@ if( $_POST["mode"] == "save" )
         if( ! empty($_POST["deleted_api_keys"]) )
             foreach(explode(",", $_POST["deleted_api_keys"]) as $deleted_key)
                 $xaccount->set_engine_pref("api_access.last:{$deleted_key}", "");
+        
+        $current_module->load_extensions("profile_editor", "after_saving");
         
         $messages[] = $current_module->language->edit_account_form->saved_ok;
         $account = $xaccount;

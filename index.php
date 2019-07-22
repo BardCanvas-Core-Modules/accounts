@@ -177,12 +177,18 @@ switch( $_REQUEST["mode"] )
             if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
         }
         
-        # Actual save
         if( count($errors) == 0 )
         {
             if( trim(stripslashes($_POST["password"])) != "" ) $xaccount->password = md5($xaccount->_raw_password);
             $xaccount->set_avatar_from_post();
             $xaccount->set_banner_from_post();
+        }
+        
+        if( count($errors) == 0 ) $current_module->load_extensions("account_admin_editor", "before_saving");
+        
+        # Actual save
+        if( count($errors) == 0 )
+        {
             $xaccount->save();
             
             if( ! empty($_POST["api_keys"]) )
