@@ -1,6 +1,12 @@
 
 # Accounts Module Change Log
 
+## [1.21.1] - 2019-07-22
+
+- Hidden country selector when set as non-mandatory on the account editor form.
+- Tuned profile saving scripts.
+- Added extension points.
+
 ## [1.21.0] - 2019-06-07
 
 - Devices code cleanup.
