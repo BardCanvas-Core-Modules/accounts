@@ -745,6 +745,15 @@
             ]]></description>
             <type>yes/no</type>
         </specs>
+        <specs key="default_country">
+            <title>Default country for new accounts</title>
+            <description><![CDATA[
+                If you decide to hide the origin country selector and the country code can't be obtained
+                from the user's IP address, please specify a country to set.<br>
+                If none specified, <code>US</code> (United States of America) will be set.
+            ]]></description>
+            <type>country</type>
+        </specs>
         <specs key="enforce_device_registration">
             <title>Enforce device registration</title>
             <description><![CDATA[

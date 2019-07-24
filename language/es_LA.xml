@@ -744,6 +744,15 @@
             ]]></description>
             <type>yes/no</type>
         </specs>
+        <specs key="default_country">
+            <title>País predeterminado para nuevas cuentas</title>
+            <description><![CDATA[
+                Si decides ocultar el selector de país y este no puede obtenerse de la dirección IP del usuario,
+                deberás especificar un país a establecerle.<br>
+                Si no especificas ninguno, se predeterminará <code>US</code> (Estados Unidos de Norteamérica).
+            ]]></description>
+            <type>country</type>
+        </specs>
         <specs key="enforce_device_registration">
             <title>Forzar el registro de dispositivos</title>
             <description><![CDATA[

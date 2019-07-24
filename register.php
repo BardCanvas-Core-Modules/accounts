@@ -288,6 +288,13 @@ if( $_POST["mode"] == "create" )
     if( $settings->get("modules:accounts.non_mandatory_country") == "true" && empty($xaccount->country) )
         $xaccount->country = get_geoip_location_data(get_remote_address());
     
+    if( empty($xaccount->country) )
+    {
+        $country = $settings->get("modules:accounts.default_country");
+        if( empty($country) ) $country = "us";
+        $xaccount->country = $country;
+    }
+    
     if( count($errors) == 0 ) $current_module->load_extensions("registration", "before_insertion");
     
     # Proceed to insert the account and notify the user to confirm it
