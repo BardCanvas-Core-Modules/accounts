@@ -582,8 +582,12 @@ use hng2_base\module;
         <?
     endif; ?>
     
-    <? if( $config->globals["include_bottom_fields"] )
-        $current_module->load_extensions("edit_account_form", "bottom"); ?>
+    <?
+    $current_module->load_extensions("edit_account_form", "pre_bottom");
+    
+    if( $config->globals["include_bottom_fields"] )
+        $current_module->load_extensions("edit_account_form", "bottom");
+    ?>
     
     <div align="center">
         <? if( ! empty($_cancelation_redirect) ): ?>
