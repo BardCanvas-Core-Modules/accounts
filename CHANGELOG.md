@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.21.3] - 2019-08-03
+
+- Added extension points.
+
 ## [1.21.2] - 2019-07-24
 
 - Added setting of default country when it can't be obtained on registration.
