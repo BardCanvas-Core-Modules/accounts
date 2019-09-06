@@ -129,4 +129,6 @@ if( ! empty($_REQUEST["redir_url"]) )
 
 $goto = empty($_REQUEST["goto"]) ? "/" : $_REQUEST["goto"];
 
+$current_module->load_extensions("login", "before_successful_output");
+
 echo "OK\t{$account->user_name}\t{$device_return}\t{$goto}";
