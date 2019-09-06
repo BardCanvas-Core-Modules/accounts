@@ -323,10 +323,8 @@
         <registering_disabled>Sorry, but account registration is currently disabled.</registering_disabled>
         <form_info>Please fill the form to register your account. All fields are mandatory except those explicitly specified.</form_info>
         <automatic_user_names_info><![CDATA[
-            In order to login and identify yourself through mentions (<u>@user</u>), the system
-            will create a user name from your display name, but removing any special characters and emojis.
-            Once registered, the user name can't be changed but your alias can. So please
-            create your account with a simple display name and then change it to something cooler later.
+            Please type a simple display name without accented or special letters or symbols other than
+            dashes, dots or underscores. You'll be able to change it later.
         ]]></automatic_user_names_info>
         <form_submitted>
             <title>Account created successfully!</title>

@@ -327,9 +327,8 @@
         <registering_disabled>Disculpa, pero el registro de cuentas está actualmente desactivado.</registering_disabled>
         <form_info>Llena la forma para registrar tu cuenta. Todos los campos son mandatorios excepto aquellos explícitamente opcionales.</form_info>
         <automatic_user_names_info><![CDATA[
-            Para poder abrir sesión e identificarte vía menciones (<u>@usuario</u>), el sistema creará
-            un nombre de usuario a partir de tu alias, pero removiendo eñes, acentos, caracteres especiales o emojis.<br>
-            Una vez registrado, el nombre de usuario no puede cambiarse pero sí tu alias.
+            Introduce un alias simple sin letras acentuadas o especiales ni símbolos
+            (puedes usar puntos, guiones o guiones bajos). Podrás cambiarlo después.
         ]]></automatic_user_names_info>
         <form_submitted>
             <title>¡Cuenta creada con éxito!</title>

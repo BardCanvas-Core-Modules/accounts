@@ -74,12 +74,6 @@ if( $_POST["mode"] != "create" )
     <div class="framed_content state_ok">
         <span class="fa fa-info-circle"></span>
         <?= $current_module->language->register_form->form_info ?>
-        <? if( $settings->get("modules:accounts.automatic_user_names") == "true" ): ?>
-            <div class="framed_content" style="margin-top: 5px; margin-bottom: 0;">
-                <span class="fa fa-warning"></span>
-                <?= $current_module->language->register_form->automatic_user_names_info ?>
-            </div>
-        <? endif; ?>
     </div>
 <? endif; ?>
 
@@ -120,7 +114,9 @@ if( $_POST["mode"] != "create" )
             <? if( ! $_hide_infos ): ?>
                 <div class="framed_content state_ok">
                     <span class="fa fa-info-circle"></span>
-                    <?= $current_module->language->user_account_form->display_name_info ?>
+                    <?= $settings->get("modules:accounts.automatic_user_names") == "true"
+                        ? $current_module->language->register_form->automatic_user_names_info
+                        : $current_module->language->user_account_form->display_name_info ?>
                 </div>
             <? endif; ?>
         </div>
