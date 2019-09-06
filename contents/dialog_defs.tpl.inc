@@ -7,7 +7,7 @@
         <div id="login_targetarea" style="display: none;"></div>
         <form name="login_form" id="login_form" method="post" action="<?=$config->full_root_path?>/accounts/scripts/login.php">
             <input type="hidden" name="goto" value="<?= $_SERVER["REQUEST_URI"] ?>">
-    
+            
             <? $this_module->load_extensions("login_form", "top"); ?>
             
             <? if( empty($config->globals["@accounts:login_form.no_standard_fields"]) ): ?>
@@ -27,7 +27,7 @@
             
             <? $this_module->load_extensions("login_form", "before_submit_button"); ?>
             
-            <p align="right" style="margin-bottom: 0;">
+            <p align="right" class="submit_button_container" style="margin-bottom: 0;">
                 <button type="submit">
                     <?= $language->submit ?>
                     <span class="fa fa-play"></span>

@@ -41,6 +41,10 @@ if( $account->_exists )
         </div>
     ";
 
+$registration_page = $config->globals["@accounts:login_form.registration_page_url_override"];
+if( empty($registration_page) )
+    $registration_page = "{$config->full_root_path}/accounts/register.php";
+
 ob_start(); ?>
 
 <div id="sidebar_login">
@@ -49,9 +53,9 @@ ob_start(); ?>
         <input type="hidden" name="goto" value="<?= $_SERVER["REQUEST_URI"] ?>">
         
         <? if( $settings->get("modules:accounts.register_enabled") != "false" ): ?>
-            <a class="framed_content state_highlight" 
+            <a class="framed_content registration_link state_highlight" 
                style="display: block; margin-top: 0; margin-bottom: 10px; text-align: center; font-size: 1.2em;"
-               href="<?= $config->full_root_path ?>/accounts/register.php">
+               href="<?= $registration_page?> ">
                 <?= $this_module->language->create_account_now ?>
             </a>
         <? endif; ?>
@@ -79,7 +83,7 @@ ob_start(); ?>
         
         <? $this_module->load_extensions("login_form", "before_submit_button"); ?>
         
-        <div class="field alignright">
+        <div class="field submit_button_container alignright">
             <button type="submit">
                 <span class="fa fa-sign-in"></span>
                 <?= $this_module->language->login ?>
