@@ -1,6 +1,12 @@
 
 # Accounts Module Change Log
 
+## [1.21.4] - 2019-09-06
+
+- Tuned checks for automatic generation of user names.
+- Added section identifiers to login forms.
+- Added login script extension point.
+
 ## [1.21.3] - 2019-08-03
 
 - Added extension points.
