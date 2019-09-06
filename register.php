@@ -305,6 +305,8 @@ if( $_POST["mode"] == "create" )
         $xaccount->save();
         $xaccount->send_new_account_confirmation_email();
         
+        $current_module->load_extensions("registration", "after_sending_confirmation_email");
+        
         if( ! empty($_REQUEST["redir_url"]) )
         {
             header("Location: " . $_REQUEST["redir_url"]);
