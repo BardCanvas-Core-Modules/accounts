@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.21.5] - 2019-09-06
+
+- Added registration:after_sending_confirmation_email extension point.
+
 ## [1.21.4] - 2019-09-06
 
 - Tuned checks for automatic generation of user names.

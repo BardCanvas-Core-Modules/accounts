@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     
-    <version>1.21.4</version>
+    <version>1.21.5</version>
     <group>core_modules</group>
     <admin_only>false</admin_only>
     
@@ -37,7 +37,7 @@
     </widgets>
     
     <extension_areas_info><![CDATA[
-        User registration: after initializing submitted data, before insertion, before state check on confirmation, after confirmation.
+        User registration: after initializing submitted data, before insertion, before state check on confirmation, after sending confirmation email, after confirmation.
         Registration form: top (before rendering fields), bottom (before submission buttons)
         Profile edition form: top (before rendering fields), pre-bottom, bottom (before submission buttons)
         Profile edition: after initializing submitted data, before saving, after saving, after creating.
