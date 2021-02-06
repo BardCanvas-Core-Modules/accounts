@@ -301,6 +301,7 @@ use hng2_base\module;
                     <?
                     if( ! empty($xaccount->engine_prefs["api_keys"]) ):
                         foreach($xaccount->engine_prefs["api_keys"] as $keypair):
+                            if( is_object($keypair) ) $keypair = (array) $keypair;
                             ?>
                             <div class="framed_content key_pair">
                                 
