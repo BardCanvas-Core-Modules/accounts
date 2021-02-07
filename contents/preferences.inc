@@ -8,8 +8,13 @@
 
 use hng2_base\config;
 
+include_once "{$current_module->abspath}/2fa/totp.php";
+
 $editable_prefs = $config->globals["editable_prefs_collection"];
 $account_prefs  = $account->get_editable_prefs();
+
+if( $settings->get("modules:accounts.use_2fa") != "true" )
+    unset($editable_prefs["{$current_module->language->engine_prefs->title}"]);
 
 $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
      . ( empty($_REQUEST["bcm_platform"]     ) ? "" : "&bcm_platform="      . $_REQUEST["bcm_platform"]      )
@@ -18,7 +23,6 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
      . ( empty($_REQUEST["bcm_force_session"]) ? "" : "&bcm_force_session=" . $_REQUEST["bcm_force_session"] )
      . ( empty($_REQUEST["bcm_force_session"]) ? "" : "&bcm_output_type="   . "HTML"                         )
 ;
-
 ?>
 
 <h1 class="clearfix">
@@ -49,7 +53,6 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
         /*max-width: 99%;*/
     }
 </style>
-
 <script type="text/javascript">
     $(document).ready(function()
     {
@@ -61,6 +64,97 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
                 viewPortMargin: Infinity,
                 lineNumbers:    true
             });
+        });
+    });
+</script>
+
+<!-- 2FA -->
+<script type="text/javascript">
+    
+    function open_2fa_configuration_dialog()
+    {
+        $('#2fa_creation_dialog').dialog('open');
+    }
+    
+    function validate_and_save_2fa_settings()
+    {
+        var $dialog = $('#2fa_creation_dialog');
+        var url     = $_FULL_ROOT_PATH + '/accounts/2fa/toolbox.php';
+        var params  = {
+            save_new_key: $dialog.find('#2fa_raw_secret').attr('data-value'),
+            token:        $dialog.find('#2fa_token_input').val().trim()
+        };
+        
+        $dialog.closest('.ui-dialog').block(blockUI_default_params);
+        $.get(url, params, function(response)
+        {
+            if( response !== 'OK' )
+            {
+                $dialog.closest('.ui-dialog').unblock();
+                
+                throw_notification(response, 'warning', 4000);
+                return;
+            }
+            
+            $('#preferences').submit();
+        });
+    }
+    
+    function disable_2fa()
+    {
+        var url     = $_FULL_ROOT_PATH + '/accounts/2fa/toolbox.php';
+        var params  = {
+            disable: 'true',
+            token:   $('#tfa_disabling_token_input').val().trim()
+        };
+        
+        $.blockUI(blockUI_default_params);
+        $.get(url, params, function(response)
+        {
+            if( response !== 'OK' )
+            {
+                $.unblockUI();
+                
+                throw_notification(response, 'warning', 4000);
+                return;
+            }
+            
+            $('#preferences').submit();
+        });
+    }
+    
+    $(document).ready(function()
+    {
+        var $dialog = $('#2fa_creation_dialog');
+        var cancel  = $dialog.attr('data-cancel-button');
+        var submit  = $dialog.attr('data-ok-button');
+        var width   = $(window).width();
+        if( width > 400 ) width = 380;
+        
+        $dialog.dialog({
+            autoOpen: false,
+            modal:    true,
+            width:    width,
+            open:     function() {
+                          var $img = $dialog.find('#2fa_qrcode');
+                          if( $img.attr('loaded') ) return;
+                          
+                          var url  = $img.attr('data-src');
+                          $img.attr('src', url);
+                          $img.attr('loaded', 'true');
+                      },
+            buttons:  [
+                {
+                    text:  submit,
+                    icons: { primary: "ui-icon-check" },
+                    click: function() { validate_and_save_2fa_settings(); }
+                },
+                {
+                    text:  cancel,
+                    icons: { primary: "ui-icon-cancel" },
+                    click: function() { $(this).dialog( "close" ); }
+                }
+            ]
         });
     });
 </script>
@@ -164,6 +258,52 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
     </p>
     
 </form>
+
+<?
+$totp       = new totp();
+$new_secret = $totp->createSecret();
+$enc_secret = three_layer_encrypt(
+    $new_secret, $config->website_key, $account->id_account, $account->creation_date
+);
+?>
+<div id="2fa_creation_dialog" title="<?= $current_module->language->tfa->dialog->title ?>"
+     data-ok-button="<?= $current_module->language->tfa->dialog->save ?>"
+     data-cancel-button="<?= $language->cancel ?>"
+     style="display: none; font-family: arial, helvetica, sans-serif; font-size: 12pt; line-height: normal;">
+    
+    <p>
+        <?= $current_module->language->tfa->dialog->info1 ?>
+    </p>
+    
+    <p class="aligncenter">
+        <img id="2fa_qrcode" style="width: 246px; height: 246px;"
+             src="<?= $config->full_root_path ?>/media/missing_image.png"
+             data-src="<?= $current_module->get_url() ?>/2fa/toolbox.php?new_secret_qc=<?= urlencode($enc_secret) ?>">
+    </p>
+    <p class="aligncenter">
+        <span class="framed_content principal_data fixed_font" id="2fa_raw_secret"
+              data-value="<?= $enc_secret ?>" style="font-size: 12pt;">
+            <?= $new_secret ?>
+        </span>
+        <i class="fa fa-copy fa-fw pseudo_link clipboard-copy"
+           data-clipboard-text="<?= $new_secret ?>"></i>
+    </p>
+    
+    <p>
+        <?= $current_module->language->tfa->dialog->info2 ?>
+    </p>
+    <p class="aligncenter">
+        <input type="text" id="2fa_token_input" autocomplete="off"
+               style="font-size: 18pt; text-align: center"
+               maxlength="6" placeholder="000000">
+    </p>
+    
+    <div class="framed_content state_highlight">
+        <i class="fa fa-warning"></i>
+        <?= $current_module->language->tfa->dialog->info3 ?>
+    </div>
+    
+</div>
 
 <?
 $generation_index = 0;

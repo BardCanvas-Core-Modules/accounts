@@ -684,6 +684,50 @@
         </meta>
     </widgets>
     
+    <tfa>
+        <not_configured>2FA isn't configured for this account.</not_configured>
+        <enable>Enable...</enable>
+        <configured><![CDATA[
+            2FA is enabled for this account. If you want to disable it,
+            open your authenticator app and get a verification code,
+            then type/paste it below and click on "Disable".
+        ]]></configured>
+        <disable>Disable</disable>
+        <dialog>
+            <title>Enable 2FA</title>
+            <info1><![CDATA[
+                1. Open a TOTP compatible authentication application on your phone
+                (Google Authenticator, Authy, etc.)
+                and scan the next QRcode or type the time-based key shown below:
+            ]]></info1>
+            <info2><![CDATA[
+                2. Type below a verification code from the app and click on "Save" to register it:
+            ]]></info2>
+            <save>Save</save>
+            <info3><![CDATA[
+                <b>Important:</b> copy the key above and save it on a safe place!
+                If you loose your phone, you'll need it to re-authenticate.
+            ]]></info3>
+        </dialog>
+        <login_dialog>
+            <title>2FA enabled on this account</title>
+            <info><![CDATA[
+                This account has two factor authentication enabled.
+                Please open your authenticator app and paste/type the verification code below,
+                then press "SUBMIT".
+            ]]></info>
+        </login_dialog>
+        <missing_token>Please paste or type a verification code from the authentication app you used to register your key.</missing_token>
+        <missing_token2>Please paste or type a verification code from your authentication app.</missing_token2>
+        <invalid_token>Sorry, but the verification code must be numeric and should be six digits.</invalid_token>
+        <verification_failed>Verification failed. Please try again. If the problem persists, reload the preferences page and try again or use a different authentication app.</verification_failed>
+        <verification_failed2>2FA verification failed. Please try again. If the problem persists, please contact our tech support staff.</verification_failed2>
+        <verification_passed>Verification succeeded. 2FA key has been encrypted and saved.</verification_passed>
+        <disabled_ok>2FA has been successfully disabled.</disabled_ok>
+        <token_input>2FA verification code:</token_input>
+        <token_input_caption>2FA code</token_input_caption>
+    </tfa>
+    
     <settings_data>
         <title>User account services</title>
         <specs key="register_enabled">
@@ -848,7 +892,34 @@
             <type>user_level_selector</type>
         </specs>
         
+        <specs is_separator="true">Advanced login controls</specs>
+        
+        <specs key="use_2fa">
+            <title><![CDATA[
+                Use two-factor authentication
+            ]]></title>
+            <description><![CDATA[
+                Implementation for TOTP for user logins.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
     </settings_data>
+    
+    <engine_prefs>
+        <title>2FA (Two factor authentication)</title>
+
+        <specs key="2fa_settings">
+            <title>2FA settings</title>
+            <description><![CDATA[
+                Use this control to enable/disable 2FA on your account.
+            ]]></description>
+            <type>external</type>
+            <options>
+                <url>accounts/2fa/2fa_control.php</url>
+            </options>
+        </specs>
+    </engine_prefs>
     
     <user_profile_tabs>
         <tab mode="@root" priority="0">About</tab>

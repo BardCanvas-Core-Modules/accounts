@@ -5,8 +5,10 @@
     
     <div id="login_dialog" style="display: none;" title="<?= $this_module->language->login ?>">
         <div id="login_targetarea" style="display: none;"></div>
-        <form name="login_form" id="login_form" method="post" action="<?=$config->full_root_path?>/accounts/scripts/login.php">
-            <input type="hidden" name="goto" value="<?= $_SERVER["REQUEST_URI"] ?>">
+        <form name="login_form" id="login_form" method="post" 
+              action="<?=$config->full_root_path?>/accounts/scripts/login.php">
+            
+            <input type="hidden" name="goto"      value="<?= $_SERVER["REQUEST_URI"] ?>">
             
             <? $this_module->load_extensions("login_form", "top"); ?>
             
@@ -32,6 +34,25 @@
                     <?= $language->submit ?>
                     <span class="fa fa-play"></span>
                 </button>
+            </p>
+            
+        </form>
+    </div>
+    
+    <div id="2fa_input_form"
+         title="<?= $this_module->language->tfa->login_dialog->title ?>"
+         data-ok-caption="<?= $language->submit ?>" data-cancel-caption="<?= $language->cancel ?>"
+         style="display: none; font-family: arial, helvetica, sans-serif; font-size: 12pt; line-height: normal;">
+        
+        <form method="get" action="<?=$config->full_root_path?>/accounts/scripts/login.php"
+              onsubmit="submit_2fa_token(); return false;">
+            <p style="margin-top: 0;">
+                <?= $this_module->language->tfa->login_dialog->info ?>
+            </p>
+            <p class="aligncenter" style="margin-bottom: 0;">
+                <input type="text" id="2fa_token_input" autocomplete="off"
+                       style="font-size: 18pt; text-align: center; width: 100px;"
+                       maxlength="6" placeholder="000000">
             </p>
         </form>
     </div>
@@ -74,6 +95,8 @@
         <div class="ERROR_WRONG_PASSWORD"><?= $this_module->language->errors->wrong_password ?></div>
         <div class="ERROR_ENGINE_DISABLED"><?= $this_module->language->errors->engine_disabled ?></div>
         <div class="ERROR_DEVICE_DISABLED"><?= $this_module->language->errors->device_disabled ?></div>
+        <div class="ERROR_INVALID_2FA_TOKEN"><?= $this_module->language->tfa->invalid_token ?></div>
+        <div class="ERROR_2FA_VALIDATION_FAILED"><?= $this_module->language->tfa->verification_failed2 ?></div>
         <? $this_module->load_extensions("login", "additional_errors"); ?>
     </div>
     <div id="device_messages" style="display: none;">

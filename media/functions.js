@@ -59,6 +59,10 @@ function process_login_result(result, statusText, xhr, $form)
 {
     $form.unblock();
     
+    var $tfa_form = $('#2fa_input_form');
+    $tfa_form.find('#2fa_token_input').val('');
+    $form.find('input[name="tfa_token"]').val('');
+    
     if( result.indexOf('ERROR') < 0 )
     {
         // result > username > device_message > redirect
@@ -82,6 +86,15 @@ function process_login_result(result, statusText, xhr, $form)
         return;
     }
     
+    // 2FA checks
+    if(result === 'ERROR_MISSING_2FA_TOKEN')
+    {
+        $tfa_form.data('login_form', $form);
+        $tfa_form.dialog('open');
+        
+        return;
+    }
+    
     // alert( $('#login_errors .' + result).text().replace(/\n\s+/g, ' ') );
     if( result.match(/[^a-zA-Z0-9_]/) !== null )
     {
@@ -93,6 +106,23 @@ function process_login_result(result, statusText, xhr, $form)
     var $msgelement = $('#login_errors').find('.' + result);
     var message     = $msgelement.length > 0 ? $msgelement.text() : result;
     alert( message );
+}
+
+function submit_2fa_token()
+{
+    var $this   = $('#2fa_input_form');
+    var $source = $this.data('login_form')
+    var value   = $this.find('#2fa_token_input').val().trim();
+    
+    if( $source.find('input[name="tfa_token"]').length === 0 )
+        $source.prepend(sprintf(
+            '<input type="hidden" name="tfa_token" value="%s">', value
+        ));
+    else
+        $source.find('input[name="tfa_token"]').val(value);
+    
+    $this.dialog('close');
+    $source.submit();
 }
 
 function change_device_label(id_device, current_label)
@@ -239,6 +269,27 @@ $(document).ready(function()
             target:        '#login_targetarea',
             beforeSubmit:  validate_login_form,
             success:       process_login_result
+        });
+        
+        var $tfa_form  = $('#2fa_input_form');
+        var tfa_ok     = $tfa_form.attr('data-ok-caption');
+        var tfa_cancel = $tfa_form.attr('data-cancel-caption');
+        $tfa_form.dialog({
+            title:    $login_dialog.attr('title'),
+            autoOpen: false,
+            modal:    true,
+            buttons:  [
+                {
+                    text: tfa_ok,
+                    icons: { primary: "ui-icon-check" },
+                    click: submit_2fa_token
+                },
+                {
+                    text:  tfa_cancel,
+                    icons: { primary: "ui-icon-cancel" },
+                    click: function() { $(this).dialog( "close" ); }
+                }
+            ]
         });
     }
 });

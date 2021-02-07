@@ -119,6 +119,10 @@ ob_start(); ?>
     {
         $form.unblock();
         
+        var $tfa_form = $('#2fa_input_form');
+        $tfa_form.find('#2fa_token_input').val('');
+        $form.find('input[name="tfa_token"]').val('');
+        
         if( result.indexOf('ERROR') < 0 )
         {
             // result > username > device_message > redirect
@@ -140,6 +144,15 @@ ob_start(); ?>
             }
             
             if( parts[3] != '' ) location.href = parts[3];
+            
+            return;
+        }
+        
+        // 2FA checks
+        if(result === 'ERROR_MISSING_2FA_TOKEN')
+        {
+            $tfa_form.data('login_form', $form);
+            $tfa_form.dialog('open');
             
             return;
         }

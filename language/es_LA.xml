@@ -682,6 +682,51 @@
         </meta>
     </widgets>
     
+    <tfa>
+        <not_configured>Autenticación de dos factores no configurada para esta cuenta.</not_configured>
+        <enable>Habilitar...</enable>
+        <configured><![CDATA[
+            Autenticación de dos factores activada en esta cuenta.
+            Si deseas desactivarla, abre tu aplicación de autenticación y obtén
+            un código de verificación, entonces pégalo o escríbelo debajo y
+            da click en "Desactivar".
+        ]]></configured>
+        <disable>Desactivar</disable>
+        <dialog>
+            <title>Activar 2FA</title>
+            <info1><![CDATA[
+                1. Abre una aplicación de autenticación compatible con TOTP en
+                tu teléfono (como Google Authenticator, Authy, etc.)
+                y escanea el siguiente código QR o escribe la llave basada en tiempo de abajo:
+            ]]></info1>
+            <info2><![CDATA[
+                2. Escribe debajo un código de verificación de la app y da click en "Guardar" para registrarla:
+            ]]></info2>
+            <save>Guardar</save>
+            <info3><![CDATA[
+                <b>Importante:</b> copia la llave de arriba y guárdala en un lugar seguro!
+                Si pierdes tu teléfono, necesitarás re-autenticarte con tu llave.
+            ]]></info3>
+        </dialog>
+        <login_dialog>
+            <title>2FA activado en esta cuenta</title>
+            <info><![CDATA[
+                Esta cuenta tiene habilitada la autenticación de dos factores.
+                Por favor abre tu app de autenticación y pega/escribe el código de verificación debajo,
+                después oprime "ENVIAR".
+            ]]></info>
+        </login_dialog>
+        <missing_token>Pega o escribe el código de verificación de la app que usaste para registrar tu llave.</missing_token>
+        <missing_token2>Pega o escribe un código de verificación de tu app de autenticación.</missing_token2>
+        <invalid_token>Lo sentimos, pero el código de verificación debe ser numérico y no mayor a seis dígitos.</invalid_token>
+        <verification_failed>Verificación fallida. Intenta de nuevo. Si el problema persiste, por favor contacta a nuestro personal de soporte. o recarga la página de preferencias de nuevo o intenta con otra app de autenticación.</verification_failed>
+        <verification_failed2>Verificación de dos factores fallida. Intenta de nuevo. Si el problema persiste, por favor contacta a nuestro personal de soporte.</verification_failed2>
+        <verification_passed>Verificación completa. Tu llave 2FA se ha encriptado y guardado en tu perfil.</verification_passed>
+        <disabled_ok>Autenticación de dos factores deshabilitada con éxito.</disabled_ok>
+        <token_input>Código de verificación 2FA:</token_input>
+        <token_input_caption>Código 2FA</token_input_caption>
+    </tfa>
+    
     <settings_data>
         <title>Servicios de cuentas de usuarios</title>
         <specs key="register_enabled">
@@ -847,7 +892,34 @@
             <type>user_level_selector</type>
         </specs>
         
+        <specs is_separator="true">Control de acceso avanzado</specs>
+        
+        <specs key="use_2fa">
+            <title><![CDATA[
+                Usar autenticación de dos factores
+            ]]></title>
+            <description><![CDATA[
+                Implementación de TOTP para accesos de usuarios.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
     </settings_data>
+    
+    <engine_prefs>
+        <title>2FA (Autenticación de dos factores)</title>
+
+        <specs key="2fa_settings">
+            <title>Configuración 2FA</title>
+            <description><![CDATA[
+                Usa este control para activar/desactivar 2FA en tu cuenta.
+            ]]></description>
+            <type>external</type>
+            <options>
+                <url>accounts/2fa/2fa_control.php</url>
+            </options>
+        </specs>
+    </engine_prefs>
     
     <user_profile_tabs>
         <tab mode="@root" priority="0">Acerca de...</tab>

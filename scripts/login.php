@@ -8,6 +8,7 @@
  * 
  * @param string "user_name"
  * @param string "password"
+ * @param string "tfa_token" required when account has 2fa enabled
  * @param string "redir_url" optional, direct redirect after open session
  * @param string "goto"      optional, return a location to redirect to as part of the response
  *                           (handled by the login JS snippets)
@@ -21,6 +22,9 @@
  * • ERROR_WRONG_PASSWORD
  * • ERROR_ENGINE_DISABLED
  * • ERROR_DEVICE_DISABLED
+ * • ERROR_MISSING_2FA_TOKEN
+ * • ERROR_INVALID_2FA_TOKEN
+ * • ERROR_2FA_VALIDATION_FAILED
  * • OK → User name → OK|UNREGISTERED → url
  *   Tab-separated fields: result, user name, device message, admin dashboard url or redir_url
  */
@@ -63,6 +67,16 @@ if( $account->state != "enabled" )
 
 if( md5(trim(stripslashes($_POST["password"]))) != $account->password )
     die("ERROR_WRONG_PASSWORD");
+
+# 2fa checks
+if( $account->has_2fa_enabled() )
+{
+    $tfa_token = trim(stripslashes($_POST["tfa_token"]));
+    if( empty($tfa_token) ) die("ERROR_MISSING_2FA_TOKEN");
+    if( ! is_numeric($tfa_token) ) die("ERROR_INVALID_2FA_TOKEN");
+    
+    if( ! $account->validate_2fa_token($tfa_token) ) die("ERROR_2FA_VALIDATION_FAILED");
+}
 
 if( $settings->get("engine.enabled") != "true" &&
     ! $account->_is_admin )
