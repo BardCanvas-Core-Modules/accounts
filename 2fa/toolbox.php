@@ -40,6 +40,11 @@ if( $account->state != "enabled" ) throw_fake_401();
 if( ! empty($_GET["new_secret_qc"]) )
 {
     $enc_secret = trim(stripslashes($_GET["new_secret_qc"]));
+    if( empty($enc_secret) ) die($current_module->language->tfa->missing_key);
+    
+    try { check_sql_injection($enc_secret); }
+    catch(\Exception $e) { throw_fake_501(); }
+    
     $raw_secret = three_layer_decrypt($enc_secret, $config->website_key, $account->id_account, $account->creation_date);
     $qrcode_str = sprintf(
         "otpauth://totp/%s?secret=%s",
@@ -57,7 +62,13 @@ if( ! empty($_GET["new_secret_qc"]) )
 if( ! empty($_GET["save_new_key"]) )
 {
     header("Content-Type: text/plain; charset=UTF-8");
-    $enc_secret  = trim(stripslashes($_GET["save_new_key"]));
+    
+    $enc_secret = trim(stripslashes($_GET["save_new_key"]));
+    if( empty($enc_secret) ) die($current_module->language->tfa->missing_key);
+    
+    try { check_sql_injection($enc_secret); }
+    catch(\Exception $e) { die($e->getMessage()); }
+    
     $raw_secret  = three_layer_decrypt($enc_secret, $config->website_key, $account->id_account, $account->creation_date);
     $input_token = trim(stripslashes($_GET["token"]));
     
@@ -78,7 +89,6 @@ if( ! empty($_GET["save_new_key"]) )
 if( $_GET["disable"] == "true" )
 {
     $input_token = trim(stripslashes($_GET["token"]));
-    
     if( empty($input_token) ) die($current_module->language->tfa->missing_token);
     if( ! is_numeric($input_token) ) die($current_module->language->tfa->invalid_token);
     

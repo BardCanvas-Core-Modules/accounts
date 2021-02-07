@@ -726,6 +726,7 @@
         <disabled_ok>2FA has been successfully disabled.</disabled_ok>
         <token_input>2FA verification code:</token_input>
         <token_input_caption>2FA code</token_input_caption>
+        <missing_key>Secret key not provided.</missing_key>
     </tfa>
     
     <settings_data>

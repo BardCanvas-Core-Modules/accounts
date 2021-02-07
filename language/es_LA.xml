@@ -725,6 +725,7 @@
         <disabled_ok>Autenticación de dos factores deshabilitada con éxito.</disabled_ok>
         <token_input>Código de verificación 2FA:</token_input>
         <token_input_caption>Código 2FA</token_input_caption>
+        <missing_key>No se ha especificado la llave secreta.</missing_key>
     </tfa>
     
     <settings_data>
