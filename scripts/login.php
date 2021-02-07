@@ -104,8 +104,7 @@ else # $settings->get("modules:accounts.enforce_device_registration") == "true"
         {
             case "disabled":
                 die("ERROR_DEVICE_DISABLED");
-                break;
-            
+                
             case "enabled":
                 $device->ping();
                 $device_return = "OK";
