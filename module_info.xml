@@ -50,6 +50,7 @@
         Prefs editor: before saving, after saving.
         Login form: top, before submit button.
         User menu: extra commands.
+        2FA: after enabling, after disabling.
     ]]></extension_areas_info>
     
 </module>

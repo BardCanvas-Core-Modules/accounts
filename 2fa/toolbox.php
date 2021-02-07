@@ -70,6 +70,7 @@ if( ! empty($_GET["save_new_key"]) )
     if( ! $res ) die($current_module->language->tfa->verification_failed);
     
     $account->set_engine_pref("@accounts:2fa_secret", $enc_secret);
+    $current_module->load_extensions("two_factor_auth", "after_enabling");
     send_notification($account->id_account, "success", $current_module->language->tfa->verification_passed);
     die("OK");
 }
@@ -92,6 +93,7 @@ if( $_GET["disable"] == "true" )
     if( ! $res ) die($current_module->language->tfa->verification_failed2);
     
     $account->set_engine_pref("@accounts:2fa_secret", "");
+    $current_module->load_extensions("two_factor_auth", "after_disabling");
     send_notification($account->id_account, "success", $current_module->language->tfa->disabled_ok);
     die("OK");
 }
