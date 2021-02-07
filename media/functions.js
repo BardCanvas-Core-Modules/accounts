@@ -11,7 +11,7 @@ function show_login_form()
     return false;
 }
 
-function validate_login_form(formData, $form, options)
+function validate_login_form(formData, $form)
 {
     if( $form.find('input[name="user_name"]').val().trim() == "" ||
         $form.find('input[name="user_name"]').val().trim() == "" )
@@ -164,7 +164,7 @@ function prepare_reset_submission()
     $('#password_reset').closest('.ui-dialog').find('.ui-dialog-buttonpane button:first-child').button('disable');
 }
 
-function process_reset_result(responseText, statusText, xhr, $form)
+function process_reset_result(responseText)
 {
     var $reset_form     = $('#reset_form');
     var $password_reset = $('#password_reset');
