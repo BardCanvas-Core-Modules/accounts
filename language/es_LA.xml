@@ -695,9 +695,8 @@
         <dialog>
             <title>Activar 2FA</title>
             <info1><![CDATA[
-                1. Abre una aplicación de autenticación compatible con TOTP en
-                tu teléfono (como Google Authenticator, Authy, etc.)
-                y escanea el siguiente código QR o escribe la llave basada en tiempo de abajo:
+                1. Abre <b>Google Authenticator</b>, <b>Authy</b> o una app compatible en tu teléfono
+                y escanea el código QR o escribe la llave de abajo:
             ]]></info1>
             <info2><![CDATA[
                 2. Escribe debajo un código de verificación de la app y da click en "Guardar" para registrarla:

@@ -128,13 +128,14 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
         var $dialog = $('#2fa_creation_dialog');
         var cancel  = $dialog.attr('data-cancel-button');
         var submit  = $dialog.attr('data-ok-button');
-        var width   = $(window).width();
-        if( width > 400 ) width = 380;
+        var width   = $(window).width()  - 20; if( width  > 440 ) width  = 420;
+        var height  = $(window).height() - 20; if( height > 700 ) height = 680;
         
         $dialog.dialog({
             autoOpen: false,
             modal:    true,
             width:    width,
+            height:   height,
             open:     function() {
                           var $img = $dialog.find('#2fa_qrcode');
                           if( $img.attr('loaded') ) return;
@@ -271,7 +272,8 @@ $enc_secret = three_layer_encrypt(
      data-cancel-button="<?= $language->cancel ?>"
      style="display: none; font-family: arial, helvetica, sans-serif; font-size: 12pt; line-height: normal;">
     
-    <p>
+    <input type='text' size='1' style='position: relative; top: -100px; width: 1px; height: 1px;' />
+    <p style="margin-top: 0">
         <?= $current_module->language->tfa->dialog->info1 ?>
     </p>
     
