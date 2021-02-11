@@ -59,6 +59,7 @@ else
     $added_class = preg_match('#/accounts/edit_account.php|/accounts/devices.php|/accounts/preferences.php#i', $_SERVER["PHP_SELF"]) ? "current" : "";
     $locked      = $account->_is_locked ? "fa-lock" : "fa-info-circle";
     
+    $display_name = convert_emojis($account->display_name);
     $template->add_menu_item(
         "_____login_____",
         "
@@ -66,7 +67,7 @@ else
               data-module='accounts' style='cursor: pointer;' data-submenu='#user_menu_items'>
             <span id='loggedin_icon' class='fa fa-border {$locked}' style='color: transparent; background: url({$account->get_avatar_url()}) center center no-repeat; background-size: cover'></span>
             <span id='loggedin_icon_locked' class='fa fa-border fa-lock' style='display: none;'></span>
-            <span id='logedin_user_name'>{$account->get_processed_display_name()}</span>
+            <span id='logedin_user_name'>{$display_name}</span>
             <span class='menu_toggle'>
                 <span class='fa fa-caret-down'></span>
                 <span class='fa fa-caret-up' style='display: none;'></span>
