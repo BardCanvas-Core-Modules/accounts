@@ -1,6 +1,12 @@
 
 # Accounts Module Change Log
 
+## [1.22.0] - 2021-02-11
+
+- Added workaround for a potential invalid type casting on api key listings in the profile editor.
+- Added support for 2FA.
+- Tuned user display name in the header menu.
+
 ## [1.21.5] - 2019-09-06
 
 - Added registration:after_sending_confirmation_email extension point.
