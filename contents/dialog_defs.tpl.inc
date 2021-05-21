@@ -19,7 +19,18 @@
                 </span>
                 <span class="field standard_password">
                     <span class="caption"><?= $this_module->language->password ?></span>
-                    <input type="password" name="password">
+                    <input type="password" name="password" style="width: calc(100% - 36px)">
+                    <span class="toggle_pass inline-block nowrap">
+                        <i class="show fa fa-eye fa-fw fa-lg pseudo_link"
+                           title="<?= $this_module->language->show_hide_password ?>"
+                           onclick="var $this = $(this); $this.closest('.field').find('input[name=password]').attr('type', 'text'); $this.closest('.toggle_pass').find('.fa').toggle();"
+                        ></i>
+                        <i class="hide fa fa-eye-slash fa-fw fa-lg pseudo_link"
+                           title="<?= $this_module->language->show_hide_password ?>"
+                           style="display: none"
+                           onclick="var $this = $(this); $this.closest('.field').find('input[name=password]').attr('type', 'password'); $this.closest('.toggle_pass').find('.fa').toggle();"
+                           ></i>
+                    </span>
                 </span>
                 <span class="pseudo_link standard_password_reset" onclick="$('#login_dialog').dialog('close'); reset_password();">
                     <span class="fa fa-key"></span>
