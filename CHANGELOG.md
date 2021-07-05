@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.22.1] - 2021-07-05
+
+- Added toogle for showing/hiding the password on the login dialog.
+
 ## [1.22.0] - 2021-02-11
 
 - Added workaround for a potential invalid type casting on api key listings in the profile editor.
