@@ -200,7 +200,7 @@ switch( $_REQUEST["mode"] )
                     if( empty($app_name) ) $app_name = trim($current_module->language->api_keys->unnamed);
                     
                     $secret_key = trim(stripslashes($_POST["api_keys"]["secret_key"][$index]));
-                    $secret_key = three_layer_encrypt($secret_key, $config->encryption_key, $account->id_account, $account->creation_date);
+                    $secret_key = three_layer_encrypt($secret_key, $config->encryption_key, $xaccount->id_account, $xaccount->creation_date);
                     $api_keys[] = array(
                         "enabled"     => $enabled,
                         "app_name"    => $app_name,
