@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.22.2] - 2021-07-20
+
+- Fixed wrong keys used when encrypting API keys before saving an account edited by an admin. 
+
 ## [1.22.1] - 2021-07-05
 
 - Added toogle for showing/hiding the password on the login dialog.
