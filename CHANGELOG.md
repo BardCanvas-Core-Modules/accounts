@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.22.3] - 2021-07-27
+
+- Added link to registration in the login dialog.
+- Tuned wrapping in the login dialog.
+
 ## [1.22.2] - 2021-07-20
 
 - Fixed wrong keys used when encrypting API keys before saving an account edited by an admin. 
