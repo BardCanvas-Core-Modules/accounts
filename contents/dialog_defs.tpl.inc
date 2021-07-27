@@ -33,9 +33,16 @@
                     </span>
                 </span>
                 <span class="pseudo_link standard_password_reset" onclick="$('#login_dialog').dialog('close'); reset_password();">
-                    <span class="fa fa-key"></span>
+                    <span class="fa fa-key fa-fw"></span>
                     <?= $this_module->language->reset_password ?>
                 </span>
+                <? if( $settings->get("modules:accounts.register_enabled") != "false" ): ?>
+                    <br>
+                    <a class="standard_register" href="<?=$config->full_root_path?>/accounts/register.php">
+                        <span class="fa fa-sign-in fa-fw"></span>
+                        <?= $this_module->language->create_account ?>
+                    </a>
+                <? endif; ?>
             <? endif; ?>
             
             <? $this_module->load_extensions("login_form", "before_submit_button"); ?>
