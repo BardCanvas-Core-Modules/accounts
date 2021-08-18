@@ -67,7 +67,16 @@ if( ! empty($search_for) )
             $this_term = trim($this_term);
             if( ! empty($this_term) )
             {
-                if( is_numeric($this_term) )
+                if( filter_var($this_term, FILTER_VALIDATE_IP) )
+                {
+                    $where_line .= "creation_host like '$this_term%' or ";
+                    $where_line .= "id_account in (
+                                        select al.id_account
+                                        from account_logins al
+                                        where al.ip = '$this_term'
+                                    ) or ";
+                }
+                elseif( is_numeric($this_term) )
                 {
                     $where_line .= "id_account      =    '" . trim($this_term) . "'   or ";
                 }
@@ -91,7 +100,16 @@ if( ! empty($search_for) )
     {
         $this_term  = $search_for;
         $where_line = "";
-        if( is_numeric($search_for) )
+        if( filter_var($this_term, FILTER_VALIDATE_IP) )
+        {
+            $where_line .= "creation_host like '$this_term%' or ";
+            $where_line .= "id_account in (
+                                select al.id_account
+                                from account_logins al
+                                where al.ip = '$this_term'
+                            ) or ";
+        }
+        elseif( is_numeric($search_for) )
         {
             $where_line .= "id_account = '" . trim($this_term) . "' or ";
         }
@@ -167,6 +185,22 @@ $config->globals["accounts:nav/presettings_data"] = array($sqlorder, "");
 $current_module->load_extensions("records_browser", "presettings_data");
 list($sqlorder, $additional_select_columns) = $config->globals["accounts:nav/presettings_data"];
 unset( $config->globals["accounts:nav/presettings_data"] );
+
+if( ! empty($additional_select_columns) ) $additional_select_columns .= " , ";
+$additional_select_columns .= "
+    ( select concat(al.login_date, '\t', al.ip, '\t', al.hostname, '\t', al.location)
+      from account_logins al
+      where al.id_account = account.id_account
+      order by al.login_date desc
+      limit 1
+      ) as _last_login_data,
+    ( select concat(ad.id_device, '\t', ad.device_label, '\t', ad.device_header, '\t', ad.last_activity)
+      from account_devices ad
+      where ad.id_account = account.id_account
+      order by ad.last_activity desc
+      limit 1
+      ) as _last_device_data
+";
 
 $query = "
     select
@@ -569,7 +603,56 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                 <td nowrap align="center">
                     <? $online_flag = $row->last_activity >= date("Y-m-d H:i:s", strtotime("now - 1 minute")) ? "online" : "offline"; ?>
                     <img src="<?= $config->full_root_path ?>/media/icons/user-<?= $online_flag ?>.png" border="0" width="16" height="16"><br>
-                    <?= time_elapsed_string_alternate($row->last_activity) ?>
+                    <?= time_elapsed_string_alternate($row->last_activity) ?><br>
+                    
+                        <?
+                        if( ! empty($row->_last_login_data) )
+                        {
+                            $parts    = explode("\t", $row->_last_login_data);
+                            $last_ld  = $parts[0];
+                            $ip       = $parts[1];
+                            $hostname = $parts[2];
+                            $location = $parts[3];
+                            ?>
+                            <div class="alignleft nowrap" style="font-size: 8pt">
+                                <span>
+                                    <span class="fa fa-sign-in fa-fw"></span><?= time_elapsed_string($last_ld) ?>
+                                </span><br>
+                                <? if( ! empty($ip) ): ?>
+                                    <span class="nowrap">
+                                        <span class="fa fa-cloud fa-fw"></span><?= $ip ?>
+                                        <? if( $hostname != $ip ): ?>
+                                            <span class="fa pseudo_link fa-info-circle fa-fw" title="<?= $row->creation_host ?>"
+                                                  onclick="alert('<?= end(explode(";", $row->creation_host)) ?>')"></span>
+                                        <? endif; ?>
+                                    </span><br>
+                                <? endif; ?>
+                                <? if( ! empty($location) ):
+                                    $parts    = explode("; ", $location);
+                                    $isp      = array_pop($parts);
+                                    $country  = array_pop($parts);
+                                    $city     = implode("; ", $parts);
+                                    ?>
+                                    <? if( $city != "N/A; N/A") : ?>
+                                        <span>
+                                            <span class="fa fa-map-marker fa-fw"></span><?= $city ?>
+                                        </span><br>
+                                    <? endif; ?>
+                                    <? if($country != "N/A"): ?>
+                                        <span>
+                                            <span class="fa fa-globe fa-fw"></span><?= $country ?>
+                                        </span><br>
+                                    <? endif; ?>
+                                    <? if($isp != "N/A"): ?>
+                                        <span>
+                                            <span class="fa fa-building fa-fw"></span><?= $isp ?>
+                                        </span><br>
+                                    <? endif; ?>
+                                <? endif; ?>
+                            </div>
+                            <?
+                        }
+                        ?>
                 </td>
                 
                 <!-- Created -->
