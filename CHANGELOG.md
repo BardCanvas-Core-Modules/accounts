@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.22.4] - 2021-08-19
+
+- Added IP info to last activity and search by IP in the accounts browser.
+
 ## [1.22.3] - 2021-07-27
 
 - Added link to registration in the login dialog.
