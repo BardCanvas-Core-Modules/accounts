@@ -124,6 +124,7 @@
                 <grant_admin>Grant/revoke...</grant_admin>
                 <show_devices>Show devices</show_devices>
                 <delete>Delete</delete>
+                <remove_2fa_secret>Remove 2FA secret...</remove_2fa_secret>
             </actions>
             <action_messages>
                 <target_not_exists>The specified account doesn't exist in the databse.</target_not_exists>
@@ -727,6 +728,17 @@
         <token_input>2FA verification code:</token_input>
         <token_input_caption>2FA code</token_input_caption>
         <missing_key>Secret key not provided.</missing_key>
+        <removal_dialog>
+            <title>2FA secret removal</title>
+            <content><![CDATA[
+                <b>Warning:</b> removing 2FA secret from an account is discouraged
+                unless used as last resort.<br>
+                Make sure that the user knows you're removing their 2FA secret
+                and, if they prompted you to remove it, make sure they properly
+                identified themselves with you.<br><br>
+                Do you want to proceed?
+            ]]></content>
+        </removal_dialog>
     </tfa>
     
     <settings_data>

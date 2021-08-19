@@ -564,6 +564,22 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                             </span>
                         <? endif; ?>
                         
+                        <?
+                        if( $settings->get("modules:accounts.use_2fa") == "true" && $row->id_account != $account->id_account )
+                        {
+                            $otp_secret = $repository->find_user_prefs($row->id_account, "@accounts:2fa_secret");
+                            if( ! empty($otp_secret) )
+                            {
+                                echo "
+                                    <span class='action pseudo_link critical' onclick=\"prompt_2fa_secret_removal('{$row->id_account}')\">
+                                        <i class='fa fa-unlock'></i>
+                                        {$current_module->language->admin->record_nav->actions->remove_2fa_secret}
+                                    </span>
+                                ";
+                            }
+                        }
+                        ?>
+                        
                         <? $current_module->load_extensions("records_browser", "per_row_actions"); ?>
                     </div>
                     
@@ -862,6 +878,61 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
 </script>
 
 <div id="deletion_confirmation_message" style="display: none;"><?= unindent($current_module->language->admin->record_nav->action_messages->deletion_confirmation) ?></div>
+
+<div id="tfa_secret_removal_dialog" title="<?= $current_module->language->tfa->removal_dialog->title ?>"
+     data-ok-caption="<?= $language->ok ?>" data-cancel-caption="<?= $language->cancel ?>"
+     data-id-account="0">
+    <?= $current_module->language->tfa->removal_dialog->content ?>
+</div>
+<script type="text/javascript">
+    
+    function remove_2fa_secret()
+    {
+        var $dialog = $('#tfa_secret_removal_dialog');
+        var id      = $dialog.attr('data-id-account');
+        var url     = $_FULL_ROOT_PATH + '/accounts/scripts/set_engine_pref.php';
+        var params  = {id_account: id, key: '@accounts:2fa_secret', value: ''};
+        $.blockUI(blockUI_default_params);
+        $.get(url, params, function(response)
+        {
+            if( response !== 'OK' )
+            {
+                throw_notification(response, 'warning');
+                $.unblockUI();
+                return;
+            }
+            
+            $('#filter_form').submit();
+        });
+    }
+    
+    function prompt_2fa_secret_removal(id_account)
+    {
+        var $dialog = $('#tfa_secret_removal_dialog');
+        $dialog.attr('data-id-account', id_account);
+        $dialog.dialog('open');
+    }
+    
+    $(document).ready(function()
+    {
+        var $dialog = $('#tfa_secret_removal_dialog');
+        $dialog.dialog({
+            modal:    true,
+            autoOpen: false,
+            buttons:  [
+                {
+                    text:  $dialog.attr('data-ok-caption'),
+                    icons: { primary: "ui-icon-check" },
+                    click: function() { remove_2fa_secret() }
+                }, {
+                    text:  $dialog.attr('data-cancel-caption'),
+                    icons: { primary: "ui-icon-cancel" },
+                    click: function() { $(this).dialog('close'); }
+                }
+            ]
+        });
+    });
+</script>
 
 <?
 $current_module->load_extensions("records_browser", "pre_eof");

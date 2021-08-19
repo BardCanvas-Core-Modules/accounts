@@ -124,6 +124,7 @@
                 <grant_admin>Otorgar/revocar...</grant_admin>
                 <show_devices>Ver dispositivos</show_devices>
                 <delete>Eliminar</delete>
+                <remove_2fa_secret>Remover secreto 2FA...</remove_2fa_secret>
             </actions>
             <action_messages>
                 <target_not_exists>La cuenta especificada no existe en la base de datos.</target_not_exists>
@@ -726,6 +727,17 @@
         <token_input>Código de verificación 2FA:</token_input>
         <token_input_caption>Código 2FA</token_input_caption>
         <missing_key>No se ha especificado la llave secreta.</missing_key>
+        <removal_dialog>
+            <title>Remoción de secreto 2FA</title>
+            <content><![CDATA[
+                <b>Advertencia:</b> remover el secreto 2FA de una cuenta no se recomienda
+                a menos que se use como último recurso.<br>
+                Asegúrate de que el usuario sabe que estás removiendo su secreto 2FA
+                y, si te pidió que lo hicieras, asegúrate de haberlo identificado
+                propiamente.<br><br>
+                ¿Deseas proceder?
+            ]]></content>
+        </removal_dialog>
     </tfa>
     
     <settings_data>
