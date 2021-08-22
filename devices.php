@@ -51,7 +51,8 @@ if( $_POST["mode"] == "set_state" )
         die($current_module->language->devices_nav->ops_messages->invalid_state);
     
     $device = new device(trim(stripslashes($_POST["id_device"])));
-    if( ! $device->_exists )
+    
+    if( $new_state != "deleted" && ! $device->_exists )
         die($current_module->language->devices_nav->ops_messages->unexistent_device);
     
     if( $device->id_account != $account->id_account )
@@ -60,7 +61,7 @@ if( $_POST["mode"] == "set_state" )
     if( $device->state == "deleted" )
         die($current_module->language->devices_nav->ops_messages->device_deleted);
     
-    if( $device->state == "unregistered" )
+    if( $new_state != "deleted" && $device->state == "unregistered" )
         die($current_module->language->devices_nav->ops_messages->device_unregistered);
     
     $current_device = new device($account->id_account);
