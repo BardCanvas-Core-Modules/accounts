@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.22.5] - 2021-08-29
+
+- Added admin action to remove 2FA from an account.
+- Fixed issue when deleting an unregistered device.
+
 ## [1.22.4] - 2021-08-19
 
 - Added IP info to last activity and search by IP in the accounts browser.
