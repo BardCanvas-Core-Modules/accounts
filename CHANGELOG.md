@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.22.6] - 2021-09-01
+
+- Tuned automatic purging script.
+
 ## [1.22.5] - 2021-08-29
 
 - Added admin action to remove 2FA from an account.
