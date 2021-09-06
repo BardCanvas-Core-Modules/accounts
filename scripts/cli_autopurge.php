@@ -28,7 +28,7 @@ include "../../includes/bootstrap.inc";
 $current_module = $modules["accounts"];
 
 $boundary  = date("Y-m-d H:i:s", strtotime("now - 60 minutes"));
-$dev_res   = $database->query("select id_device from account_devices where state = 'unregistered' and creation_date < '$boundary'");
+$dev_res   = $database->query("select * from account_devices where state = 'unregistered' and creation_date < '$boundary'");
 $dev_count = $database->num_rows($dev_res);
 if( $dev_count > 0 )
 {
@@ -41,7 +41,7 @@ if( $dev_count > 0 )
         if( ! $acc->_exists )
         {
             $acc->user_name    = "N/A";
-            $acc->display_name = "Deleted";
+            $acc->display_name = "Not found";
         }
         $ago  = time_elapsed_string($row->creation_date);
         $used = time_elapsed_string($row->last_activity);
