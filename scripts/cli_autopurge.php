@@ -66,7 +66,7 @@ if( count($rows) > 0 )
     $start = time();
     $now   = date("Y-m-d H:i:s");
     $count = count($rows);
-    cli_colortags::write("<cyan>[$now] Starting deletion of $count unconfirmedaccounts...</cyan>\n");
+    cli_colortags::write("<cyan>[$now] Starting deletion of $count unconfirmed accounts...</cyan>\n");
     foreach($rows as $row)
     {
         $ago = time_elapsed_string($row->creation_date);
