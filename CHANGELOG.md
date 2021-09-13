@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.22.7] - 2021-09-13
+
+- Fixed logging issues in the automatic purging script.
+
 ## [1.22.6] - 2021-09-01
 
 - Tuned automatic purging script.
