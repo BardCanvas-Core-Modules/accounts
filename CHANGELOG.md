@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.22.8] - 2021-09-29
+
+- Added support for restricted engine prefs.
+
 ## [1.22.7] - 2021-09-13
 
 - Fixed logging issues in the automatic purging script.
