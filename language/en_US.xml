@@ -156,6 +156,7 @@
                     <start>Account deletion starting now.</start>
                     <end>Account deletion finished. An email has been sent to all administrators.</end>
                 </deletion_progress>
+                <restricted_pref>You can't change this preference.</restricted_pref>
             </action_messages>
             <devices_and_login_infos>Devices and login info</devices_and_login_infos>
         </record_nav>

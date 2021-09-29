@@ -38,5 +38,9 @@ if( isset($_REQUEST["id_account"]) && $_REQUEST["id_account"] != $account->id_ac
     die("OK");
 }
 
+$config->add_to_restricted_engine_prefs("/granted_admin_to_modules/i");
+if( ! $account->_is_admin && $config->is_engine_pref_restricted($key) )
+    die($current_module->language->admin->record_nav->action_messages->restricted_pref);
+    
 $account->set_engine_pref($key, $val);
 echo "OK";

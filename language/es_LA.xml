@@ -156,6 +156,7 @@
                     <start>Borrado de cuenta iniciando.</start>
                     <end>Borrado de cuenta finalizado. Un correo con los detalles se ha enviado a los administradores.</end>
                 </deletion_progress>
+                <restricted_pref>No puedes cambiar esta opción.</restricted_pref>
             </action_messages>
             <devices_and_login_infos>Información de dispositivos y sesiones</devices_and_login_infos>
         </record_nav>
