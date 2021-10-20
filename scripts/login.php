@@ -51,8 +51,6 @@ if( trim($_POST["user_name"]) == "" || trim($_POST["password"])  == "" )
 
 $account = new account(trim(stripslashes($_POST["user_name"])));
 
-$current_module->load_extensions("login", "pre_validations");
-
 if( ! $account->_exists )
     die("ERROR_ACCOUNT_UNEXISTENT");
 
@@ -64,6 +62,8 @@ if( $account->state == "new" )
 
 if( $account->state != "enabled" )
     die("ERROR_ACCOUNT_DISABLED");
+
+$current_module->load_extensions("login", "pre_validations");
 
 if( md5(trim(stripslashes($_POST["password"]))) != $account->password )
     die("ERROR_WRONG_PASSWORD");
