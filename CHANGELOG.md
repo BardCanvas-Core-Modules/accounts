@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.22.10] - 2021-10-25
+
+- Tuned 2FA enabling dialog.
+
 ## [1.22.9] - 2021-10-25
 
 - Relocated extension point for login/pre_validations.
