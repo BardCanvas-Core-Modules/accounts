@@ -278,32 +278,28 @@ $enc_secret = three_layer_encrypt(
     </p>
     
     <p class="aligncenter">
-        <img id="2fa_qrcode" style="width: 246px; height: 246px;"
+        <img id="2fa_qrcode" style="width: 200px; height: 200px;"
              src="<?= $config->full_root_path ?>/media/missing_image.png"
-             data-src="<?= $current_module->get_url() ?>/2fa/toolbox.php?new_secret_qc=<?= urlencode($enc_secret) ?>">
-    </p>
-    <p class="aligncenter">
-        <span class="framed_content principal_data fixed_font" id="2fa_raw_secret"
-              data-value="<?= $enc_secret ?>" style="font-size: 12pt;">
-            <?= $new_secret ?>
-        </span>
-        <i class="fa fa-copy fa-fw pseudo_link clipboard-copy"
-           data-clipboard-text="<?= $new_secret ?>"></i>
-    </p>
-    
-    <p>
-        <?= $current_module->language->tfa->dialog->info2 ?>
-    </p>
-    <p class="aligncenter">
-        <input type="text" id="2fa_token_input" autocomplete="off"
-               style="font-size: 18pt; text-align: center"
-               maxlength="6" placeholder="000000">
+             data-src="<?= $current_module->get_url() ?>/2fa/toolbox.php?new_secret_qc=<?= urlencode($enc_secret) ?>"><br>
+        
+        <input type="text" class="aligncenter" readonly value="<?= $new_secret ?>"
+               id="2fa_raw_secret" data-value="<?= $enc_secret ?>"
+               style="font-size: large; margin-top: 5px; width: 200px;">
     </p>
     
     <div class="framed_content state_highlight">
         <i class="fa fa-warning"></i>
         <?= $current_module->language->tfa->dialog->info3 ?>
     </div>
+    
+    <p>
+        <?= $current_module->language->tfa->dialog->info2 ?>
+    </p>
+    <p class="aligncenter" style="margin-bottom: 0">
+        <input type="text" id="2fa_token_input" autocomplete="off"
+               style="font-size: 18pt; text-align: center"
+               maxlength="6" placeholder="000000">
+    </p>
     
 </div>
 

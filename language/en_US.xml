@@ -707,8 +707,8 @@
             ]]></info2>
             <save>Save</save>
             <info3><![CDATA[
-                <b>Important:</b> copy the key above and save it on a safe place!
-                If you loose your phone, you'll need it to re-authenticate.
+                Copy the secret key and save it on a safe place!
+                If you loose your phone, you'll need it to validate ownership of your account.
             ]]></info3>
         </dialog>
         <login_dialog>

@@ -706,8 +706,8 @@
             ]]></info2>
             <save>Guardar</save>
             <info3><![CDATA[
-                <b>Importante:</b> copia la llave de arriba y guárdala en un lugar seguro!
-                Si pierdes tu teléfono, necesitarás re-autenticarte con tu llave.
+                Copia la llave secreta y guárdala en un lugar seguro!
+                Si pierdes tu teléfono, la necesitarás para validar la propiedad de tu cuenta.
             ]]></info3>
         </dialog>
         <login_dialog>
