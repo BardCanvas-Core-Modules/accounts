@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.22.9] - 2021-10-25
+
+- Relocated extension point for login/pre_validations.
+
 ## [1.22.8] - 2021-09-29
 
 - Added support for restricted engine prefs.
