@@ -189,7 +189,8 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
     <? foreach($editable_prefs as $title => $group_data): ?>
         
         <div class="table_wrapper">
-            <table class="settings_group nav_table no_highlight" style="margin-bottom: 20px;">
+            <table class="settings_group nav_table no_highlight" style="margin-bottom: 20px;" 
+                   id="sgroup_<?= str_replace(".", "_", wp_sanitize_filename($title)) ?>">
                 
                 <thead>
                 <tr>
