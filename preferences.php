@@ -16,22 +16,25 @@ if( ! empty($_POST["engine_prefs"]) )
     
     $current_module->load_extensions("prefs_editor", "before_saving");
     
-    foreach($_POST["engine_prefs"] as $key => $val)
+    if( count($messages) == 0 )
     {
-        if( is_string($val) ) $val = trim(stripslashes($val));
-        
-        if( $val != $account->engine_prefs[$key] )
+        foreach($_POST["engine_prefs"] as $key => $val)
         {
-            $account->set_engine_pref($key, $val);
-            $messages[] = replace_escaped_vars(
-                $current_module->language->pref_saved_ok,
-                '{$key}',
-                ucwords(str_replace("_", " ", end(explode(":", $key))))
-            );
+            if( is_string($val) ) $val = trim(stripslashes($val));
+            
+            if( $val != $account->engine_prefs[$key] )
+            {
+                $account->set_engine_pref($key, $val);
+                $messages[] = replace_escaped_vars(
+                    $current_module->language->pref_saved_ok,
+                    '{$key}',
+                    ucwords(str_replace("_", " ", end(explode(":", $key))))
+                );
+            }
         }
+        
+        $current_module->load_extensions("prefs_editor", "after_saving");
     }
-    
-    $current_module->load_extensions("prefs_editor", "after_saving");
     
     if( count($messages) > 0 )
         send_notification($account->id_account, "success", implode("\n", $messages));
