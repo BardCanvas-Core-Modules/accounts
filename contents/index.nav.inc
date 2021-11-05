@@ -881,7 +881,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
 
 <div id="tfa_secret_removal_dialog" title="<?= $current_module->language->tfa->removal_dialog->title ?>"
      data-ok-caption="<?= $language->ok ?>" data-cancel-caption="<?= $language->cancel ?>"
-     data-id-account="0">
+     data-id-account="0" style="display: none">
     <?= $current_module->language->tfa->removal_dialog->content ?>
 </div>
 <script type="text/javascript">
