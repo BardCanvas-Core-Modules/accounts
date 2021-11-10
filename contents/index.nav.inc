@@ -64,7 +64,7 @@ if( ! empty($search_for) )
         $where_line          = "";
         foreach( $search_for_exploded as $this_term )
         {
-            $this_term = trim($this_term);
+            $this_term = addslashes(trim($this_term));
             if( ! empty($this_term) )
             {
                 if( filter_var($this_term, FILTER_VALIDATE_IP) )
@@ -98,7 +98,7 @@ if( ! empty($search_for) )
     }
     else
     {
-        $this_term  = $search_for;
+        $this_term  = addslashes($search_for);
         $where_line = "";
         if( filter_var($this_term, FILTER_VALIDATE_IP) )
         {
