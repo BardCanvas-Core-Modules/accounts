@@ -1,6 +1,13 @@
 
 # Accounts Module Change Log
 
+## [1.22.11] - 2021-11-16
+
+- Added group identifiers to the preferences editor.
+- Added trailing error checks before prefs saving to avoid saving incorrect settings.
+- Hidden the 2fa secret removal dialog on the manager index.
+- Added quotes management on the users search function.
+
 ## [1.22.10] - 2021-10-25
 
 - Tuned 2FA enabling dialog.
