@@ -468,6 +468,12 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                     <div class="principal_data user_display_name" data-user-level="<?= $row->level ?>">
                         <span class="fa fa-user"></span>
                         <?= convert_emojis($row->display_name) ?>
+                        <span class="inline-block nowrap">
+                            [<span class="clipboard-copy pseudo_link" data-clipboard-text="<?= $row->user_name ?>">
+                                <?= $row->user_name ?>
+                                <i class="fa fa-copy"></i>
+                            </span>]
+                        </span>
                     </div>
                     
                     <?
