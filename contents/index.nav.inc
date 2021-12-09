@@ -519,6 +519,15 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                         
                         <? render_user_devices_trigger($row); ?>
                         
+                        <?
+                        $prefs = $repository->find_user_prefs($row->id_account, "@accounts:ips_whitelist");
+                        $class = empty($prefs["@accounts:ips_whitelist"]) ? "greengo" : "critical";
+                        ?>
+                        <span class="action <?= $class ?> pseudo_link" onclick="edit_whitelist_fields('<?= $row->id_account ?>', '<?= $row->level ?>', '<?= $row->username ?>', '<?= htmlspecialchars($row->display_name) ?>', $(this).find('.whitelist_contents').text())">
+                            <i class="fa fa-cloud fa-fw"></i><?= $current_module->language->ips_whitelist->button ?>
+                            <span class="whitelist_contents" style="display: none"><?= $prefs["@accounts:ips_whitelist"] ?></span>
+                        </span>
+                        
                         <? if( $row->id_account != $account->id_account && ($account->_is_admin || $row->level < $account->level) ): ?>
                             <a class="action" href="<?= $_SERVER["PHP_SELF"] ?>?mode=edit&id_account=<?= $row->id_account ?>&offset=<?= $offset ?>&wasuuup=<?= md5(mt_rand(1, 65535)) ?>">
                                 <span class="fa fa-pencil"></span>
@@ -931,6 +940,90 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                 }
             ]
         });
+    });
+</script>
+
+<div id="account_ips_whitelist_dialog" style="display: none"
+     title="<?= $current_module->language->ips_whitelist->dialog_title ?>"
+     data-ok-caption="<?= $language->submit ?>" data-cancel-caption="<?= $language->cancel ?>">
+    
+    <form name="account_ips_whitelist_form" id="account_ips_whitelist_form" method="post"
+          action="<?= $current_module->get_url() ?>/scripts/set_engine_pref.php">
+        <input type="hidden" name="id_account" value="">
+        <input type="hidden" name="key" value="@accounts:ips_whitelist">
+        
+        <?= $current_module->language->ips_whitelist->user ?>
+        <a class="user_display_name" data-user-level="{$level}" href="<?= $config->full_root_path ?>/user/{$username}"
+           target="_blank">
+            <i class="fa fa-user fa-fw"></i><span class="display_name">{$display_name}</span>
+        </a>
+        <br><br>
+        
+        <textarea name="value" style="width: 100%" wrap="off" rows="10"></textarea>
+    </form>
+    <div id="account_ips_whitelist_target" style="display: none"></div>
+</div>
+
+<script type="text/javascript">
+    
+    function edit_whitelist_fields(id, level, username, display_name, contents)
+    {
+        var $form = $('#account_ips_whitelist_form');
+        $form.find('input[name="id_account"]').val(id);
+        $form.find('textarea[name="value"]').val(contents);
+        $form.find('.user_display_name').attr('data-user-level', level);
+        $form.find('.user_display_name').attr('href', $_FULL_ROOT_PATH + '/user/' + username);
+        $form.find('.user_display_name .display_name').html(display_name);
+        
+        $('#account_ips_whitelist_dialog').dialog('open');
+    }
+    
+    function prepare_whitelist_submission()
+    {
+        $.blockUI(blockUI_default_params);
+    }
+    
+    function process_whitelist_submission(response)
+    {
+        if( response !== "OK" )
+        {
+            $.unblockUI();
+            throw_notification(response, 'warning');
+            return;
+        }
+        
+        location.reload();
+    }
+    
+    $(document).ready(function()
+    {
+        var $form = $('#account_ips_whitelist_form');
+        $form.ajaxForm({
+            target:       '#account_ips_whitelist_target',
+            beforeSubmit: prepare_whitelist_submission,
+            success:      process_whitelist_submission
+        });
+        
+        var $dialog = $('#account_ips_whitelist_dialog');
+        $dialog.dialog({
+            modal:     true,
+            autoOpen:  false,
+            width:     300,
+            maxHeight: 600,
+            buttons:   [
+                {
+                    text:  $dialog.attr('data-cancel-caption'),
+                    icons: { primary: "ui-icon-cancel" },
+                    click: function() { $(this).dialog( "close" ); }
+                },
+                {
+                    text: $dialog.attr('data-ok-caption'),
+                    icons: { primary: "ui-icon-check" },
+                    click: function() { $('#account_ips_whitelist_form').submit(); }
+                }
+            ]
+        });
+        
     });
 </script>
 

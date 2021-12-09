@@ -213,6 +213,7 @@
         <device_unregistered>
             This device is not registered. An email has been sent to your address with a token to authorize this device permanently.
         </device_unregistered>
+        <ip_not_in_whitelist>Your IP address isn't allowed to login on this account.</ip_not_in_whitelist>
         
         <!-- Registration related -->
         <registration>
@@ -921,8 +922,8 @@
     </settings_data>
     
     <engine_prefs>
-        <title>2FA (Two factor authentication)</title>
-
+        <title>(Security settings)</title>
+        
         <specs key="2fa_settings">
             <title>2FA settings</title>
             <description><![CDATA[
@@ -933,6 +934,50 @@
                 <url>accounts/2fa/2fa_control.php</url>
             </options>
         </specs>
+        
+        <specs key="ips_whitelist">
+            <title>IPs whitelist</title>
+            <description><![CDATA[
+                If you want to be allowed to login only from specific IPs,
+                add all the IPs you want here, one per line.<br>
+                If you want to allow a network segment,
+                use an asterisk instead of a number at the last octet, E.G. <code>200.12.4.*</code>
+                <br><br>
+                
+                <span class="framed_content inlined state_ok pseudo_link"
+                      onclick="whitelist_ip(this, '{$current_user_ip}')">
+                    <i class="fa fa-plus"></i>
+                    Add current IP ({$current_user_ip})
+                </span>
+                
+                <br><br>
+                If you want your access from any IP address, leave this field empty.
+                <br><br>
+                
+                <span class="critical">
+                    <i class="fa fa-warning"></i> <b>Warning:</b>
+                    Use this feature only if you connect from static IPs or specify
+                    segments according to your ISP assignments.
+                </span>
+                
+                <script type="text/javascript">
+                    function whitelist_ip(e, ip)
+                    {
+                        var $trigger = $(e);
+                        var $target  = $trigger.closest('tr').find('.control textarea[name="engine_prefs[@accounts:ips_whitelist]"]');
+                        var editor    = $target.data('editor');
+                        console.log(editor);
+                        
+                        var value = editor.getDoc().getValue();
+                        value = $.trim(value + '\n' + ip + '\n');
+                        editor.getDoc().setValue(value);
+                    }
+                </script>
+                
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
     </engine_prefs>
     
     <user_profile_tabs>
@@ -983,5 +1028,11 @@
         your profile and add an address.<br><br>
         <a href="{$url}"><i class="fa fa-play"></i> Edit my profile now</a>
     ]]></missing_email>
+    
+    <ips_whitelist>
+        <button>Edit IPs whitelist...</button>
+        <dialog_title>Edit account IPs whitelist</dialog_title>
+        <user>User:</user>
+    </ips_whitelist>
     
 </language>

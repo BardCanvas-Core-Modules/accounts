@@ -60,10 +60,12 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
         {
             var element = $(this).get(0);
             
-            CodeMirror.fromTextArea(element, {
+            var editor = CodeMirror.fromTextArea(element, {
                 viewPortMargin: Infinity,
                 lineNumbers:    true
             });
+            
+            $(this).data('editor', editor);
         });
     });
 </script>
@@ -199,7 +201,11 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
                 </thead>
                 
                 <tbody>
-                <? foreach($group_data as $key => $specs):
+                <?
+                $fields = array(
+                    '{$current_user_ip}' => get_user_ip(),
+                );
+                foreach($group_data as $key => $specs):
                     
                     if( isset($specs["min_account_level"]) )
                         if( $account->level < $specs["min_account_level"] )
@@ -226,7 +232,7 @@ $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
                                 <? endif; ?>
                             </div>
                             <blockquote>
-                                <?= $specs->description ?>
+                                <?= replace_escaped_objects($specs->description, $fields) ?>
                             </blockquote>
                         <? if( ! $full_layout ): ?></td><? endif; ?>
                         <? if( ! $full_layout ): ?><td class="control" nowrap><? endif; ?>

@@ -68,6 +68,43 @@ $current_module->load_extensions("login", "pre_validations");
 if( md5(trim(stripslashes($_POST["password"]))) != $account->password )
     die("ERROR_WRONG_PASSWORD");
 
+# IPs whitelist checks
+$ips_whitelist = $account->engine_prefs["@accounts:ips_whitelist"];
+if( ! empty($ips_whitelist) )
+{
+    $ip    = get_user_ip();
+    $lines = explode("\n", $ips_whitelist);
+    $found = false;
+    foreach($lines as $line)
+    {
+        $listed_ip = trim($line);
+        if( empty($listed_ip) ) continue;
+        if( substr($listed_ip, 0, 1) == "#" ) continue;
+        
+        if( stristr($listed_ip, "*") )
+        {
+            $pattern = str_replace(".", "\\.", $listed_ip);
+            $pattern = str_replace("*", ".*", $listed_ip);
+            
+            if(preg_match("/$pattern/", $ip) )
+            {
+                $found = true;
+                break;
+            }
+        }
+        else
+        {
+            if( $ip == $listed_ip )
+            {
+                $found = true;
+                break;
+            }
+        }
+    }
+    
+    if( ! $found ) die("ERROR_IP_NOT_IN_WHITELIST");
+}
+
 # 2fa checks
 if( $account->has_2fa_enabled() )
 {

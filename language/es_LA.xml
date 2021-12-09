@@ -215,6 +215,7 @@
             Este dispositivo no está registrado. Un correo ha sido enviado a tu dirección con una llave
             para autorizar este dispositivo de forma permanente.
         </device_unregistered>
+        <ip_not_in_whitelist>Tu dirección IP no tiene permitido accesar a esta cuenta.</ip_not_in_whitelist>
         
         <!-- Registration related -->
         <registration>
@@ -921,8 +922,8 @@
     </settings_data>
     
     <engine_prefs>
-        <title>2FA (Autenticación de dos factores)</title>
-
+        <title>(Seguridad de la cuenta)</title>
+        
         <specs key="2fa_settings">
             <title>Configuración 2FA</title>
             <description><![CDATA[
@@ -933,6 +934,50 @@
                 <url>accounts/2fa/2fa_control.php</url>
             </options>
         </specs>
+        
+        <specs key="ips_whitelist">
+            <title>Lista blanca de IPs</title>
+            <description><![CDATA[
+                Si deseas abrir sesión sólo desde ciertas direcciones IP,
+                agrégalas en este campo, una por línea.<br>
+                Si quieres agregar un segmento de red, usa un asterisco en lugar
+                de un número en el último octeto, P.E. <code>200.12.4.*</code>
+                <br><br>
+                
+                <span class="framed_content inlined state_ok pseudo_link"
+                      onclick="whitelist_ip(this, '{$current_user_ip}')">
+                    <i class="fa fa-plus"></i>
+                    Añadir esta IP ({$current_user_ip})
+                </span>
+                
+                <br><br>
+                Si deseas accesar desde cualquier dirección IP, deja este campo vacío.
+                <br><br>
+                
+                <span class="critical">
+                    <i class="fa fa-warning"></i> <b>Advertencia:</b>
+                    Usa esta característica sólo si te conectas de una IP estática o especifica
+                    segmentos de acuerdo a las asignaciones de tu proveedor de acceso a internet.
+                </span>
+                
+                <script type="text/javascript">
+                    function whitelist_ip(e, ip)
+                    {
+                        var $trigger = $(e);
+                        var $target  = $trigger.closest('tr').find('.control textarea[name="engine_prefs[@accounts:ips_whitelist]"]');
+                        var editor    = $target.data('editor');
+                        console.log(editor);
+                        
+                        var value = editor.getDoc().getValue();
+                        value = $.trim(value + '\n' + ip + '\n');
+                        editor.getDoc().setValue(value);
+                    }
+                </script>
+                
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
     </engine_prefs>
     
     <user_profile_tabs>
@@ -983,5 +1028,11 @@
         que edites tu perfil y añadas una dirección.<br><br>
         <a href="{$url}"><i class="fa fa-play"></i> Editar mi perfil ahora</a>
     ]]></missing_email>
+    
+    <ips_whitelist>
+        <button>Editar lista blanca de IPs...</button>
+        <dialog_title>Editando lista blanca de IPS para cuenta</dialog_title>
+        <user>Usuario:</user>
+    </ips_whitelist>
     
 </language>
