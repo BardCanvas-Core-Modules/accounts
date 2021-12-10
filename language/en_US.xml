@@ -919,6 +919,17 @@
             <type>boolean</type>
         </specs>
         
+        <specs key="track_last_login_ip">
+            <title><![CDATA[
+                Track last login IP
+            ]]></title>
+            <description><![CDATA[
+                If enabled, users that come in after a saved session will
+                be checked for an IP change. If there's no match, the session will be closed.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
     </settings_data>
     
     <engine_prefs>

@@ -919,6 +919,17 @@
             <type>boolean</type>
         </specs>
         
+        <specs key="track_last_login_ip">
+            <title><![CDATA[
+                Rastrear IP de la última sesión
+            ]]></title>
+            <description><![CDATA[
+                De activarse esta opción, usuarios que vengan de una sesión guardada
+                serán sometidos a un chequeo de cambio de IP. Si el chequeo falla, la sesión se cerrará.
+            ]]></description>
+            <type>boolean</type>
+        </specs>
+        
     </settings_data>
     
     <engine_prefs>
