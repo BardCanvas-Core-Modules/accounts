@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.23.0] - 2021-12-10
+
+- Added IPs whitelist support.
+- Added option for agressive IP tracking.
+
 ## [1.22.11] - 2021-11-16
 
 - Added group identifiers to the preferences editor.
