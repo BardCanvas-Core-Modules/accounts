@@ -20,6 +20,8 @@ include "../../includes/bootstrap.inc";
 
 $_current_page_requires_login = true;
 if( ! $account->_exists ) die("OK");
+if( $account->state != "enabled" ) throw_fake_401();
+if( $account->level < $config::NEWCOMER_USER_LEVEL ) throw_fake_401();
 
 $key = trim(stripslashes($_REQUEST["key"]));
 if( empty($key) ) die($current_module->language->errors->prefs_setting->empty_key);
