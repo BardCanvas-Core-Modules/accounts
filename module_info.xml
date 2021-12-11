@@ -51,6 +51,7 @@
         Login form: top, before submit button.
         User menu: extra commands.
         2FA: after enabling, after disabling.
+        Check last login IP (into the core accounts class): Before session autoclose.
     ]]></extension_areas_info>
     
 </module>
