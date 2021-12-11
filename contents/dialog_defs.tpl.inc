@@ -1,6 +1,19 @@
 
 <!-- accounts :: basic :: dialog defs -->
 
+<? if( ! $account->_exists && ! empty($_COOKIE["ip_changed"]) ): $div_id = uniqid(); ?>
+    <div id="_<?= $div_id ?>" style="display:none">
+        <i class="fa fa-warning"></i>
+        <?= $this_module->language->ip_changed_warning ?>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            throw_notification( $('#_<?= $div_id ?>').html(), 'error' );
+        });
+    </script>
+<? endif; ?>
+
 <? if( ! $account->_exists ): ?>
     
     <div id="login_dialog" style="display: none;" title="<?= $this_module->language->login ?>">

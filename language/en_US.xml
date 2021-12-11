@@ -1046,4 +1046,13 @@
         <user>User:</user>
     </ips_whitelist>
     
+    <ip_changed_warning><![CDATA[
+        <b>Warning:</b> your IP address has changed. Your session has been closed.
+        <br><br>
+        Please login again.
+        <br><br>
+        If this happens frequently, please login and immediately whitelist your IP address
+        from the security settings on the preferences page.
+    ]]></ip_changed_warning>
+    
 </language>
