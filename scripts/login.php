@@ -84,7 +84,7 @@ if( ! empty($ips_whitelist) )
         if( stristr($listed_ip, "*") )
         {
             $pattern = str_replace(".", "\\.", $listed_ip);
-            $pattern = str_replace("*", ".*", $listed_ip);
+            $pattern = str_replace("*", ".*",  $pattern);
             
             if(preg_match("/$pattern/", $ip) )
             {
