@@ -1,6 +1,13 @@
 
 # Accounts Module Change Log
 
+## [1.23.1] - 2021-12-11
+
+- Added checks to the engine prefs setter.
+- Fixed search pattern issue in whitelist checks.
+- Added warning for sessions closed by IP changes.
+- Added bruteforce checks to the login tool.
+
 ## [1.23.0] - 2021-12-10
 
 - Added IPs whitelist support.
