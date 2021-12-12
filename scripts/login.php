@@ -37,15 +37,17 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: text/plain; charset=utf-8");
 
-#==================#
-# Bruteforce check #
-#==================#
+#region Bruteforce check
+#=======================
 
 $chk_ip  = get_remote_address();
 $mem_key = "@accounts:attempts_count_by_ip:$chk_ip";
 $mem_ttl = 60 * 10;
-$mem_res = (int) $mem_cache->get($mem_key);
-if( $mem_res == 10 )
+$blk_ttl = 60 * 60;
+$bftries = 30;
+$bf_hits = (int) $mem_cache->get($mem_key);
+
+if( $bf_hits == $bftries )
 {
     $logdate  = date("Ymd");
     $logfile  = "{$config->logfiles_location}/bruteforce_attempts-$logdate.log";
@@ -53,16 +55,22 @@ if( $mem_res == 10 )
     $location = forge_geoip_location($chk_ip, true);
     $isp      = get_geoip_location_data($chk_ip, "isp");
     $agent    = $_SERVER["HTTP_USER_AGENT"];
-    $logmsg   = "[$lognowd] - $chk_ip - $location - $isp - $agent - $mem_res attempts\n";
+    $logmsg   = "[$lognowd] - $chk_ip - $location - $isp - $agent\n";
     @file_put_contents($logfile, $logmsg, FILE_APPEND);
     
+    $logmsg   = "           ! $chk_ip - blocked after $bftries attempts.\n";
+    @file_put_contents($logfile, $logmsg, FILE_APPEND);
+    
+    $mem_cache->set($mem_key, $bf_hits + 1, 0, $mem_ttl);
     throw_fake_401();
 }
 
-if( $mem_res >= 10 ) throw_fake_401();
+$bf_hits++;
+if( $bf_hits > $bftries ) throw_fake_401();
+$mem_cache->set($mem_key, $bf_hits, 0, $mem_ttl);
 
-$mem_res++;
-$mem_cache->set($mem_key, $mem_res, 0, $mem_ttl);
+#=========
+#endregion
 
 $current_module->load_extensions("login", "bootstrap");
 
