@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.23.1] - 2021-12-12
+
+- Tuned bruteforce checks.
+
 ## [1.23.1] - 2021-12-11
 
 - Added checks to the engine prefs setter.
