@@ -37,6 +37,33 @@ include "../../includes/bootstrap.inc";
 
 header("Content-Type: text/plain; charset=utf-8");
 
+#==================#
+# Bruteforce check #
+#==================#
+
+$chk_ip  = get_remote_address();
+$mem_key = "@accounts:attempts_count_by_ip:$chk_ip";
+$mem_ttl = 60 * 10;
+$mem_res = (int) $mem_cache->get($mem_key);
+if( $mem_res == 10 )
+{
+    $logdate  = date("Ymd");
+    $logfile  = "{$config->logfiles_location}/bruteforce_attempts-$logdate.log";
+    $lognowd  = date("H:i:s");
+    $location = forge_geoip_location($chk_ip, true);
+    $isp      = get_geoip_location_data($chk_ip, "isp");
+    $agent    = $_SERVER["HTTP_USER_AGENT"];
+    $logmsg   = "[$lognowd] - $chk_ip - $location - $isp - $agent - $mem_res attempts\n";
+    @file_put_contents($logfile, $logmsg, FILE_APPEND);
+    
+    throw_fake_401();
+}
+
+if( $mem_res >= 10 ) throw_fake_401();
+
+$mem_res++;
+$mem_cache->set($mem_key, $mem_res, 0, $mem_ttl);
+
 $current_module->load_extensions("login", "bootstrap");
 
 #=====================#
@@ -171,6 +198,9 @@ else # $settings->get("modules:accounts.enforce_device_registration") == "true"
 }
 
 $account->open_session($device);
+
+$mem_cache->delete($mem_key);
+
 if( ! empty($_REQUEST["redir_url"]) )
 {
     header("Location: " . $_REQUEST["redir_url"]);
