@@ -1,7 +1,11 @@
 
 # Accounts Module Change Log
 
-## [1.23.1] - 2021-12-12
+## [1.23.3] - 2021-12-13
+
+- Tuned login whitelist IP checks.
+
+## [1.23.2] - 2021-12-12
 
 - Tuned bruteforce checks.
 
