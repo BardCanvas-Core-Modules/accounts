@@ -98,12 +98,9 @@ if( $account->state == "new" )
 if( $account->state != "enabled" )
     die("ERROR_ACCOUNT_DISABLED");
 
-$current_module->load_extensions("login", "pre_validations");
+#region IPs whitelist checks
+#===========================
 
-if( md5(trim(stripslashes($_POST["password"]))) != $account->password )
-    die("ERROR_WRONG_PASSWORD");
-
-# IPs whitelist checks
 $ips_whitelist = $account->engine_prefs["@accounts:ips_whitelist"];
 if( ! empty($ips_whitelist) )
 {
@@ -137,8 +134,20 @@ if( ! empty($ips_whitelist) )
         }
     }
     
-    if( ! $found ) die("ERROR_IP_NOT_IN_WHITELIST");
+    if( ! $found )
+    {
+        $current_module->load_extensions("login", "after_whitelist_check_fail");
+        die("ERROR_IP_NOT_IN_WHITELIST");
+    }
 }
+
+#=========
+#endregion
+
+$current_module->load_extensions("login", "pre_validations");
+
+if( md5(trim(stripslashes($_POST["password"]))) != $account->password )
+    die("ERROR_WRONG_PASSWORD");
 
 # 2fa checks
 if( $account->has_2fa_enabled() )
