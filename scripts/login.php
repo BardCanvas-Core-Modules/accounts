@@ -136,6 +136,17 @@ if( ! empty($ips_whitelist) )
     
     if( ! $found )
     {
+        $host    = @gethostbyaddr($ip); if(empty($host)) $host = $ip;
+        $loc     = forge_geoip_location($ip, true);
+        $isp     = get_geoip_location_data($ip, "isp");
+        $agnt    = $_SERVER["HTTP_USER_AGENT"];
+        $logdate = date("Ymd");
+        $lognow  = date("H:i:s");
+        $logfile = "{$config->logfiles_location}/accounts_security-$logdate.log";
+        $logmsg  = "[$lognow] - #{$account->id_account} ({$account->user_name}) - "
+                 . "$ip - $host - $loc - $isp - $agnt\n";
+        @file_put_contents($logfile, $logmsg, FILE_APPEND);
+        
         $current_module->load_extensions("login", "after_whitelist_check_fail");
         die("ERROR_IP_NOT_IN_WHITELIST");
     }
