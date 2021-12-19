@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.23.4] - 2021-12-18
+
+- Added logging for failed login attempts on non-whitelisted IPs.
+
 ## [1.23.3] - 2021-12-13
 
 - Tuned login whitelist IP checks.
