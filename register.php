@@ -45,7 +45,7 @@ if( $_POST["mode"] == "create" )
     
     if( $settings->get("modules:accounts.automatic_user_names") == "true" )
     {
-        $count = $repository->get_record_count(array("display_name" => $xaccount->display_name));
+        $count = $repository->get_record_count(array("display_name" => addslashes($xaccount->display_name)));
         if( $count > 0 )
             $errors[] = $current_module->language->errors->registration->display_name_taken;
     }
@@ -203,7 +203,7 @@ if( $_POST["mode"] == "create" )
     # Pre-check for double accounts (by display name)
     if( count($errors) == 0 )
     {
-        $count = $repository->get_record_count(array("display_name" => $_POST["display_name"]) );
+        $count = $repository->get_record_count(array("display_name" => addslashes($_POST["display_name"])) );
         if( $count > 0 ) $errors[] = $current_module->language->errors->registration->invalid->display_name_taken;
     }
     
