@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.23.5] - 2022-01-01
+
+- Added SQL injection checks and input sanitization to account registration.
+
 ## [1.23.4] - 2021-12-18
 
 - Added logging for failed login attempts on non-whitelisted IPs.
