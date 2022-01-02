@@ -18,6 +18,15 @@ include "../includes/bootstrap.inc";
 
 $repository = new accounts_repository();
 
+try
+{
+    check_sql_injection($_POST);
+}
+catch(\Exception $e)
+{
+    throw_fake_501();
+}
+
 $errors = array();
 if( $_POST["mode"] == "create" )
 {
