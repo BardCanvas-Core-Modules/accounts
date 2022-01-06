@@ -1055,4 +1055,52 @@
         from the security settings on the preferences page.
     ]]></ip_changed_warning>
     
+    <grants_changed>
+        <subject>Admin grants changed on {$target_display_name} by {$user_display_name}</subject>
+        <body><![CDATA[
+            <p>
+                {$user_display_name} has modified the admin grants for <b>{$target_display_name}</b>.
+            </p>
+            <p>
+                Details follow:
+            </p>
+            <ul>
+                <li>
+                    Target account: #{$target_id_account}
+                    (<a href='{$target_home_link}'>{$target_username}</a>)
+                </li>
+                <li>
+                    Modified by: #{$user_id_account}
+                    (<a href='{$user_home_link}'>{$user_username}</a>)
+                </li>
+                <li>
+                    Previous grants: {$previous_grants}
+                </li>
+                <li>
+                    New grants: {$final_grants}
+                </li>
+            </ul>
+            <p>
+                Request details:
+            </p>
+            <ul>
+                <li>
+                    Host: {$ip} ({$host})
+                </li>
+                <li>
+                    Location: {$loc}
+                </li>
+                <li>
+                    ISP: {$isp}
+                </li>
+                <li>
+                    User agent: {$agnt}
+                </li>
+            </ul>
+            <p>
+                If this request is invalid, please take proper actions on involved accounts.
+            </p>
+        ]]></body>
+    </grants_changed>
+    
 </language>

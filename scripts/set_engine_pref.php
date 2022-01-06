@@ -28,15 +28,70 @@ if( empty($key) ) die($current_module->language->errors->prefs_setting->empty_ke
 
 $val = trim(stripslashes($_REQUEST["value"]));
 
-if( isset($_REQUEST["id_account"]) && $_REQUEST["id_account"] != $account->id_account )
+$id_account = (int) $_REQUEST["id_account"];
+
+try
+{
+    check_sql_injection(array($key, $val, $id_account));
+}
+catch(\Exception $e)
+{
+    throw_fake_501();
+}
+
+if( ! empty($id_account) && $id_account != $account->id_account )
 {
     if( ! $account->_is_admin )
         die( $language->errors->access_denied );
     
-    $xaccount = new account($_REQUEST["id_account"]);
-    if( ! $xaccount->_exists ) die($current_module->language->admin->record_nav->action_messages->target_not_exists);
+    $user_account = new account($id_account);
+    if( ! $user_account->_exists ) die($current_module->language->admin->record_nav->action_messages->target_not_exists);
     
-    $xaccount->set_engine_pref($key, $val);
+    if( $key == "granted_admin_to_modules" )
+        $previous_grants = $user_account->engine_prefs["granted_admin_to_modules"];
+    
+    $user_account->set_engine_pref($key, $val);
+    
+    if( $key == "granted_admin_to_modules" )
+    {
+        if( empty($previous_grants) ) $previous_grants = array();
+        else                          $previous_grants = preg_split('/,\s*/', $previous_grants);
+        $previous_grants = empty($previous_grants) ? "none" : implode(", ", $previous_grants);
+        $final_grants    = $val;
+        if( empty($final_grants) ) $final_grants = "none";
+        
+        if( $previous_grants != $final_grants )
+        {
+            $ip   = get_remote_address();
+            $host = @gethostbyaddr($ip); if(empty($host)) $host = $ip;
+            $loc  = forge_geoip_location($ip, true);
+            $isp  = get_geoip_location_data($ip, "isp");
+            $agnt = $_SERVER["HTTP_USER_AGENT"];
+            
+            $fields = array(
+                '{$target_display_name}' => $user_account->display_name,
+                '{$user_display_name}'   => $account->display_name,
+                '{$target_id_account}'   => $user_account->id_account,
+                '{$target_home_link}'    => "{$config->full_root_url}/user/{$user_account->user_name}",
+                '{$target_username}'     => $user_account->user_name,
+                '{$user_id_account}'     => $account->id_account,
+                '{$user_home_link}'      => "{$config->full_root_url}/user/{$account->user_name}",
+                '{$user_username}'       => $account->user_name,
+                '{$previous_grants}'     => $previous_grants,
+                '{$final_grants}'        => $final_grants,
+                '{$ip}'                  => $ip,
+                '{$host}'                => $host,
+                '{$loc}'                 => $loc,
+                '{$isp}'                 => $isp,
+                '{$agnt}'                => $agnt,
+            );
+            
+            $subject = replace_escaped_objects($current_module->language->grants_changed->subject, $fields);
+            $body    = unindent(replace_escaped_objects($current_module->language->grants_changed->body, $fields));
+            broadcast_mail_between_levels($config::COADMIN_USER_LEVEL, $config::ADMIN_USER_LEVEL, $subject, $body);
+        }
+    }
+    
     die("OK");
 }
 

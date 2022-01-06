@@ -1056,4 +1056,53 @@
         en las opciones de seguridad de la página de preferencias de tu cuenta.
     ]]></ip_changed_warning>
     
+    <grants_changed>
+        <subject>Privilegios administrativos cambiados a {$target_display_name} por {$user_display_name}</subject>
+        <body><![CDATA[
+            <p>
+                {$user_display_name} ha modificado los privilegios administrativos de <b>{$target_display_name}</b>.
+            </p>
+            <p>
+                Detalles:
+            </p>
+            <ul>
+                <li>
+                    Cuenta modificada: #{$target_id_account}
+                    (<a href='{$target_home_link}'>{$target_username}</a>)
+                </li>
+                <li>
+                    Cambiada por: #{$user_id_account}
+                    (<a href='{$user_home_link}'>{$user_username}</a>)
+                </li>
+                <li>
+                    Accesos anteriores: {$previous_grants}
+                </li>
+                <li>
+                    Nuevos accesos: {$final_grants}
+                </li>
+            </ul>
+            <p>
+                Detalles de la solicitud:
+            </p>
+            <ul>
+                <li>
+                    Host: {$ip} ({$host})
+                </li>
+                <li>
+                    Ubicación: {$loc}
+                </li>
+                <li>
+                    ISP: {$isp}
+                </li>
+                <li>
+                    Navegador: {$agnt}
+                </li>
+            </ul>
+            <p>
+                Si esta solicitud es inválida, favor de tomar las acciones pertinentes
+                sobre las cuentas involucradas.
+            </p>
+        ]]></body>
+    </grants_changed>
+    
 </language>
