@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.23.6] - 2022-01-06
+
+- Added admin checks on the account prefs setter.
+- Added filter by admin granted accounts on the accounts browser.
+
 ## [1.23.5] - 2022-01-01
 
 - Added SQL injection checks and input sanitization to account registration.
