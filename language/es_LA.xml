@@ -1056,6 +1056,7 @@
         en las opciones de seguridad de la página de preferencias de tu cuenta.
     ]]></ip_changed_warning>
     
+    <with_admin_grants>Con acceso admin otorgado</with_admin_grants>
     <grants_changed>
         <subject>Privilegios administrativos cambiados a {$target_display_name} por {$user_display_name}</subject>
         <body><![CDATA[

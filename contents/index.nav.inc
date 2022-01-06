@@ -132,7 +132,11 @@ if( ! empty($search_for) )
 if( ! empty($search_rest) ) $search_for = $search_rest;
 
 if( ! empty($search_state) ) $where_lines[] = "state = '$search_state'";
-if( ! empty($search_level) ) $where_lines[] = "level = '$search_level'";
+
+if( $search_level == "@with_admin_grants" )
+    $where_lines[] = "id_account in (select aep.id_account from account_engine_prefs aep where aep.name = 'granted_admin_to_modules')";
+elseif( ! empty($search_level))
+    $where_lines[] = "level = '$search_level'";
 
 $current_module->load_extensions("records_browser", "before_query_filters_integration");
 
@@ -369,6 +373,9 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                 <? foreach($config->user_levels_by_level as $level => $name): if($level < 1) continue; ?>
                     <option <? if( $search_level == $level ) echo "selected"; ?> value="<?= $level ?>"><?= $level ?>: <?= $name ?></option>
                 <? endforeach; ?>
+                <option <? if($search_level == "@with_admin_grants") echo "selected"; ?> value="@with_admin_grants">
+                    (<?= $current_module->language->with_admin_grants ?>)
+                </option>
             </select>
             
             <span class="inline-block">

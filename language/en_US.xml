@@ -1055,6 +1055,7 @@
         from the security settings on the preferences page.
     ]]></ip_changed_warning>
     
+    <with_admin_grants>With admin grants</with_admin_grants>
     <grants_changed>
         <subject>Admin grants changed on {$target_display_name} by {$user_display_name}</subject>
         <body><![CDATA[
