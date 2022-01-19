@@ -22,6 +22,16 @@ if( ! empty($_POST["engine_prefs"]) )
         {
             if( is_string($val) ) $val = trim(stripslashes($val));
             
+            if( $config->is_engine_pref_restricted($key) )
+            {
+                $messages[] = replace_escaped_vars(
+                    $current_module->language->pref_restricted,
+                    '{$key}',
+                    ucwords(str_replace("_", " ", end(explode(":", $key))))
+                );
+                continue;
+            }
+            
             if( $val != $account->engine_prefs[$key] )
             {
                 $account->set_engine_pref($key, $val);

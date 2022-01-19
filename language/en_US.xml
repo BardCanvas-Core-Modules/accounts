@@ -19,6 +19,7 @@
     
     <no_engine_prefs>There are no preferences to set.</no_engine_prefs>
     <pref_saved_ok>Preference "{$key}" saved.</pref_saved_ok>
+    <pref_restricted>Preference "{$key}" is restricted. Cannot be modified.</pref_restricted>
     <show_hide_password>Show/hide password</show_hide_password>
     
     <admin>

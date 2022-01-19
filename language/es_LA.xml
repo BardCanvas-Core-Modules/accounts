@@ -20,6 +20,8 @@
     
     <no_engine_prefs>No hay preferencias a definir.</no_engine_prefs>
     <pref_saved_ok>Opción "{$key}" guardada.</pref_saved_ok>
+    <pref_restricted>La opción "{$key}" es restringida. No se puede cambiar.</pref_restricted>
+    <show_hide_password>Ver/ocultar contraseña</show_hide_password>
     
     <admin>
         <menu_items>
