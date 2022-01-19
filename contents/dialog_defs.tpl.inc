@@ -10,6 +10,7 @@
         $(document).ready(function()
         {
             throw_notification( $('#_<?= $div_id ?>').html(), 'error' );
+            $.removeCookie('ip_changed', {path: '/', domain: $_COOKIES_DOMAIN})
         });
     </script>
 <? endif; ?>
