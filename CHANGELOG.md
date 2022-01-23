@@ -1,6 +1,12 @@
 
 # Accounts Module Change Log
 
+## [1.23.7] - 2022-01-23
+
+- Fixed annoyance on the notification about session being closed automatically.
+- Added support for restricted options when saving from the prefs editor.
+- Fixed visibility issue in security preferences.
+
 ## [1.23.6] - 2022-01-06
 
 - Added admin checks on the account prefs setter.
