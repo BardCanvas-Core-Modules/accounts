@@ -14,7 +14,13 @@ $editable_prefs = $config->globals["editable_prefs_collection"];
 $account_prefs  = $account->get_editable_prefs();
 
 if( $settings->get("modules:accounts.use_2fa") != "true" )
-    unset($editable_prefs["{$current_module->language->engine_prefs->title}"]);
+    unset($editable_prefs["{$current_module->language->engine_prefs->title}"]["@accounts:2fa_settings"]);
+
+if( $settings->get("modules:accounts.track_last_login_ip") != "true" )
+    unset($editable_prefs["{$current_module->language->engine_prefs->title}"]["@accounts:ips_whitelist"]);
+
+if( empty($editable_prefs["{$current_module->language->engine_prefs->title}"]) )
+    unset( $editable_prefs["{$current_module->language->engine_prefs->title}"] );
 
 $url = "{$_SERVER["PHP_SELF"]}?wasuuup=" . md5(mt_rand(1, 65535))
      . ( empty($_REQUEST["bcm_platform"]     ) ? "" : "&bcm_platform="      . $_REQUEST["bcm_platform"]      )
