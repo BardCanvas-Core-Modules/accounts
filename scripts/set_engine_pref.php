@@ -28,7 +28,7 @@ if( empty($key) ) die($current_module->language->errors->prefs_setting->empty_ke
 
 $val = trim(stripslashes($_REQUEST["value"]));
 
-$id_account = (int) $_REQUEST["id_account"];
+$id_account = $_REQUEST["id_account"] + 0;
 
 try
 {
