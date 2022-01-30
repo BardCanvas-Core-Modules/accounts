@@ -536,7 +536,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                         $prefs = $repository->find_user_prefs($row->id_account, "@accounts:ips_whitelist");
                         $class = empty($prefs["@accounts:ips_whitelist"]) ? "greengo" : "critical";
                         ?>
-                        <span class="action <?= $class ?> pseudo_link" onclick="edit_whitelist_fields('<?= $row->id_account ?>', '<?= $row->level ?>', '<?= $row->username ?>', '<?= htmlspecialchars($row->display_name) ?>', $(this).find('.whitelist_contents').text())">
+                        <span class="action <?= $class ?> pseudo_link" onclick="edit_whitelist_fields('<?= $row->id_account ?>', '<?= $row->level ?>', '<?= $row->user_name ?>', '<?= htmlspecialchars($row->display_name) ?>', $(this).find('.whitelist_contents').text())">
                             <i class="fa fa-cloud fa-fw"></i><?= $current_module->language->ips_whitelist->button ?>
                             <span class="whitelist_contents" style="display: none"><?= $prefs["@accounts:ips_whitelist"] ?></span>
                         </span>
