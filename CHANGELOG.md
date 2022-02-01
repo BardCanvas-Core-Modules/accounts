@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.23.8] - 2022-02-01
+
+- Added workaround for checking bigint user ids.
+- Fixed wrong field passed to the IPs whitelist editor.
+
 ## [1.23.7] - 2022-01-23
 
 - Fixed annoyance on the notification about session being closed automatically.
