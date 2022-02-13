@@ -75,6 +75,17 @@ if( $_POST["mode"] == "create" )
         if( ! preg_match('/[a-z0-9]/i', $xaccount->display_name) )
             $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols2;
     }
+
+    # Check for accounts created from the same IP during the last N hours
+    $hours = (int) $settings->get("modules:accounts.registration_from_same_ip_threshold");
+    if( $hours > 0 )
+    {
+        $ip       = get_remote_address();
+        $boundary = date("Y-m-d H:i:s", strtotime("now - $hours hours"));
+        $filter   = array("(creation_date >= '{$boundary}' and creation_host like '{$ip}%')");
+        $count    = $repository->get_record_count($filter);
+        if( $count > 0 ) $errors[] = $current_module->language->errors->registration->invalid->created_from_same_ip;
+    }
     
     # Blacklist validations
     $blacklist = trim($settings->get("modules:accounts.usernames_blacklist"));

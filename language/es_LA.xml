@@ -257,6 +257,7 @@
                 <display_name_length>Longitud de alias inválida. Debe tener al menos 3 caracteres.</display_name_length>
                 <numeric_display_name>Alias inválido. Debe tener caracteres alfanuméricos.</numeric_display_name>
                 <not_only_special_symbols2>Alias inválido. Debe tener letras y/o números.</not_only_special_symbols2>
+                <created_from_same_ip>Otra cuenta se ha creado desde tu misma dirección IP recientemente. Por favor intenta más tarde.</created_from_same_ip>
                 <user_name_blacklisted>No puedes usar ese nombre de usuario. Por favor especifica otro.</user_name_blacklisted>
                 <display_name_blacklisted>No puedes usar ese alias. Por favor especifica otro..</display_name_blacklisted>
                 <user_name_taken>El nombre de usuario que especificaste ya existe. Elige otro.</user_name_taken>
@@ -833,6 +834,16 @@
             <options>
                 <image_size>full</image_size>
             </options>
+        </specs>
+        
+        <specs key="registration_from_same_ip_threshold">
+            <title>Límite para cuentas creadas desde la misma IP</title>
+            <description><![CDATA[
+                Especifica la cantidad de horas que un usuario deberá esperar
+                antes de registrar una nueva cuenta desde la misma dirección IP.
+                Dejar vacío o poner un cero para desactivar este chequeo.
+            ]]></description>
+            <type>number</type>
         </specs>
         
         <specs key="usernames_blacklist">

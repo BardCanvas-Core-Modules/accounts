@@ -254,6 +254,7 @@
                 <display_name_length>Invalid display name length. It must be at least 3 chars long.</display_name_length>
                 <numeric_display_name>Invalid display name. It must contain alphanumeric characters.</numeric_display_name>
                 <not_only_special_symbols2>Invalid display name. Must contain letters and/or numbers.</not_only_special_symbols2>
+                <created_from_same_ip>Another account was recently created from your same IP address. Please try again later.</created_from_same_ip>
                 <user_name_blacklisted>You can't use that user name. Please specify another.</user_name_blacklisted>
                 <display_name_blacklisted>You can't use that display name. Please specify another.</display_name_blacklisted>
                 <user_name_taken>The user name you've specified has been taken. Please choose another.</user_name_taken>
@@ -831,6 +832,16 @@
             <options>
                 <image_size>full</image_size>
             </options>
+        </specs>
+        
+        <specs key="registration_from_same_ip_threshold">
+            <title>Threshold for accounts created from the same IP</title>
+            <description><![CDATA[
+                Specify the amount of hours a user must wait before registering
+                a new account from the same IP address.<br>
+                Leave empty or set it to zero for disabling this check.
+            ]]></description>
+            <type>number</type>
         </specs>
         
         <specs key="usernames_blacklist">
