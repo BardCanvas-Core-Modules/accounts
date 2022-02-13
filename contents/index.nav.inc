@@ -51,7 +51,7 @@ if( substr($search_for, 0, 5) == "pref:" )
     $where_lines[] = "
         account.id_account in (
             select aep.id_account from account_engine_prefs aep
-            where aep.name = '$search_pref' and aep.value like '\"$search_val\"'
+            where aep.name like '$search_pref' and aep.value like '\"$search_val\"'
         )
     ";
 }
