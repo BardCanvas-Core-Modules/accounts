@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.23.9] - 2022-02-24
+
+- Tuned browser filter by account engine prefs.
+- Added optional threshold against creating accounts from the same IP.
+
 ## [1.23.8] - 2022-02-01
 
 - Added workaround for checking bigint user ids.
