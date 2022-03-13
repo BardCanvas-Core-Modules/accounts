@@ -174,7 +174,10 @@ while( $this_device = $database->fetch_object($res) ):
                                     
                                     <td nowrap><?= $row->hostname ?></td>
                                     
-                                    <td width="100%"><?= $row->location ?></td>
+                                    <? $parts = explode("; ", $row->location); ?>
+                                    <td width="100%"><?=
+                                        $account->has_admin_rights_to_module("accounts") ? $row->location : $parts[2]
+                                    ?></td>
                                     
                                 </tr>
                                 
