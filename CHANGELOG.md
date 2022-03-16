@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.24.0] - 2022-03-16
+
+- Tuned data in devices table.
+- Refactored IP Geolocation functions.
+
 ## [1.23.9] - 2022-02-24
 
 - Tuned browser filter by account engine prefs.
