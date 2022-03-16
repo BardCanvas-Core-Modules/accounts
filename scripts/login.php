@@ -52,8 +52,8 @@ if( $bf_hits == $bftries )
     $logdate  = date("Ymd");
     $logfile  = "{$config->logfiles_location}/bruteforce_attempts-$logdate.log";
     $lognowd  = date("H:i:s");
-    $location = forge_geoip_location($chk_ip, true);
-    $isp      = get_geoip_location_data($chk_ip, "isp");
+    $location = get_geoip_location($chk_ip);
+    $isp      = get_geoip_isp($chk_ip);
     $agent    = $_SERVER["HTTP_USER_AGENT"];
     $logmsg   = "[$lognowd] - $chk_ip - $location - $isp - $agent\n";
     @file_put_contents($logfile, $logmsg, FILE_APPEND);
@@ -137,8 +137,8 @@ if( ! empty($ips_whitelist) )
     if( ! $found )
     {
         $host    = @gethostbyaddr($ip); if(empty($host)) $host = $ip;
-        $loc     = forge_geoip_location($ip, true);
-        $isp     = get_geoip_location_data($ip, "isp");
+        $loc     = get_geoip_location($ip);
+        $isp     = get_geoip_isp($ip);
         $agnt    = $_SERVER["HTTP_USER_AGENT"];
         $logdate = date("Ymd");
         $lognow  = date("H:i:s");

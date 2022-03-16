@@ -39,13 +39,13 @@ if( ! empty($_POST["email"]) )
     
     # Let's send the email
     $ip           = get_remote_address();
-    $hostname     = gethostbyaddr(get_remote_address());
+    $hostname     = @gethostbyaddr($ip);
     $fecha_envio  = date("Y-m-d H:i:s");
     
     $recipients = array();
     foreach($target_emails as $email) $recipients[$email] = $email;
     
-    $request_location = forge_geoip_location($ip);
+    $request_location = get_geoip_disclosable_location($ip);
     
     $mail_subject = replace_escaped_vars(
         $current_module->language->email_templates->reset_password->subject,
@@ -54,8 +54,28 @@ if( ! empty($_POST["email"]) )
     );
     $mail_body = replace_escaped_vars(
         $current_module->language->email_templates->reset_password->body,
-        array('{$website_name}',                       '{$account_list}',                 '{$token_urls}',                '{$email}', '{$date_sent}', '{$request_ip}', '{$request_hostname}', '{$request_location}', '{$request_user_agent}'      ),
-        array(  $settings->get("engine.website_name"),   implode("\n\n", $tied_accounts),   implode("\n\n", $token_urls),   $email,     $fecha_envio,   $ip,             $hostname,             $request_location,     $_SERVER["HTTP_USER_AGENT"])
+        array(
+            '{$website_name}',
+            '{$account_list}',
+            '{$token_urls}',
+            '{$email}',
+            '{$date_sent}',
+            '{$request_ip}',
+            '{$request_hostname}',
+            '{$request_location}',
+            '{$request_user_agent}',
+        ),
+        array(
+            $settings->get("engine.website_name"),
+            implode("\n\n", $tied_accounts),
+            implode("\n\n", $token_urls),
+            $email,
+            $fecha_envio,
+            $ip,
+            $hostname,
+            $request_location,
+            $_SERVER["HTTP_USER_AGENT"],
+        )
     );
     $mail_body = unindent($mail_body);
     

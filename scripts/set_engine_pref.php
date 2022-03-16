@@ -64,8 +64,8 @@ if( ! empty($id_account) && $id_account != $account->id_account )
         {
             $ip   = get_remote_address();
             $host = @gethostbyaddr($ip); if(empty($host)) $host = $ip;
-            $loc  = forge_geoip_location($ip, true);
-            $isp  = get_geoip_location_data($ip, "isp");
+            $loc  = get_geoip_location($ip);
+            $isp  = get_geoip_isp($ip);
             $agnt = $_SERVER["HTTP_USER_AGENT"];
             
             $fields = array(

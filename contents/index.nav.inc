@@ -709,7 +709,7 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
                         </span><br>
                         
                         <?
-                        $location = forge_geoip_location($ip);
+                        $location = get_geoip_location_with_isp($ip);
                         $parts    = explode("; ", $location);
                         $isp      = array_pop($parts);
                         $country  = array_pop($parts);

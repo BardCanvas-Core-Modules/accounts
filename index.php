@@ -264,7 +264,7 @@ switch( $_REQUEST["mode"] )
         );
         
         $_include_account_id    = true;
-        $_current_user_country  = strtolower(get_geoip_location_data(get_remote_address()));
+        $_current_user_country  = strtolower(get_geoip_country_code());
         $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?offset={$_REQUEST["offset"]}&wasuuup=" . md5(mt_rand(1, 65535));
         $_hide_captcha          = true;
         $_form_title            = $current_module->language->register_form->creation;
@@ -383,7 +383,7 @@ switch( $_REQUEST["mode"] )
             );
             
             $_include_account_id    = true;
-            $_current_user_country  = strtolower(get_geoip_location_data(get_remote_address()));
+            $_current_user_country  = strtolower(get_geoip_country_code());
             $_cancelation_redirect  = $_SERVER["PHP_SELF"] . "?wasuuup=" . md5(mt_rand(1, 65535));
             $_hide_captcha          = true;
             $_form_title            = $current_module->language->register_form->creation;

@@ -306,7 +306,7 @@ if( $_POST["mode"] == "create" )
     
     # Final assignments
     if( $settings->get("modules:accounts.non_mandatory_country") == "true" && empty($xaccount->country) )
-        $xaccount->country = get_geoip_location_data(get_remote_address());
+        $xaccount->country = get_geoip_country_code();
     
     if( empty($xaccount->country) )
     {
@@ -341,7 +341,7 @@ if( $_POST["mode"] == "create" )
 }
 
 # Country list preload
-$current_user_country = empty($xaccount->country) ? get_geoip_location_data(get_remote_address()) : $xaccount->country;
+$current_user_country = empty($xaccount->country) ? get_geoip_country_code() : $xaccount->country;
 $countries            = array();
 $query                = "select * from countries order by name asc";
 $res                  = $database->query("select * from countries order by name asc");
