@@ -237,7 +237,10 @@ if( $_POST["mode"] != "create" )
         </div>
     <? endif; ?>
     
-    <? if( $config->globals["include_bottom_fields"] )
+    <?
+    $current_module->load_extensions("register_form", "before_bottom");
+    
+    if( $config->globals["include_bottom_fields"] )
         $current_module->load_extensions("register_form", "bottom"); ?>
     
     <div align="center">

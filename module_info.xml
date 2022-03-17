@@ -38,7 +38,7 @@
     
     <extension_areas_info><![CDATA[
         User registration: after initializing submitted data, before insertion, before state check on confirmation, after sending confirmation email, after confirmation.
-        Registration form: top (before rendering fields), bottom (before submission buttons)
+        Registration form: top (before rendering fields), bottom (before submission buttons), before bottom
         Profile edition form: top (before rendering fields), pre-bottom, bottom (before submission buttons)
         Profile edition: after initializing submitted data, before saving, after saving, after creating.
         Records browser: Before query filters integration, Before running query, Additional scripts, Custom filter defs, Before loop start, per row actions, pre-EOF.
