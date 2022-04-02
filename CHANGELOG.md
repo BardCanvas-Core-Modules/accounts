@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.1] - 2022-04-02
+
+- Added extension point on the registration form.
+
 ## [1.24.0] - 2022-03-16
 
 - Tuned data in devices table.
