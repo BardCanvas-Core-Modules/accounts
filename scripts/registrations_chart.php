@@ -55,6 +55,9 @@ while( $current_date <= $today )
 }
 $data = $final_data;
 
+$_REQUEST["width"]  = $_REQUEST["width"]  + 0;
+$_REQUEST["height"] = $_REQUEST["height"] + 0;
+
 $width  = empty($_REQUEST["width"])  ? 640 : $_REQUEST["width"];
 $height = empty($_REQUEST["height"]) ? 480 : $_REQUEST["height"];
 
