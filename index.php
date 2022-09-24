@@ -184,6 +184,27 @@ switch( $_REQUEST["mode"] )
             $xaccount->set_banner_from_post();
         }
         
+        if( count($errors) == 0 )
+        {
+            if( ! empty($xaccount->homepage_url) && ! filter_var($xaccount->homepage_url, FILTER_VALIDATE_URL) )
+            {
+                $xaccount->homepage_url = "";
+                $errors[] = $current_module->language->errors->registration->invalid->invalid_homepage_url;
+            }
+            
+            if( ! empty($xaccount->bio) && has_injected_scripts($xaccount->bio) )
+            {
+                $xaccount->bio = "";
+                $errors[] = $current_module->language->errors->registration->invalid->contents->bio;
+            }
+            
+            if( ! empty($xaccount->signature) && has_injected_scripts($xaccount->signature) )
+            {
+                $xaccount->signature = "";
+                $errors[] = $current_module->language->errors->registration->invalid->contents->signature;
+            }
+        }
+        
         if( count($errors) == 0 ) $current_module->load_extensions("account_admin_editor", "before_saving");
         
         # Actual save

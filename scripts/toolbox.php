@@ -14,7 +14,7 @@
  * @var module            $current_module
  * 
  * $_GET params:
- * @param mode
+ * @param string mode
  */
 
 use hng2_base\account;
@@ -26,13 +26,22 @@ use hng2_base\template;
 
 include "../../config.php";
 include "../../includes/bootstrap.inc";
+header("Content-Type: text/plain; charset=utf-8");
 
 if( ! $account->has_admin_rights_to_module("accounts") )
     if( $account->level < $config::MODERATOR_USER_LEVEL )
         throw_fake_401();
 
-header("Content-Type: text/plain; charset=utf-8");
-switch( $_REQUEST["mode"] )
+if( ! $account->is_expirable_token_valid("@accounts:admin_toolbox.") )
+    die($current_module->language->errors->invalid_csrf_token);
+
+$id_account = $_REQUEST["id_account"] + 0;
+if( empty($id_account) ) die($current_module->language->admin->record_nav->action_messages->invalid_account_id);
+
+$_REQUEST["id_account"] = $_GET["id_account"] = $id_account;
+
+$mode = trim(stripslashes($_REQUEST["mode"]));
+switch( $mode )
 {
     case "enable_register":
     {
@@ -44,7 +53,6 @@ switch( $_REQUEST["mode"] )
         );
         
         die("OK");
-        break;
     }
     case "disable_register":
     {
@@ -56,11 +64,10 @@ switch( $_REQUEST["mode"] )
         );
         
         die("OK");
-        break;
     }
     case "enable":
     {
-        $user_account = new account($_REQUEST["id_account"]);
+        $user_account = new account($id_account);
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
     
@@ -80,11 +87,10 @@ switch( $_REQUEST["mode"] )
         );
         
         die("OK");
-        break;
     }
     case "disable":
     {
-        $user_account = new account($_REQUEST["id_account"]);
+        $user_account = new account($id_account);
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
         
@@ -103,14 +109,11 @@ switch( $_REQUEST["mode"] )
         );
         
         die("OK");
-        break;
     }
     case "change_level":
     {
-        # if( $account->level < $config::MODERATOR_USER_LEVEL )
-        #     die( $current_module->language->admin->record_nav->action_messages->level_change_denied );
-        
-        $user_account = new account($_REQUEST["id_account"]);
+        $user_account = new account($id_account);
+        $level        = $_GET["level"] + 0;
         
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
@@ -121,16 +124,16 @@ switch( $_REQUEST["mode"] )
         if( $user_account->level > $account->level )
             die( $current_module->language->admin->record_nav->action_messages->no_upper_level_allowed );
         
-        if( ! is_numeric($_GET["level"]) )
-            die( $current_module->language->admin->record_nav->action_messages->invalid_level_specified );
-        
-        if( ! isset($config->user_levels_by_level[$_GET["level"]]))
+        if( ! isset($config->user_levels_by_level[$level]))
             die( $current_module->language->admin->record_nav->action_messages->invalid_level_specified );
         
         $current_module->load_extensions("toolbox", "before_level_change");
         $previous_level = $user_account->level;
-        $user_account->set_level( $_GET["level"] );
-        if( $previous_level != $_GET["level"] ) $current_module->load_extensions("toolbox", "account_level_changed");
+        if( $previous_level != $level )
+        {
+            $user_account->set_level( $level );
+            $current_module->load_extensions("toolbox", "account_level_changed");
+        }
         
         send_notification(
             $account->id_account,
@@ -143,12 +146,11 @@ switch( $_REQUEST["mode"] )
         );
         
         die("OK");
-        break;
     }
     case "delete":
     {
         $repository   = new accounts_repository();
-        $user_account = $repository->get($_GET["id_account"]);
+        $user_account = $repository->get($id_account);
         
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
@@ -159,7 +161,7 @@ switch( $_REQUEST["mode"] )
         if( $account->level < $user_account->level )
             die( $current_module->language->admin->record_nav->action_messages->deletion_above_level_denied );
         
-        if( $_GET["id_account"] == "100000000000000" )
+        if( $id_account == "100000000000000" )
             die( $current_module->language->admin->record_nav->action_messages->system_account_cannot_be_deleted );
         
         $current_module->load_extensions("toolbox", "before_delete");
@@ -167,7 +169,7 @@ switch( $_REQUEST["mode"] )
         $config->globals["notify_deletion_progress"] = false;
         //send_notification($account->id_account, "information", $current_module->language->admin->record_nav->action_messages->deletion_progress->start);
         //sleep(1);
-        $repository->delete($_GET["id_account"]);
+        $repository->delete($id_account);
         $mem_cache->delete("account:{$user_account->id_account}");
         
         if( ! empty($config->globals["deletions_log"]) )
@@ -195,7 +197,6 @@ switch( $_REQUEST["mode"] )
         send_notification($account->id_account, "information", $current_module->language->admin->record_nav->action_messages->deletion_progress->end);
         
         die("OK");
-        break;
     }
 }
 

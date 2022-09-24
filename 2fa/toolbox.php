@@ -37,9 +37,10 @@ if( $account->state != "enabled" ) throw_fake_401();
 # New secret QRcode
 #
 
-if( ! empty($_GET["new_secret_qc"]) )
+$new_secret_qc = trim(stripslashes($_GET["new_secret_qc"]));
+if( ! empty($new_secret_qc) )
 {
-    $enc_secret = trim(stripslashes($_GET["new_secret_qc"]));
+    $enc_secret = trim(stripslashes($new_secret_qc));
     if( empty($enc_secret) ) die($current_module->language->tfa->missing_key);
     
     try { check_sql_injection($enc_secret); }
@@ -59,11 +60,12 @@ if( ! empty($_GET["new_secret_qc"]) )
 # Check new secret key and validate against incoming token
 #
 
-if( ! empty($_GET["save_new_key"]) )
+$save_new_key = trim(stripslashes($_GET["save_new_key"]));
+if( ! empty($save_new_key) )
 {
     header("Content-Type: text/plain; charset=UTF-8");
     
-    $enc_secret = trim(stripslashes($_GET["save_new_key"]));
+    $enc_secret = trim(stripslashes($save_new_key));
     if( empty($enc_secret) ) die($current_module->language->tfa->missing_key);
     
     try { check_sql_injection($enc_secret); }

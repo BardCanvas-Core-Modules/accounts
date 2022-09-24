@@ -20,6 +20,8 @@ use hng2_tools\record_browser;
 $repository = new accounts_repository();
 $browser    = new record_browser("{$config->website_key}_{$current_module->name}");
 
+$account->set_expirable_token("@accounts:admin_toolbox.");
+
 /**
  * @var int    $offset
  * @var int    $limit

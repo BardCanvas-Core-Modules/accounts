@@ -129,6 +129,7 @@
                 <remove_2fa_secret>Remover secreto 2FA...</remove_2fa_secret>
             </actions>
             <action_messages>
+                <invalid_account_id>Id de cuenta inválido.</invalid_account_id>
                 <target_not_exists>La cuenta especificada no existe en la base de datos.</target_not_exists>
                 <enabled_ok>Cuenta activada con éxito.</enabled_ok>
                 <disabled_ok>Cuenta desactivada con éxito.</disabled_ok>
@@ -265,6 +266,12 @@
                 <main_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como principal.</main_email_exists>
                 <alt_email_exists>Hay otra cuenta registrada con el mismo correo electrónico que has especificado como adicional.</alt_email_exists>
                 <birthdate>Especifica una fecha de nacimiento válida usando el siguiente formato: aaaa-mm-dd.</birthdate>
+                <invalid_homepage_url>Por favor especifica una URL válida en tu sitio web personal.</invalid_homepage_url>
+                <contents>
+                    <bio>Contenido inválido detectado en tu bio. Por favor revísalo.</bio>
+                    <signature>Contenido inválido detectado en tu firma. Por favor revísala.</signature>
+                </contents>
+                <invalid_country>Invalid country selected.</invalid_country>
             </invalid>
             <user_name_cant_be_forged><![CDATA[
                 Hay caracteres en tu alias que no pueden ser traducidos.
@@ -326,6 +333,7 @@
         
         <!-- Other -->
         <invalid_email>Correo inválido</invalid_email>
+        <invalid_csrf_token>Token de seguridad inválido o expirado. Favor de recargar la página e intenta de nuevo.</invalid_csrf_token>
     </errors>
     
     <register_form>

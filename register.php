@@ -27,12 +27,20 @@ catch(\Exception $e)
     throw_fake_501();
 }
 
+$countries = array();
+$query     = "select * from countries order by name asc";
+$res       = $database->query("select * from countries order by name asc");
+while( $row = $database->fetch_object($res) ) $countries[$row->alpha_2] = $row->name;
+
 $errors = array();
 if( $_POST["mode"] == "create" )
 {
     # This keeps the whole posted data prepped for output on the form
     $xaccount = new account();
     $xaccount->assign_from_posted_form();
+    $xaccount->homepage_url = "";
+    $xaccount->bio          = "";
+    $xaccount->signature    = "";
     $config->globals["accounts:processing_account"] = $xaccount;
     $current_module->load_extensions("registration", "after_init");
     
@@ -314,6 +322,23 @@ if( $_POST["mode"] == "create" )
         if( empty($country) ) $country = "us";
         $xaccount->country = $country;
     }
+    else
+    {
+        if( empty($countries[$xaccount->country]) )
+        {
+            $xaccount->country = "";
+            $errors[] = $current_module->language->errors->registration->invalid->invalid_country;
+        }
+    }
+    
+    if( count($errors) == 0 )
+    {
+        if( ! filter_var($xaccount->homepage_url, FILTER_VALIDATE_URL) )
+        {
+            $xaccount->homepage_url = "";
+            $errors[] = $current_module->language->errors->registration->invalid->invalid_homepage_url;
+        }
+    }
     
     if( count($errors) == 0 ) $current_module->load_extensions("registration", "before_insertion");
     
@@ -342,10 +367,6 @@ if( $_POST["mode"] == "create" )
 
 # Country list preload
 $current_user_country = empty($xaccount->country) ? get_geoip_country_code() : $xaccount->country;
-$countries            = array();
-$query                = "select * from countries order by name asc";
-$res                  = $database->query("select * from countries order by name asc");
-while( $row = $database->fetch_object($res) ) $countries[$row->alpha_2] = $row->name;
 
 $_errors               = $errors;
 $_country_list         = $countries;

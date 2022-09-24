@@ -128,6 +128,7 @@
                 <remove_2fa_secret>Remove 2FA secret...</remove_2fa_secret>
             </actions>
             <action_messages>
+                <invalid_account_id>Invalid account id</invalid_account_id>
                 <target_not_exists>The specified account doesn't exist in the databse.</target_not_exists>
                 <enabled_ok>Account successfully enabled.</enabled_ok>
                 <disabled_ok>Account successfully disabled.</disabled_ok>
@@ -262,6 +263,12 @@
                 <main_email_exists>There is another account registered with the main email you've provided. Please provide a different one.</main_email_exists>
                 <alt_email_exists>There is another account registered with the alternate email you've provided. Please provide a different one.</alt_email_exists>
                 <birthdate>Please specify a valid birth date in the next format: yyyy-mm-dd.</birthdate>
+                <invalid_homepage_url>Please specify a valid homepage url.</invalid_homepage_url>
+                <contents>
+                    <bio>Invalid contents in your bio. Please review.</bio>
+                    <signature>Invalid contents in your signature. Please review.</signature>
+                </contents>
+                <invalid_country>Invalid country selected.</invalid_country>
             </invalid>
             <user_name_cant_be_forged><![CDATA[
                 There are characters in your display name that can't be transliterated.
@@ -321,6 +328,7 @@
         
         <!-- Other -->
         <invalid_email>Invalid email</invalid_email>
+        <invalid_csrf_token>Security token missing or expired. Please reload the page and try again.</invalid_csrf_token>
     </errors>
     
     <register_form>

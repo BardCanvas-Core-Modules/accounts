@@ -28,6 +28,12 @@ if( empty($key) ) die($current_module->language->errors->prefs_setting->empty_ke
 
 $val = trim(stripslashes($_REQUEST["value"]));
 
+try { check_sql_injection(array($key, $val)); }
+catch(\Exception $e) { throw_fake_501(); }
+
+if( has_injected_scripts($key) ) throw_fake_501();
+if( has_injected_scripts($val) ) throw_fake_501();
+
 $id_account = $_REQUEST["id_account"] + 0;
 
 try

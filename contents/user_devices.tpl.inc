@@ -4,6 +4,8 @@
  */
 
 use hng2_base\device;
+
+$account->set_expirable_token("@accounts:current_user.devices", 10);
 ?>
 
 <style type="text/css">
