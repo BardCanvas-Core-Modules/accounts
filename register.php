@@ -51,7 +51,7 @@ if( $_POST["mode"] == "create" )
     $user_name = trim(stripslashes($_POST["user_name"]));
     $country   = trim(stripslashes($_POST["country"]));
     
-    if( preg_match('/[\\"\'<>%$&]/', $xaccount->display_name) )
+    if( preg_match('/["\'<>%$&]/', $xaccount->display_name) || stristr($xaccount->display_name, "\\") )
         $errors[] = $current_module->language->errors->registration->invalid->symbols_in_display_name;
     
     if( count($errors) == 0 )

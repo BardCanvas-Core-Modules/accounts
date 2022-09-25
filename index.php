@@ -338,7 +338,7 @@ switch( $_REQUEST["mode"] )
                     $errors[] = $current_module->language->errors->registration->missing->{$field};
             
             # Validations: invalid entries
-            if( preg_match('/[\\"\'<>%$&]/', $xaccount->display_name) )
+            if( preg_match('/["\'<>%$&]/', $xaccount->display_name) || stristr($xaccount->display_name, "\\") )
                 $errors[] = $current_module->language->errors->registration->invalid->symbols_in_display_name;
             
             if( preg_match('/[^a-z0-9\-_]/i', $xaccount->user_name) )

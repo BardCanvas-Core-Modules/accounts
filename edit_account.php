@@ -32,7 +32,7 @@ if( $_POST["mode"] == "save" )
     $xaccount->assign_from_posted_form();
     $xaccount->user_name = $user_name;
     
-    if( preg_match('/[\\"\'<>%$&]/', $xaccount->display_name) )
+    if( preg_match('/["\'<>%$&]/', $xaccount->display_name) || stristr($xaccount->display_name, "\\") )
         $errors[] = $current_module->language->errors->registration->invalid->symbols_in_display_name;
     
     if( count($errors) == 0 )
