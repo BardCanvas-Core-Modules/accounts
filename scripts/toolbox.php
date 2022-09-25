@@ -36,7 +36,6 @@ if( ! $account->is_expirable_token_valid("@accounts:admin_toolbox.") )
     die($current_module->language->errors->invalid_csrf_token);
 
 $id_account = $_REQUEST["id_account"] + 0;
-if( empty($id_account) ) die($current_module->language->admin->record_nav->action_messages->invalid_account_id);
 
 $_REQUEST["id_account"] = $_GET["id_account"] = $id_account;
 
@@ -67,6 +66,8 @@ switch( $mode )
     }
     case "enable":
     {
+        if( empty($id_account) ) die($current_module->language->admin->record_nav->action_messages->invalid_account_id);
+        
         $user_account = new account($id_account);
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
@@ -90,6 +91,8 @@ switch( $mode )
     }
     case "disable":
     {
+        if( empty($id_account) ) die($current_module->language->admin->record_nav->action_messages->invalid_account_id);
+        
         $user_account = new account($id_account);
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
@@ -112,6 +115,8 @@ switch( $mode )
     }
     case "change_level":
     {
+        if( empty($id_account) ) die($current_module->language->admin->record_nav->action_messages->invalid_account_id);
+        
         $user_account = new account($id_account);
         $level        = $_GET["level"] + 0;
         
@@ -149,6 +154,8 @@ switch( $mode )
     }
     case "delete":
     {
+        if( empty($id_account) ) die($current_module->language->admin->record_nav->action_messages->invalid_account_id);
+        
         $repository   = new accounts_repository();
         $user_account = $repository->get($id_account);
         
