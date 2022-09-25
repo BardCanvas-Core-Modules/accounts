@@ -337,15 +337,6 @@ if( $_POST["mode"] == "create" )
         }
     }
     
-    if( count($errors) == 0 )
-    {
-        if( ! filter_var($xaccount->homepage_url, FILTER_VALIDATE_URL) )
-        {
-            $xaccount->homepage_url = "";
-            $errors[] = $current_module->language->errors->registration->invalid->invalid_homepage_url;
-        }
-    }
-    
     if( count($errors) == 0 ) $current_module->load_extensions("registration", "before_insertion");
     
     # Proceed to insert the account and notify the user to confirm it
