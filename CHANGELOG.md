@@ -1,6 +1,12 @@
 
 # Accounts Module Change Log
 
+## [1.24.3] - 2022-09-25
+
+- Added check against invalid characters in display name on registration and edition.
+- Relocated wrong check on the admin toolbox.
+- Removed bogus check on the registration form.
+
 ## [1.24.2] - 2022-09-24
 
 - Added sanitization and attack checks on:
