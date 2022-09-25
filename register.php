@@ -51,171 +51,177 @@ if( $_POST["mode"] == "create" )
     $user_name = trim(stripslashes($_POST["user_name"]));
     $country   = trim(stripslashes($_POST["country"]));
     
-    if( $settings->get("modules:accounts.automatic_user_names") == "true" )
-    {
-        $count = $repository->get_record_count(array("display_name" => addslashes($xaccount->display_name)));
-        if( $count > 0 )
-            $errors[] = $current_module->language->errors->registration->display_name_taken;
-    }
-    else
-    {
-        if( empty($user_name) )
-            $errors[] = $current_module->language->errors->registration->missing->user_name;
-        
-        if( preg_match('/[^a-z0-9\-_\.]/i', $user_name) )
-            $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
-        
-        if( strlen($user_name) < 3 )
-            $errors[] = $current_module->language->errors->registration->invalid->user_name_length;
-        
-        if( is_numeric($user_name) )
-            $errors[] = $current_module->language->errors->registration->invalid->numeric_user_name;
-        
-        if( ! preg_match('/[a-z0-9]/i', $user_name) )
-            $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols;
-        
-        if( strlen($xaccount->display_name) < 3 )
-            $errors[] = $current_module->language->errors->registration->invalid->display_name_length;
-        
-        if( is_numeric($xaccount->display_name) )
-            $errors[] = $current_module->language->errors->registration->invalid->numeric_display_name;
-        
-        if( ! preg_match('/[a-z0-9]/i', $xaccount->display_name) )
-            $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols2;
-    }
-
-    # Check for accounts created from the same IP during the last N hours
-    $hours = (int) $settings->get("modules:accounts.registration_from_same_ip_threshold");
-    if( $hours > 0 )
-    {
-        $ip       = get_remote_address();
-        $boundary = date("Y-m-d H:i:s", strtotime("now - $hours hours"));
-        $filter   = array("(creation_date >= '{$boundary}' and creation_host like '{$ip}%')");
-        $count    = $repository->get_record_count($filter);
-        if( $count > 0 ) $errors[] = $current_module->language->errors->registration->invalid->created_from_same_ip;
-    }
+    if( preg_match('/[\\"\'<>%$&]/', $xaccount->display_name) )
+        $errors[] = $current_module->language->errors->registration->invalid->symbols_in_display_name;
     
-    # Blacklist validations
-    $blacklist = trim($settings->get("modules:accounts.usernames_blacklist"));
-    if( ! empty($blacklist) )
+    if( count($errors) == 0 )
     {
-        foreach(explode("\n", $blacklist) as $line)
+        if( $settings->get("modules:accounts.automatic_user_names") == "true" )
         {
-            $line = trim($line);
-            if( empty($line) ) continue;
-            if( substr($line, 0, 1) == "#" ) continue;
-            
-            $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
-            if( preg_match($pattern, $user_name) )
-            {
-                $errors[] = $current_module->language->errors->registration->invalid->user_name_blacklisted;
-                
-                break;
-            }
-        }
-    }
-    $blacklist = trim($settings->get("modules:accounts.displaynames_blacklist"));
-    if( ! empty($blacklist) )
-    {
-        foreach(explode("\n", $blacklist) as $line)
-        {
-            $line = trim($line);
-            if( empty($line) ) continue;
-            if( substr($line, 0, 1) == "#" ) continue;
-            
-            $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
-            if( preg_match($pattern, $xaccount->display_name) )
-            {
-                $errors[] = $current_module->language->errors->registration->invalid->display_name_blacklisted;
-                
-                break;
-            }
-        }
-    }
-    $blacklist = trim($settings->get("modules:accounts.email_domains_blacklist"));
-    if( ! empty($blacklist) )
-    {
-        $main_domain = end(explode("@", $xaccount->email));
-        $alt_domain  = end(explode("@", $xaccount->alt_email));
-        foreach(explode("\n", $blacklist) as $line)
-        {
-            $line = trim($line);
-            if( empty($line) ) continue;
-            if( substr($line, 0, 1) == "#" ) continue;
-            
-            if( $line == $main_domain )
-            {
-                $errors[] = $current_module->language->errors->registration->invalid->mail_domain;
-                
-                break;
-            }
-            
-            if( $line == $alt_domain )
-            {
-                $errors[] = $current_module->language->errors->registration->invalid->alt_mail_domain;
-                
-                break;
-            }
-        }
-    }
-    
-    if( $settings->get("modules:accounts.non_mandatory_country") != "true" && empty($country) )
-        $errors[] = $current_module->language->errors->registration->missing->country;
-    
-    # Validations: invalid entries
-    if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
-        $errors[] = $current_module->language->errors->registration->invalid->email;
-    
-    if( trim(stripslashes($_POST["alt_email"])) != "" )
-        if( ! filter_var(trim(stripslashes($_POST["alt_email"])), FILTER_VALIDATE_EMAIL) )
-            $errors[] = $current_module->language->errors->registration->invalid->alt_email;
-    
-    if( trim(stripslashes($_POST["alt_email"])) != "" )
-        if( trim(stripslashes($_POST["email"])) == trim(stripslashes($_POST["alt_email"])) )
-            $errors[] = $current_module->language->errors->registration->invalid->mails_must_be_different;
-    
-    if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
-        $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
-    
-    # Validations: captcha
-    if( $settings->get("engine.recaptcha_private_key") != "" )
-    {
-        if( ! isset($_POST['g-recaptcha-response']) )
-        {
-            $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+            $count = $repository->get_record_count(array("display_name" => addslashes($xaccount->display_name)));
+            if( $count > 0 )
+                $errors[] = $current_module->language->errors->registration->display_name_taken;
         }
         else
         {
-            $cap = trim(stripslashes($_POST['g-recaptcha-response']));
-            $ch  = curl_init("https://www.google.com/recaptcha/api/siteverify?secret={$settings->get("engine.recaptcha_private_key")}&response={$cap}");
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $res = curl_exec($ch);
+            if( empty($user_name) )
+                $errors[] = $current_module->language->errors->registration->missing->user_name;
             
-            if( curl_error($ch) )
+            if( preg_match('/[^a-z0-9\-_\.]/i', $user_name) )
+                $errors[] = $current_module->language->errors->registration->invalid->chars_in_user_name;
+            
+            if( strlen($user_name) < 3 )
+                $errors[] = $current_module->language->errors->registration->invalid->user_name_length;
+            
+            if( is_numeric($user_name) )
+                $errors[] = $current_module->language->errors->registration->invalid->numeric_user_name;
+            
+            if( ! preg_match('/[a-z0-9]/i', $user_name) )
+                $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols;
+            
+            if( strlen($xaccount->display_name) < 3 )
+                $errors[] = $current_module->language->errors->registration->invalid->display_name_length;
+            
+            if( is_numeric($xaccount->display_name) )
+                $errors[] = $current_module->language->errors->registration->invalid->numeric_display_name;
+            
+            if( ! preg_match('/[a-z0-9]/i', $xaccount->display_name) )
+                $errors[] = $current_module->language->errors->registration->invalid->not_only_special_symbols2;
+        }
+        
+        # Check for accounts created from the same IP during the last N hours
+        $hours = (int) $settings->get("modules:accounts.registration_from_same_ip_threshold");
+        if( $hours > 0 )
+        {
+            $ip       = get_remote_address();
+            $boundary = date("Y-m-d H:i:s", strtotime("now - $hours hours"));
+            $filter   = array("(creation_date >= '{$boundary}' and creation_host like '{$ip}%')");
+            $count    = $repository->get_record_count($filter);
+            if( $count > 0 ) $errors[] = $current_module->language->errors->registration->invalid->created_from_same_ip;
+        }
+        
+        # Blacklist validations
+        $blacklist = trim($settings->get("modules:accounts.usernames_blacklist"));
+        if( ! empty($blacklist) )
+        {
+            foreach(explode("\n", $blacklist) as $line)
             {
-                $errors[] = replace_escaped_objects(
-                    $current_module->language->errors->registration->invalid->captcha_api_error,
-                    array('{$error}' => curl_error($ch))
-                );
+                $line = trim($line);
+                if( empty($line) ) continue;
+                if( substr($line, 0, 1) == "#" ) continue;
+                
+                $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
+                if( preg_match($pattern, $user_name) )
+                {
+                    $errors[] = $current_module->language->errors->registration->invalid->user_name_blacklisted;
+                    
+                    break;
+                }
+            }
+        }
+        $blacklist = trim($settings->get("modules:accounts.displaynames_blacklist"));
+        if( ! empty($blacklist) )
+        {
+            foreach(explode("\n", $blacklist) as $line)
+            {
+                $line = trim($line);
+                if( empty($line) ) continue;
+                if( substr($line, 0, 1) == "#" ) continue;
+                
+                $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
+                if( preg_match($pattern, $xaccount->display_name) )
+                {
+                    $errors[] = $current_module->language->errors->registration->invalid->display_name_blacklisted;
+                    
+                    break;
+                }
+            }
+        }
+        $blacklist = trim($settings->get("modules:accounts.email_domains_blacklist"));
+        if( ! empty($blacklist) )
+        {
+            $main_domain = end(explode("@", $xaccount->email));
+            $alt_domain  = end(explode("@", $xaccount->alt_email));
+            foreach(explode("\n", $blacklist) as $line)
+            {
+                $line = trim($line);
+                if( empty($line) ) continue;
+                if( substr($line, 0, 1) == "#" ) continue;
+                
+                if( $line == $main_domain )
+                {
+                    $errors[] = $current_module->language->errors->registration->invalid->mail_domain;
+                    
+                    break;
+                }
+                
+                if( $line == $alt_domain )
+                {
+                    $errors[] = $current_module->language->errors->registration->invalid->alt_mail_domain;
+                    
+                    break;
+                }
+            }
+        }
+        
+        if( $settings->get("modules:accounts.non_mandatory_country") != "true" && empty($country) )
+            $errors[] = $current_module->language->errors->registration->missing->country;
+        
+        # Validations: invalid entries
+        if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
+            $errors[] = $current_module->language->errors->registration->invalid->email;
+        
+        if( trim(stripslashes($_POST["alt_email"])) != "" )
+            if( ! filter_var(trim(stripslashes($_POST["alt_email"])), FILTER_VALIDATE_EMAIL) )
+                $errors[] = $current_module->language->errors->registration->invalid->alt_email;
+        
+        if( trim(stripslashes($_POST["alt_email"])) != "" )
+            if( trim(stripslashes($_POST["email"])) == trim(stripslashes($_POST["alt_email"])) )
+                $errors[] = $current_module->language->errors->registration->invalid->mails_must_be_different;
+        
+        if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
+            $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
+        
+        # Validations: captcha
+        if( $settings->get("engine.recaptcha_private_key") != "" )
+        {
+            if( ! isset($_POST['g-recaptcha-response']) )
+            {
+                $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
             }
             else
             {
-                $obj = json_decode($res);
-                if( empty($obj) )
+                $cap = trim(stripslashes($_POST['g-recaptcha-response']));
+                $ch  = curl_init("https://www.google.com/recaptcha/api/siteverify?secret={$settings->get("engine.recaptcha_private_key")}&response={$cap}");
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $res = curl_exec($ch);
+                
+                if( curl_error($ch) )
                 {
                     $errors[] = replace_escaped_objects(
                         $current_module->language->errors->registration->invalid->captcha_api_error,
-                        array('{$error}' => print_r($res))
+                        array('{$error}' => curl_error($ch))
                     );
                 }
                 else
                 {
-                    if( ! $obj->success )
-                        $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+                    $obj = json_decode($res);
+                    if( empty($obj) )
+                    {
+                        $errors[] = replace_escaped_objects(
+                            $current_module->language->errors->registration->invalid->captcha_api_error,
+                            array('{$error}' => print_r($res))
+                        );
+                    }
+                    else
+                    {
+                        if( ! $obj->success )
+                            $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+                    }
                 }
+                curl_close($ch);
             }
-            curl_close($ch);
         }
     }
     

@@ -31,117 +31,124 @@ if( $_POST["mode"] == "save" )
     $user_name = $account->user_name;
     $xaccount->assign_from_posted_form();
     $xaccount->user_name = $user_name;
-    $config->globals["accounts:processing_account"] = $xaccount;
-    $current_module->load_extensions("profile_editor", "after_init");
     
-    # Validations: missing fields
-    foreach( array("display_name", "country", "email" ) as $field )
-        if( trim(stripslashes($_POST[$field])) == "" ) $errors[] = $current_module->language->errors->registration->missing->{$field};
+    if( preg_match('/[\\"\'<>%$&]/', $xaccount->display_name) )
+        $errors[] = $current_module->language->errors->registration->invalid->symbols_in_display_name;
     
-    # Blacklist validations
-    if( $account->level < config::MODERATOR_USER_LEVEL )
+    if( count($errors) == 0 )
     {
-        if( $account->display_name != $xaccount->display_name )
+        $config->globals["accounts:processing_account"] = $xaccount;
+        $current_module->load_extensions("profile_editor", "after_init");
+        
+        # Validations: missing fields
+        foreach( array("display_name", "country", "email" ) as $field )
+            if( trim(stripslashes($_POST[$field])) == "" ) $errors[] = $current_module->language->errors->registration->missing->{$field};
+        
+        # Blacklist validations
+        if( $account->level < config::MODERATOR_USER_LEVEL )
         {
-            $blacklist = trim($settings->get("modules:accounts.displaynames_blacklist"));
+            if( $account->display_name != $xaccount->display_name )
+            {
+                $blacklist = trim($settings->get("modules:accounts.displaynames_blacklist"));
+                if( ! empty($blacklist) )
+                {
+                    foreach(explode("\n", $blacklist) as $line)
+                    {
+                        $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
+                        if( preg_match($pattern, $xaccount->display_name) )
+                        {
+                            $errors[] = $current_module->language->errors->registration->invalid->display_name_blacklisted;
+                            
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            $blacklist = trim($settings->get("modules:accounts.email_domains_blacklist"));
             if( ! empty($blacklist) )
             {
+                $main_domain = end(explode("@", $xaccount->email));
+                $alt_domain  = end(explode("@", $xaccount->alt_email));
                 foreach(explode("\n", $blacklist) as $line)
                 {
-                    $pattern = "@^" . str_replace(array("*", "?"), array(".+", ".?"), trim($line)) . "@i";
-                    if( preg_match($pattern, $xaccount->display_name) )
+                    $line = trim($line);
+                    if( empty($line) ) continue;
+                    if( substr($line, 0, 1) == "#" ) continue;
+                
+                    if( $line == $main_domain )
                     {
-                        $errors[] = $current_module->language->errors->registration->invalid->display_name_blacklisted;
-                        
+                        $errors[] = $current_module->language->errors->registration->invalid->mail_domain;
+                    
+                        break;
+                    }
+                
+                    if( $line == $alt_domain )
+                    {
+                        $errors[] = $current_module->language->errors->registration->invalid->alt_mail_domain;
+                    
                         break;
                     }
                 }
             }
         }
         
-        $blacklist = trim($settings->get("modules:accounts.email_domains_blacklist"));
-        if( ! empty($blacklist) )
-        {
-            $main_domain = end(explode("@", $xaccount->email));
-            $alt_domain  = end(explode("@", $xaccount->alt_email));
-            foreach(explode("\n", $blacklist) as $line)
-            {
-                $line = trim($line);
-                if( empty($line) ) continue;
-                if( substr($line, 0, 1) == "#" ) continue;
+        if(
+            $settings->get("modules:accounts.automatic_user_names") == "true"
+            && $origin_account->display_name != $xaccount->display_name
+        ) {
+            $count = $repository->get_record_count(array(
+                "display_name" => $xaccount->display_name,
+                "id_account <> '$xaccount->id_account'"
+            ));
             
-                if( $line == $main_domain )
-                {
-                    $errors[] = $current_module->language->errors->registration->invalid->mail_domain;
-                
-                    break;
-                }
-            
-                if( $line == $alt_domain )
-                {
-                    $errors[] = $current_module->language->errors->registration->invalid->alt_mail_domain;
-                
-                    break;
-                }
-            }
+            if( $count > 0 )
+                $errors[] = $current_module->language->errors->registration->display_name_taken;
         }
-    }
-    
-    if(
-        $settings->get("modules:accounts.automatic_user_names") == "true"
-        && $origin_account->display_name != $xaccount->display_name
-    ) {
-        $count = $repository->get_record_count(array(
-            "display_name" => $xaccount->display_name,
-            "id_account <> '$xaccount->id_account'"
-        ));
         
-        if( $count > 0 )
-            $errors[] = $current_module->language->errors->registration->display_name_taken;
-    }
-    
-    # Validations: invalid entries
-    if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
-        $errors[] = $current_module->language->errors->registration->invalid->email;
-    
-    if( trim(stripslashes($_POST["alt_email"])) != "" )
-        if( ! filter_var(trim(stripslashes($_POST["alt_email"])), FILTER_VALIDATE_EMAIL) )
-            $errors[] = $current_module->language->errors->registration->invalid->alt_email;
-    
-    if( trim(stripslashes($_POST["alt_email"])) != "" )
-        if( trim(stripslashes($_POST["email"])) == trim(stripslashes($_POST["alt_email"])) )
-            $errors[] = $current_module->language->errors->registration->invalid->same_emails;
-    
-    if( trim(stripslashes($_POST["password"])) != "" && trim(stripslashes($_POST["password2"])) == "" )
-        $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
-    
-    if( trim(stripslashes($_POST["password"])) == "" && trim(stripslashes($_POST["password2"])) != "" )
-        $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
-    
-    if( trim(stripslashes($_POST["password"])) != "" && trim(stripslashes($_POST["password2"])) != "" )
-        if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
+        # Validations: invalid entries
+        if( ! filter_var(trim(stripslashes($_POST["email"])), FILTER_VALIDATE_EMAIL) )
+            $errors[] = $current_module->language->errors->registration->invalid->email;
+        
+        if( trim(stripslashes($_POST["alt_email"])) != "" )
+            if( ! filter_var(trim(stripslashes($_POST["alt_email"])), FILTER_VALIDATE_EMAIL) )
+                $errors[] = $current_module->language->errors->registration->invalid->alt_email;
+        
+        if( trim(stripslashes($_POST["alt_email"])) != "" )
+            if( trim(stripslashes($_POST["email"])) == trim(stripslashes($_POST["alt_email"])) )
+                $errors[] = $current_module->language->errors->registration->invalid->same_emails;
+        
+        if( trim(stripslashes($_POST["password"])) != "" && trim(stripslashes($_POST["password2"])) == "" )
             $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
-    
-    if( $settings->get("modules:accounts.hide_birthdate_input") != "true" )
-    {
-        if( empty($_POST["birthdate"]) )
-            $errors[] = $current_module->language->errors->registration->invalid->birthdate;
-        elseif( ! @checkdate(substr($_POST["birthdate"], 5, 2), substr($_POST["birthdate"], 8, 2), substr($_POST["birthdate"], 0, 4)) )
-            $errors[] = $current_module->language->errors->registration->invalid->birthdate;
-    }
-    
-    # Impersonation tries
-    if( $_POST["email"] != $origin_account->email && $xaccount->level < config::MODERATOR_USER_LEVEL )
-    {
-        $res = $database->query("select * from account where id_account <> '$xaccount->id_account' and (email = '".trim(stripslashes($_POST["email"]))."' or alt_email = '".trim(stripslashes($_POST["email"]))."')");
-        if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
-    }
-    
-    if( $_POST["alt_email"] != "" && $_POST["alt_email"] != $origin_account->alt_email && $xaccount->level < config::MODERATOR_USER_LEVEL )
-    {
-        $query = "select * from account where id_account <> '$xaccount->id_account' and (email = '".trim(stripslashes($_POST["alt_email"]))."' or alt_email = '".trim(stripslashes($_POST["alt_email"]))."')";
-        $res = $database->query($query);
-        if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
+        
+        if( trim(stripslashes($_POST["password"])) == "" && trim(stripslashes($_POST["password2"])) != "" )
+            $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
+        
+        if( trim(stripslashes($_POST["password"])) != "" && trim(stripslashes($_POST["password2"])) != "" )
+            if( trim(stripslashes($_POST["password"])) != trim(stripslashes($_POST["password2"])) )
+                $errors[] = $current_module->language->errors->registration->invalid->passwords_mismatch;
+        
+        if( $settings->get("modules:accounts.hide_birthdate_input") != "true" )
+        {
+            if( empty($_POST["birthdate"]) )
+                $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+            elseif( ! @checkdate(substr($_POST["birthdate"], 5, 2), substr($_POST["birthdate"], 8, 2), substr($_POST["birthdate"], 0, 4)) )
+                $errors[] = $current_module->language->errors->registration->invalid->birthdate;
+        }
+        
+        # Impersonation tries
+        if( $_POST["email"] != $origin_account->email && $xaccount->level < config::MODERATOR_USER_LEVEL )
+        {
+            $res = $database->query("select * from account where id_account <> '$xaccount->id_account' and (email = '".trim(stripslashes($_POST["email"]))."' or alt_email = '".trim(stripslashes($_POST["email"]))."')");
+            if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->main_email_exists;
+        }
+        
+        if( $_POST["alt_email"] != "" && $_POST["alt_email"] != $origin_account->alt_email && $xaccount->level < config::MODERATOR_USER_LEVEL )
+        {
+            $query = "select * from account where id_account <> '$xaccount->id_account' and (email = '".trim(stripslashes($_POST["alt_email"]))."' or alt_email = '".trim(stripslashes($_POST["alt_email"]))."')";
+            $res = $database->query($query);
+            if( $database->num_rows($res) > 0 ) $errors[] = $current_module->language->errors->registration->invalid->alt_email_exists;
+        }
     }
     
     if( count($errors) == 0 )
