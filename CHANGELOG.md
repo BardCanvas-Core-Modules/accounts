@@ -1,6 +1,15 @@
 
 # Accounts Module Change Log
 
+## [1.24.2] - 2022-09-24
+
+- Added sanitization and attack checks on:
+  - Registrations chart on the accounts manager.
+  - Account registration and edition.
+  - Devices manager.
+  - Admin tools.
+  - 2FA toolbox.
+
 ## [1.24.1] - 2022-04-02
 
 - Added extension point on the registration form.
