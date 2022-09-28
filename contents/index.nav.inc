@@ -1118,7 +1118,7 @@ function render_user_devices_info($row, $res2)
         <? while( $row2 = $database->fetch_object($res2) ): ?>
             <tr>
                 <td><?= $row2->id_device ?></td>
-                <td><?= empty($row2->device_label) ? "&mdash;" : $row2->device_label ?></td>
+                <td><?= empty($row2->device_label) ? "&mdash;" : htmlspecialchars($row2->device_label) ?></td>
                 <td><?= $row2->device_header ?></td>
                 <td><?= time_elapsed_string($row2->creation_date) ?></td>
                 <td><?= $current_module->language->admin->record_nav->devices_columns->state->{$row2->state} ?></td>
