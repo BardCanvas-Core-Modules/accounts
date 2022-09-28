@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.4] - 2022-09-28
+
+- Added output sanitization for device labels in the admin browser.
+
 ## [1.24.3] - 2022-09-25
 
 - Added check against invalid characters in display name on registration and edition.
