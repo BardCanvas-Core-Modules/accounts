@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.6] - 2022-10-17
+
+- Added missing file from the logins table sweeper.
+
 ## [1.24.5] - 2022-10-17
 
 - Added logins table sweeper.
