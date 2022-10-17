@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.5] - 2022-10-17
+
+- Added logins table sweeper.
+
 ## [1.24.4] - 2022-09-28
 
 - Added output sanitization for device labels in the admin browser.
