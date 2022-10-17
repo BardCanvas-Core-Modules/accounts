@@ -26,6 +26,10 @@
         <menu_items>
             <admin_menu_caption>Accounts</admin_menu_caption>
         </menu_items>
+        <sweep_logins>
+            <button>Sweep logins...</button>
+            <prompt>This process will delete login info prior to the last one from all users in the database. It will take a few minutes to finish, and might logout some online users. Do you want to prceed?</prompt>
+        </sweep_logins>
         <record_nav>
             <page_title>User accounts</page_title>
             <disable_register>Disable registration</disable_register>

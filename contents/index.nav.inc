@@ -267,6 +267,10 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         <span class="fa fa-plus"></span>
         <?= $current_module->language->admin->record_nav->create ?>
     </button>
+    <button onclick="sweep_logins_prompt()" style="background-color: maroon; color: white;">
+        <span class="fa fa-trash-o"></span>
+        <?= $current_module->language->admin->sweep_logins->button ?>
+    </button>
 </h1>
 
 <? if( count(array_merge($errors, $messages)) > 0 ): ?>
@@ -321,6 +325,13 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         document.filter_form.offset.value               = 0;
         document.filter_form.resetting.value            = 'true';
         $('#filter_form').submit();
+    }
+    
+    function sweep_logins_prompt()
+    {
+        if( ! confirm('<?= addslashes($current_module->language->admin->sweep_logins->prompt) ?>') ) return;
+        
+        window.open('<?= $current_module->get_url() ?>/sweep_logins.php');
     }
 </script>
 
