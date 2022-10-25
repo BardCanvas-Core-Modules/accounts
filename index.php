@@ -107,10 +107,19 @@ switch( $_REQUEST["mode"] )
                 if( trim(stripslashes($_POST[$field])) == "" )
                     $errors[] = $current_module->language->errors->registration->missing->{$field};
             
-            if( $settings->get("modules:accounts.automatic_user_names") == "true" )
+            # Impersonation through display/username check
+            $count = $repository->get_record_count(array(
+                "display_name" => $xaccount->display_name,
+                "id_account <> '$xaccount->id_account'"
+            ));
+            if( $count > 0 )
+            {
+                $errors[] = $current_module->language->errors->registration->display_name_taken;
+            }
+            else
             {
                 $count = $repository->get_record_count(array(
-                    "display_name" => $xaccount->display_name,
+                    "user_name" => $xaccount->display_name,
                     "id_account <> '$xaccount->id_account'"
                 ));
                 

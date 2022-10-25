@@ -93,17 +93,28 @@ if( $_POST["mode"] == "save" )
             }
         }
         
-        if(
-            $settings->get("modules:accounts.automatic_user_names") == "true"
-            && $origin_account->display_name != $xaccount->display_name
-        ) {
+        # Impersonation through display/username check
+        if($origin_account->display_name != $xaccount->display_name )
+        {
             $count = $repository->get_record_count(array(
                 "display_name" => $xaccount->display_name,
                 "id_account <> '$xaccount->id_account'"
             ));
             
             if( $count > 0 )
+            {
                 $errors[] = $current_module->language->errors->registration->display_name_taken;
+            }
+            else
+            {
+                $count = $repository->get_record_count(array(
+                    "user_name" => $xaccount->display_name,
+                    "id_account <> '$xaccount->id_account'"
+                ));
+                
+                if( $count > 0 )
+                    $errors[] = $current_module->language->errors->registration->display_name_taken;
+            }
         }
         
         # Validations: invalid entries
