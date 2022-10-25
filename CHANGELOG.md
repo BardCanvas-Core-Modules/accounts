@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.7] - 2022-10-25
+
+- Added impersonation check over user/display name on edition.
+
 ## [1.24.6] - 2022-10-17
 
 - Added missing file from the logins table sweeper.
