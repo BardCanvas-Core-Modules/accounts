@@ -320,7 +320,7 @@ if( $_POST["mode"] == "create" )
     
     # Final assignments
     if( $settings->get("modules:accounts.non_mandatory_country") == "true" && empty($xaccount->country) )
-        $xaccount->country = get_geoip_country_code();
+        $xaccount->country = strtolower(get_geoip_country_code());
     
     if( empty($xaccount->country) )
     {
