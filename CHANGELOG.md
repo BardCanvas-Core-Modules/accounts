@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.8] - 2024-02-21
+
+- Fixed error on automatic country selection at registration.
+
 ## [1.24.7] - 2022-10-25
 
 - Added impersonation check over user/display name on edition.
