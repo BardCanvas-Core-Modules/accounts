@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.9] - 2024-03-12
+
+- Added check to prevent warnings caused by session errors on the account preferences page.
+
 ## [1.24.8] - 2024-02-21
 
 - Fixed error on automatic country selection at registration.
