@@ -10,6 +10,8 @@
 include "../config.php";
 include "../includes/bootstrap.inc";
 
+if( ! $account->_exists ) throw_fake_401();
+
 if( ! empty($_POST["engine_prefs"]) )
 {
     $messages = array();
