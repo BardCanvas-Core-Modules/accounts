@@ -63,7 +63,7 @@
             
             <? $this_module->load_extensions("login_form", "before_submit_button"); ?>
             
-            <p align="right" class="submit_button_container" style="margin-bottom: 0;">
+            <p class="aligncenter submit_button_container" style="margin-bottom: 0;">
                 <button type="submit">
                     <?= $language->submit ?>
                     <span class="fa fa-play"></span>
