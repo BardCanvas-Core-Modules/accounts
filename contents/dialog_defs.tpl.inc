@@ -70,6 +70,8 @@
                 </button>
             </p>
             
+            <? $this_module->load_extensions("login_form", "bottom"); ?>
+            
         </form>
     </div>
     
