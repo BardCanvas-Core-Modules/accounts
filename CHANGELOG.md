@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.24.10] - 2024-06-27
+
+- Added extension point on the login form.
+- Aligned login form submit button to the center.
+
 ## [1.24.9] - 2024-03-12
 
 - Added check to prevent warnings caused by session errors on the account preferences page.
