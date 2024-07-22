@@ -932,6 +932,17 @@
             <type>user_level_selector</type>
         </specs>
         
+        <specs key="confirmation_page_markup">
+            <title><![CDATA[
+                Adición a página de confirmación
+            ]]></title>
+            <description><![CDATA[
+                Pega cualquier código HTML que desees agregar a la página de confirmación de cuenta,
+                P.E. scripts rastreo de conversiones.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
         <specs is_separator="true">Control de acceso avanzado</specs>
         
         <specs key="use_2fa">

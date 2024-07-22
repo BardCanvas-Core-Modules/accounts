@@ -932,6 +932,17 @@
             <type>user_level_selector</type>
         </specs>
         
+        <specs key="confirmation_page_markup">
+            <title><![CDATA[
+                Confirmation page markup
+            ]]></title>
+            <description><![CDATA[
+                Paste any markup you want to add on the account confirmation page,
+                E.G. conversion tracking codes.
+            ]]></description>
+            <type>code</type>
+        </specs>
+        
         <specs is_separator="true">Advanced login controls</specs>
         
         <specs key="use_2fa">

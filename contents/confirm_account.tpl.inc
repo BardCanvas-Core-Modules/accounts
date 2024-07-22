@@ -23,6 +23,8 @@
     
     <?= $current_module->language->account_confirmation->content ?>
     
+    <?= $settings->get("modules:accounts.confirmation_page_markup") ?>
+    
     <? $current_module->load_extensions("confirm_account_page", "after_successful_confirmation"); ?>
     
 <? endif; ?>
