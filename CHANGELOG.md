@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.24.11] - 2024-08-11
+
+- Added option to inject HTML markup (for conversion tracking and other facilities)
+  on the account confirmation page.
+
 ## [1.24.10] - 2024-06-27
 
 - Added extension point on the login form.
