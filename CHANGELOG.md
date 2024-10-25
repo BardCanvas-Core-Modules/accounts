@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.24.12] - 2024-10-24
+
+- Added debug info on captcha error.
+- Added registration page tag.
+
 ## [1.24.11] - 2024-08-11
 
 - Added option to inject HTML markup (for conversion tracking and other facilities)
