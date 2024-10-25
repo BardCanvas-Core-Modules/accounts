@@ -360,6 +360,7 @@ if( $_POST["mode"] == "create" )
         
         $template->set_page_title($current_module->language->page_titles->registration_form_submitted);
         $template->page_contents_include = "register_form_submitted.tpl.inc";
+        $template->set("page_tag", "registration");
         include "{$template->abspath}/main.php";
         die();
     }
@@ -373,5 +374,6 @@ $_country_list         = $countries;
 $_current_user_country = strtolower($current_user_country);
 
 $template->set_page_title($current_module->language->page_titles->registration_form);
+$template->set("page_tag", "registration");
 $template->page_contents_include = "register_form.tpl.inc";
 include "{$template->abspath}/main.php";
