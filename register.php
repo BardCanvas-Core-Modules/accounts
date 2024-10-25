@@ -206,18 +206,21 @@ if( $_POST["mode"] == "create" )
                 }
                 else
                 {
-                    $obj = json_decode($res);
+                    $obj = json_decode($res, true);
                     if( empty($obj) )
                     {
                         $errors[] = replace_escaped_objects(
                             $current_module->language->errors->registration->invalid->captcha_api_error,
-                            array('{$error}' => print_r($res))
+                            array('{$error}' => print_r($res, true))
                         );
                     }
                     else
                     {
-                        if( ! $obj->success )
-                            $errors[] = $current_module->language->errors->registration->invalid->captcha_invalid;
+                        if( ! $obj["success"] )
+                            $errors[] = replace_escaped_objects(
+                                $current_module->language->errors->registration->invalid->captcha_invalid,
+                                array('{$error}' => $obj["error-codes"][0])
+                            );
                     }
                 }
                 curl_close($ch);

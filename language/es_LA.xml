@@ -253,7 +253,7 @@
                 <alt_mail_domain>El dominio de tu dirección de correo alterno no está permitido aquí.</alt_mail_domain>
                 <passwords_mismatch>Las contraseñas no coinciden.</passwords_mismatch>
                 <mails_must_be_different>Ambas direcciones de correo deben ser distintas.</mails_must_be_different>
-                <captcha_invalid>Captcha inválido. Intenta de nuevo.</captcha_invalid>
+                <captcha_invalid>Captcha inválido: {$error}. Por favor contáctanos e incluye este mensaje para corregir el problema.</captcha_invalid>
                 <captcha_api_error>No se ha logrado validar el Captcha: {$error}</captcha_api_error>
                 <chars_in_user_name>Caracteres inválidos en nombre de usuario (usar solo letras, números, guiones y guiones bajos).</chars_in_user_name>
                 <user_name_length>Longitud de nombre de usuario inválida. Debe tener al menos 3 caracteres.</user_name_length>

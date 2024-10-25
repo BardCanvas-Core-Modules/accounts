@@ -250,7 +250,7 @@
                 <alt_mail_domain>The domain of your alternate email address is not allowed here.</alt_mail_domain>
                 <passwords_mismatch>The passwords you've specified don't match. Please re-type them.</passwords_mismatch>
                 <mails_must_be_different>Main and alternate e-mail addresses must be different.</mails_must_be_different>
-                <captcha_invalid>Invalid captcha. Please try again.</captcha_invalid>
+                <captcha_invalid>Invalid captcha: {$error}. Please contact us and provide this message so we can fix it.</captcha_invalid>
                 <captcha_api_error>Couldn't verify Captcha: {$error}</captcha_api_error>
                 <chars_in_user_name>Invalid characters in user name.</chars_in_user_name>
                 <user_name_length>Invalid user name length. It must be at least 3 chars long.</user_name_length>
