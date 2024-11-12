@@ -1153,7 +1153,7 @@ function render_user_devices_info($row, $res2)
                                 }
                                 else
                                 {
-                                    $changelog_lines = split("\n\n", trim($row->changelog));
+                                    $changelog_lines = explode("\n\n", trim($row->changelog));
                                     $changelog_lines = array_reverse($changelog_lines);
                                     foreach( $changelog_lines as $this_line )
                                         echo "<li>" . nl2br($this_line) . "</li>\n";
