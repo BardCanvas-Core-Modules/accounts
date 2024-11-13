@@ -1,3 +1,7 @@
+<?php
+global $modules;
+?>
+
 
 <!-- accounts :: basic :: dialog defs -->
 
@@ -131,7 +135,12 @@
         <div class="ERROR_WRONG_PASSWORD"><?= $this_module->language->errors->wrong_password ?></div>
         <div class="ERROR_ENGINE_DISABLED"><?= $this_module->language->errors->engine_disabled ?></div>
         <div class="ERROR_DEVICE_DISABLED"><?= $this_module->language->errors->device_disabled ?></div>
-        <div class="ERROR_IP_NOT_IN_WHITELIST"><?= $this_module->language->errors->ip_not_in_whitelist ?></div>
+        <div class="ERROR_IP_NOT_IN_WHITELIST"><?
+            if( $modules["security"] && $modules["security"]->enabled )
+                echo $modules["security"]->language->messages->ip_not_in_whitelist;
+            else
+                echo $this_module->language->errors->ip_not_in_whitelist;
+        ?></div>
         <div class="ERROR_INVALID_2FA_TOKEN"><?= $this_module->language->tfa->invalid_token ?></div>
         <div class="ERROR_2FA_VALIDATION_FAILED"><?= $this_module->language->tfa->verification_failed2 ?></div>
         <? $this_module->load_extensions("login", "additional_errors"); ?>
