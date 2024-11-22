@@ -1,6 +1,11 @@
 
 # Accounts Module Change Log
 
+## [1.24.13] - 2024-11-22
+
+- Update to prevent fatal error on the account browser.
+- Extended message thrown when logging in from a non-whitelisted IP having the enhanced security module enabled.
+
 ## [1.24.12] - 2024-10-24
 
 - Added debug info on captcha error.
