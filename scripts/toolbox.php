@@ -157,7 +157,7 @@ switch( $mode )
         if( empty($id_account) ) die($current_module->language->admin->record_nav->action_messages->invalid_account_id);
         
         $repository   = new accounts_repository();
-        $user_account = $repository->get($id_account);
+        $user_account = new account($id_account);
         
         if( ! $user_account->_exists )
             die( $current_module->language->admin->record_nav->action_messages->target_not_exists );
@@ -177,7 +177,7 @@ switch( $mode )
         //send_notification($account->id_account, "information", $current_module->language->admin->record_nav->action_messages->deletion_progress->start);
         //sleep(1);
         $repository->delete($id_account);
-        $mem_cache->delete("account:{$user_account->id_account}");
+        $mem_cache->delete("account:{$id_account}");
         
         if( ! empty($config->globals["deletions_log"]) )
         {
@@ -202,6 +202,10 @@ switch( $mode )
             broadcast_mail_between_levels( $config::ADMIN_USER_LEVEL, $config::ADMIN_USER_LEVEL, $subject, $body );
         }
         send_notification($account->id_account, "information", $current_module->language->admin->record_nav->action_messages->deletion_progress->end);
+        
+        $dir  = substr($user_account->user_name, 0, 3);
+        $patt = "{$config->datafiles_location}/cache/account_prefs/{$dir}/{$user_account->user_name}~v*.dat";
+        foreach(glob($patt) as $file) @unlink($file);
         
         die("OK");
     }
