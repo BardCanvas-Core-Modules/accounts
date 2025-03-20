@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.14] - 2025-03-19
+
+- Purged complementary data on account deletion.
+
 ## [1.24.13] - 2024-11-22
 
 - Update to prevent fatal error on the account browser.
