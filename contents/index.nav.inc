@@ -324,7 +324,10 @@ foreach( preg_split('/,\s*/', $overrides) as $module_name )
         document.filter_form.order.value                = 16;
         document.filter_form.offset.value               = 0;
         document.filter_form.resetting.value            = 'true';
-        $('#filter_form').submit();
+        
+        let $form = $('#filter_form');
+        $form.find('.extra_filters input[type="hidden"]').val('');
+        $form.submit();
     }
     
     function sweep_logins_prompt()
