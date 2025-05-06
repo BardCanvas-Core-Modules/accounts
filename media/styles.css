@@ -45,3 +45,5 @@
     background-position: 6px 4px;
     background-size: 16px;
 }
+
+#filter_form .extra_filters { display: flex; gap: 5px; flex-wrap: wrap; }
