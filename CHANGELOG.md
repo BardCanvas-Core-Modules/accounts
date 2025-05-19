@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.15] - 2025-05-19
+
+- Tuned accounts browser.
+
 ## [1.24.14] - 2025-03-19
 
 - Purged complementary data on account deletion.
