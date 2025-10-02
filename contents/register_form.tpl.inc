@@ -79,8 +79,13 @@ if( $_POST["mode"] != "create" )
 
 <form name="register_form" id="register_form" class="userdata_form" method="post" action="<?=$_SERVER["PHP_SELF"]?>" onsubmit="return validate_register_form()">
     
+    <?
+    $url = $_REQUEST["redir_url"];
+    if( has_injected_scripts($url) ) $url = "";
+    else $url = htmlspecialchars($url);
+    ?>
     <input type="hidden" name="mode"      value="create">
-    <input type="hidden" name="redir_url" value="<?= empty($_REQUEST["redir_url"]) ? "" : $_REQUEST["redir_url"] ?>">
+    <input type="hidden" name="redir_url" value="<?= empty($_REQUEST["redir_url"]) ? "" : $url ?>">
     
     <? $current_module->load_extensions("register_form", "top"); ?>
     
