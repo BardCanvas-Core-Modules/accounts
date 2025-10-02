@@ -1,6 +1,10 @@
 
 # Accounts Module Change Log
 
+## [1.24.16] - 2025-10-02
+
+- Added check against script injection in the registration form.
+
 ## [1.24.15] - 2025-05-19
 
 - Tuned accounts browser.
